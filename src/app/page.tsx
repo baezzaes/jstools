@@ -3,7 +3,7 @@ export default function Home() {
     <div className="max-w-3xl mx-auto p-6 space-y-8">
       <header className="text-center space-y-2">
         <h1 className="text-4xl font-bold">🧰 JSTools</h1>
-        <p className="text-gray-600">작지만 유용한 웹도구 모음 플랫폼</p>
+        <p className="text-gray-600">작지만 유용한 웹도구 모음 플랫폼a</p>
       </header>
 
       <section className="grid gap-6 md:grid-cols-2">
