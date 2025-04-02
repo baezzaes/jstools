@@ -50,7 +50,7 @@ export default function LottoGenerator() {
   }
 
   // 저장된 번호 가져오기
-  const getSavedNumbers = () => {
+  const getSavedNumbers = (): number[][] => {
     return JSON.parse(localStorage.getItem('savedLottoNumbers') || '[]')
   }
 
@@ -135,12 +135,12 @@ export default function LottoGenerator() {
       {getSavedNumbers().length > 0 && (
         <div className="mt-6">
           <h3 className="text-lg font-semibold">저장된 번호</h3>
-          {getSavedNumbers().map((saved, index) => (
+          {getSavedNumbers().map((saved: number[], index) => (
             <div key={index} className="p-2 border-b">
-              <strong>{saved.join(', ')}</strong>
-              <button onClick={() => deleteSavedNumber(index)} className="ml-2 text-red-500">삭제</button>
+                <strong>{saved.join(', ')}</strong>
+                <button onClick={() => deleteSavedNumber(index)} className="ml-2 text-red-500">삭제</button>
             </div>
-          ))}
+            ))}
           
         </div>
       )}
