@@ -47,6 +47,20 @@ export default function Home() {
           </a>
         </div>
 
+        <div className="border rounded-xl p-4 shadow-sm space-y-2">
+          <h2 className="text-xl font-semibold">🎯 운세 기반 로또 번호 추천기</h2>
+          <p className="text-sm text-gray-600">
+            기분과 색상, 좋아하는 숫자에 기반하여 로또 번호를 추천합니다.
+          </p>
+          <a
+            href="/tools/lotto-generator"
+            className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
+          >
+            사용하기
+          </a>
+        </div>
+
+
       </section>
 
       {/* 광고 자리 */}
