@@ -21,18 +21,17 @@ export default function Home() {
           </a>
         </div>
 
-        {/* Placeholder for future tools */}
-        <div className="border rounded-xl p-4 shadow-sm space-y-2 opacity-50">
-          <h2 className="text-xl font-semibold">🧼 텍스트 정리 도구</h2>
+        <div className="border rounded-xl p-4 shadow-sm space-y-2">
+          <h2 className="text-xl font-semibold">📅 날짜 계산기</h2>
           <p className="text-sm text-gray-600">
-            줄 바꿈 제거, 공백 제거 등 간단한 텍스트 정리 기능 모음. (곧 추가 예정!)
+            두 날짜 사이의 차이를 계산하거나, 기준일로부터 며칠 전/후 날짜를 계산합니다.
           </p>
-          <button
-            disabled
-            className="inline-block mt-2 px-4 py-2 bg-gray-300 text-gray-600 rounded cursor-not-allowed"
+          <a
+            href="/tools/date-calculator"
+            className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
           >
-            준비 중
-          </button>
+            사용하기
+          </a>
         </div>
       </section>
 
