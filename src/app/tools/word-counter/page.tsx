@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 export default function WordCounterPage() {
   const [text, setText] = useState('')
@@ -48,12 +49,11 @@ export default function WordCounterPage() {
       </div>
 
       {/* 홈으로 돌아가기 */}
-        <div className="text-center mt-8">
-        <a href="/" className="text-sm text-blue-600 hover:underline">
+      <div className="text-center mt-8">
+        <Link href="/" className="text-sm text-blue-600 hover:underline">
             ← JSTools 홈으로
-        </a>
+        </Link>
         </div>
-
 
       {/* 광고 영역 */}
       <div className="border border-dashed border-gray-300 p-4 text-center text-sm text-gray-500 rounded-xl">

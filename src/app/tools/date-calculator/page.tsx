@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 export default function DateCalculatorPage() {
   const [startDate, setStartDate] = useState('')
@@ -82,10 +83,10 @@ export default function DateCalculatorPage() {
 
     {/* 홈으로 돌아가기 */}
     <div className="text-center mt-8">
-    <a href="/" className="text-sm text-blue-600 hover:underline">
-        ← JSTools 홈으로
-    </a>
-    </div>
+        <Link href="/" className="text-sm text-blue-600 hover:underline">
+            ← JSTools 홈으로
+        </Link>
+        </div>
 
 
       {/* 광고 자리 */}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 export default function PasswordGeneratorPage() {
   const [length, setLength] = useState(12)
@@ -137,10 +138,10 @@ export default function PasswordGeneratorPage() {
       </div>
 
       {/* 홈으로 돌아가기 */}
-        <div className="text-center mt-8">
-        <a href="/" className="text-sm text-blue-600 hover:underline">
+      <div className="text-center mt-8">
+        <Link href="/" className="text-sm text-blue-600 hover:underline">
             ← JSTools 홈으로
-        </a>
+        </Link>
         </div>
 
 
