@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
+import { useState, useEffect } from 'react'
+import Link from 'next/link'  // Link import 추가
 
 const feelings = ["행복함", "평온함", "불안함", "짜증남", "신남"]
 const colors = ["빨강", "파랑", "노랑", "초록", "보라"]
@@ -11,6 +11,13 @@ export default function LottoGenerator() {
   const [selectedColor, setSelectedColor] = useState('')
   const [favoriteNumber, setFavoriteNumber] = useState('')
   const [result, setResult] = useState<number[]>([])
+  const [savedNumbers, setSavedNumbers] = useState<number[][]>([])
+
+  // 로컬 저장소에서 저장된 번호 불러오기
+  useEffect(() => {
+    const storedNumbers = JSON.parse(localStorage.getItem('savedLottoNumbers') || '[]')
+    setSavedNumbers(storedNumbers)
+  }, [])
 
   const handleGenerate = () => {
     const numbers = new Set<number>()
@@ -44,21 +51,17 @@ export default function LottoGenerator() {
 
   // 번호 저장
   const saveNumber = () => {
-    const savedNumbers = JSON.parse(localStorage.getItem('savedLottoNumbers') || '[]')
-    savedNumbers.push(result)
-    localStorage.setItem('savedLottoNumbers', JSON.stringify(savedNumbers))
-  }
-
-  // 저장된 번호 가져오기
-  const getSavedNumbers = (): number[][] => {
-    return JSON.parse(localStorage.getItem('savedLottoNumbers') || '[]')
+    const newSavedNumbers = [...savedNumbers, result]
+    setSavedNumbers(newSavedNumbers)
+    localStorage.setItem('savedLottoNumbers', JSON.stringify(newSavedNumbers))
   }
 
   // 저장된 번호 삭제하기
   const deleteSavedNumber = (index: number) => {
-    const savedNumbers = JSON.parse(localStorage.getItem('savedLottoNumbers') || '[]')
-    savedNumbers.splice(index, 1)
-    localStorage.setItem('savedLottoNumbers', JSON.stringify(savedNumbers))
+    const updatedNumbers = [...savedNumbers]
+    updatedNumbers.splice(index, 1)
+    setSavedNumbers(updatedNumbers)
+    localStorage.setItem('savedLottoNumbers', JSON.stringify(updatedNumbers))
   }
 
   return (
@@ -132,25 +135,21 @@ export default function LottoGenerator() {
       )}
 
       {/* 저장된 번호 보기 */}
-      {getSavedNumbers().length > 0 && (
+      {savedNumbers.length > 0 && (
         <div className="mt-6">
           <h3 className="text-lg font-semibold">저장된 번호</h3>
-          {getSavedNumbers().map((saved: number[], index) => (
+          {savedNumbers.map((saved, index) => (
             <div key={index} className="p-2 border-b">
-                <strong>{saved.join(', ')}</strong>
-                <button onClick={() => deleteSavedNumber(index)} className="ml-2 text-red-500">삭제</button>
+              <strong>{saved.join(', ')}</strong>
+              <button onClick={() => deleteSavedNumber(index)} className="ml-2 text-red-500">삭제</button>
             </div>
-            ))}
-          
+          ))}
         </div>
       )}
 
-      {/* 홈으로 돌아가기 */}
-    <div className="text-center mt-8">
-        <Link href="/" className="text-sm text-blue-600 hover:underline">
-            ← JSTools 홈으로
-        </Link>
-        </div>
+      <div className="text-center mt-8">
+        <Link href="/" className="text-sm text-blue-600 hover:underline">← JSTools 홈으로</Link>
+      </div>
 
       {/* 광고 영역 */}
       <div className="border border-dashed border-gray-300 p-4 text-center text-sm text-gray-500 rounded-xl">
