@@ -8,10 +8,24 @@ export default function PasswordGeneratorPage() {
   const [useUppercase, setUseUppercase] = useState(true)
   const [useLowercase, setUseLowercase] = useState(true)
   const [useSymbols, setUseSymbols] = useState(true)
+  const [easyMode, setEasyMode] = useState(false)
   const [password, setPassword] = useState('')
+  const [copied, setCopied] = useState(false)
 
   const generatePassword = () => {
     let charset = ''
+    if (easyMode) {
+      const words = ['Tree', 'Cat', 'Dog', 'Moon', 'Sun', 'Book', 'Fire', 'Rain']
+      const symbols = ['!', '@', '#', '$']
+      const word1 = words[Math.floor(Math.random() * words.length)]
+      const word2 = words[Math.floor(Math.random() * words.length)]
+      const number = Math.floor(Math.random() * 100)
+      const symbol = symbols[Math.floor(Math.random() * symbols.length)]
+      const easyPass = `${word1}${number}${symbol}${word2}`
+      setPassword(easyPass)
+      return
+    }
+
     if (useNumbers) charset += '0123456789'
     if (useUppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     if (useLowercase) charset += 'abcdefghijklmnopqrstuvwxyz'
@@ -29,6 +43,8 @@ export default function PasswordGeneratorPage() {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(password)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   return (
@@ -45,6 +61,7 @@ export default function PasswordGeneratorPage() {
             className="border p-2 rounded w-24"
             min={4}
             max={32}
+            disabled={easyMode}
           />
         </div>
 
@@ -54,6 +71,7 @@ export default function PasswordGeneratorPage() {
               type="checkbox"
               checked={useNumbers}
               onChange={() => setUseNumbers(!useNumbers)}
+              disabled={easyMode}
             />
             숫자 포함
           </label>
@@ -62,6 +80,7 @@ export default function PasswordGeneratorPage() {
               type="checkbox"
               checked={useUppercase}
               onChange={() => setUseUppercase(!useUppercase)}
+              disabled={easyMode}
             />
             대문자 포함
           </label>
@@ -70,6 +89,7 @@ export default function PasswordGeneratorPage() {
               type="checkbox"
               checked={useLowercase}
               onChange={() => setUseLowercase(!useLowercase)}
+              disabled={easyMode}
             />
             소문자 포함
           </label>
@@ -78,10 +98,20 @@ export default function PasswordGeneratorPage() {
               type="checkbox"
               checked={useSymbols}
               onChange={() => setUseSymbols(!useSymbols)}
+              disabled={easyMode}
             />
             특수문자 포함
           </label>
         </div>
+
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={easyMode}
+            onChange={() => setEasyMode(!easyMode)}
+          />
+          기억하기 쉬운 비밀번호 모드
+        </label>
 
         <button
           onClick={generatePassword}
@@ -93,12 +123,15 @@ export default function PasswordGeneratorPage() {
         {password && (
           <div className="border p-3 rounded bg-white flex items-center justify-between">
             <span className="font-mono break-all">{password}</span>
-            <button
-              onClick={copyToClipboard}
-              className="text-sm text-blue-500 hover:underline"
-            >
-              복사
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={copyToClipboard}
+                className="text-sm text-blue-500 hover:underline"
+              >
+                복사
+              </button>
+              {copied && <span className="text-green-600 text-xs">복사 완료!</span>}
+            </div>
           </div>
         )}
       </div>
