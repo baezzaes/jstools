@@ -21,12 +21,12 @@ export default function LottoGenerator() {
 
   const handleGenerate = () => {
     const numbers = new Set<number>()
-
+  
     // 사용자 입력 반영
     if (!isNaN(Number(favoriteNumber))) {
       numbers.add(Number(favoriteNumber))
     }
-
+  
     // 기분별 번호 편향
     const moodBias: Record<string, number[]> = {
       행복함: [7, 14, 21, 28, 35, 42],
@@ -40,14 +40,18 @@ export default function LottoGenerator() {
       const rand = bias[Math.floor(Math.random() * bias.length)]
       numbers.add(rand)
     }
-
-    // 랜덤 숫자 보완
+  
+    // 랜덤 숫자 보완 (0을 제외하도록 1부터 45 사이의 숫자만 생성)
     while (numbers.size < 6) {
-      numbers.add(Math.floor(Math.random() * 45) + 1)
+      const rand = Math.floor(Math.random() * 45) + 1
+      if (rand !== 0) {  // 이 부분 추가하여 0을 제외
+        numbers.add(rand)
+      }
     }
-
+  
     setResult(Array.from(numbers).sort((a, b) => a - b))
   }
+  
 
   // 번호 저장
   const saveNumber = () => {
