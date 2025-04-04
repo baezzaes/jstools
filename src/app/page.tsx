@@ -58,8 +58,20 @@ export default function Home() {
           >
             사용하기
           </a>
-        </div>
-
+        </div>  
+        
+        <div className="border rounded-xl p-4 shadow-sm space-y-2">
+          <h2 className="text-xl font-semibold">📱 QR 코드 생성기</h2>
+          <p className="text-sm text-gray-600">
+            입력한 텍스트나 URL을 QR 코드로 변환해주는 도구입니다.
+          </p>
+          <a
+            href="/tools/qr-code-generator"
+            className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
+          >
+            사용하기
+          </a>
+        </div>                     
 
       </section>
 

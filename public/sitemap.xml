@@ -30,5 +30,11 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://jstools-app.vercel.app/tools/qr-code-generator</loc>
+    <lastmod>2025-04-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <!-- 추가 페이지를 여기에 추가 -->
 </urlset>
