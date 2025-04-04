@@ -75,7 +75,7 @@ export default function LottoGenerator() {
 
   return (
     <div className="max-w-xl mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold text-center">🎯 운세 기반 로또 번호 추천기</h1>
+      <h1 className="text-2xl font-bold text-center">🎯 운세 기반 로또 번호 추천기(수정)</h1>
 
       <div className="space-y-4 border p-4 rounded bg-gray-50">
         <div>
