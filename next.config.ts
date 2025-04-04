@@ -1,11 +1,8 @@
-import { NextConfig } from 'next'
-
-const nextConfig: NextConfig = {
+// next.config.ts
+module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['your-image-domain.com'],  // 이미지 도메인 설정 (필요시 추가)
+    unoptimized: true, // 이미지 최적화 하지 않도록 설정
   },
-  // output: 'export' 제거
+  // 기존의 `output` 설정을 제거했는지 확인
 }
-
-export default nextConfig
