@@ -43,14 +43,15 @@ export default function LottoGenerator() {
   
     // 랜덤 숫자 보완 (0을 제외하도록 1부터 45 사이의 숫자만 생성)
     while (numbers.size < 6) {
-      const rand = Math.floor(Math.random() * 45) + 1
-      if (rand !== 0) {  // 이 부분 추가하여 0을 제외
+      const rand = Math.floor(Math.random() * 45) + 1 // 1부터 45 사이로만 랜덤
+      if (rand >= 1 && rand <= 45) {
         numbers.add(rand)
       }
     }
   
     setResult(Array.from(numbers).sort((a, b) => a - b))
   }
+  
   
 
   // 번호 저장
