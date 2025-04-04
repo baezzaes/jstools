@@ -5,10 +5,10 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {/* Google Analytics 4 */}
+          {/* Google Analytics */}
           <script
             async
-            src={`https://www.googletagmanager.com/gtag/js?id=G-F8GPFH41SR`}  // GA4 측정 ID로 변경
+            src={`https://www.googletagmanager.com/gtag/js?id=G-F8GPFH41SR`}  // GA4 측정 ID
           ></script>
           <script
             dangerouslySetInnerHTML={{
@@ -17,7 +17,7 @@ class MyDocument extends Document {
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
                 
-                gtag('config', 'G-F8GPFH41SR');  // GA4 측정 ID로 변경
+                gtag('config', 'G-F8GPFH41SR');  // GA4 측정 ID
               `,
             }}
           />
