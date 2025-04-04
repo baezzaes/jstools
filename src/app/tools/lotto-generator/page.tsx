@@ -12,7 +12,6 @@ export default function LottoGenerator() {
   const [favoriteNumber, setFavoriteNumber] = useState('')
   const [result, setResult] = useState<number[]>([]) // result 초기화
 
-  // 로컬 저장소에서 저장된 번호 불러오기
   const [savedNumbers, setSavedNumbers] = useState<number[][]>([])
 
   useEffect(() => {
@@ -27,6 +26,7 @@ export default function LottoGenerator() {
     if (!isNaN(Number(favoriteNumber))) {
       numbers.push(Number(favoriteNumber))
     }
+    console.log("초기 numbers 배열:", numbers) // 초기 배열 출력
   
     // 기분별 번호 편향
     const moodBias: Record<string, number[]> = {
@@ -41,24 +41,25 @@ export default function LottoGenerator() {
     while (numbers.length < 4 && bias.length > 0) {
       const rand = bias[Math.floor(Math.random() * bias.length)]
       console.log("추출된 기분 번호:", rand) // 로그 추가
-      if (rand !== 0 && !numbers.includes(rand)) { // 0을 제외
+      if (rand !== 0 && !numbers.includes(rand)) {
         numbers.push(rand)
       }
+      console.log("현재 numbers 배열 (기분 번호 추가 후):", numbers) // 기분 번호 추가 후 출력
     }
   
     // 랜덤 숫자 보완 (0을 제외하고 1부터 45 사이의 숫자만 생성)
     while (numbers.length < 6) {
       const rand = Math.floor(Math.random() * 45) + 1 // 1부터 45 사이로만 랜덤
       console.log("추출된 랜덤 번호:", rand) // 로그 추가
-      if (!numbers.includes(rand)) { // 중복 체크
+      if (!numbers.includes(rand)) {
         numbers.push(rand)
       }
+      console.log("현재 numbers 배열 (랜덤 번호 추가 후):", numbers) // 랜덤 번호 추가 후 출력
     }
   
     console.log("최종 추천 번호:", numbers) // 최종 번호 로그
     setResult(numbers.sort((a, b) => a - b))
   }
-  
   
 
   // 번호 저장
