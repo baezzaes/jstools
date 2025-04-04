@@ -1,12 +1,11 @@
 import { NextConfig } from 'next'
 
-// TypeScript에서는 직접 `export default`로 설정할 수 있습니다.
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    unoptimized: true,  // `next export`와 함께 이미지를 최적화하지 않도록 설정
+    domains: ['your-image-domain.com'],  // 이미지 도메인 설정 (필요시 추가)
   },
-  output: 'export',  // 정적 사이트 export 설정
+  // output: 'export' 제거
 }
 
 export default nextConfig
