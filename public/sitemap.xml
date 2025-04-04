@@ -7,25 +7,25 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://jstools-app.vercel.app/date-calculator</loc>
+    <loc>https://jstools-app.vercel.app/tools/date-calculator</loc>
     <lastmod>2025-04-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jstools-app.vercel.app/lotto-generator</loc>
+    <loc>https://jstools-app.vercel.app/tools/lotto-generator</loc>
     <lastmod>2025-04-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jstools-app.vercel.app/password-generator</loc>
+    <loc>https://jstools-app.vercel.app/tools/password-generator</loc>
     <lastmod>2025-04-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jstools-app.vercel.app/word-counter</loc>
+    <loc>https://jstools-app.vercel.app/tools/word-counter</loc>
     <lastmod>2025-04-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
