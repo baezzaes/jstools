@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'  // Link import 추가
+import Link from 'next/link'
 
 const feelings = ["행복함", "평온함", "불안함", "짜증남", "신남"]
 const colors = ["빨강", "파랑", "노랑", "초록", "보라"]
@@ -10,10 +10,11 @@ export default function LottoGenerator() {
   const [selectedFeeling, setSelectedFeeling] = useState('')
   const [selectedColor, setSelectedColor] = useState('')
   const [favoriteNumber, setFavoriteNumber] = useState('')
-  const [result, setResult] = useState<number[]>([])
-  const [savedNumbers, setSavedNumbers] = useState<number[][]>([])
+  const [result, setResult] = useState<number[]>([]) // result 초기화
 
   // 로컬 저장소에서 저장된 번호 불러오기
+  const [savedNumbers, setSavedNumbers] = useState<number[][]>([])
+
   useEffect(() => {
     const storedNumbers = JSON.parse(localStorage.getItem('savedLottoNumbers') || '[]')
     setSavedNumbers(storedNumbers)
@@ -21,12 +22,12 @@ export default function LottoGenerator() {
 
   const handleGenerate = () => {
     const numbers: number[] = []
-  
+
     // 사용자 입력 반영
     if (!isNaN(Number(favoriteNumber))) {
       numbers.push(Number(favoriteNumber))
     }
-  
+
     // 기분별 번호 편향
     const moodBias: Record<string, number[]> = {
       행복함: [7, 14, 21, 28, 35, 42],
@@ -35,6 +36,7 @@ export default function LottoGenerator() {
       짜증남: [5, 13, 22, 31, 38, 45],
       신남: [1, 8, 17, 26, 33, 41],
     }
+
     const bias = moodBias[selectedFeeling] || []
     while (numbers.length < 4 && bias.length > 0) {
       const rand = bias[Math.floor(Math.random() * bias.length)]
@@ -42,21 +44,17 @@ export default function LottoGenerator() {
         numbers.push(rand)
       }
     }
-  
+
     // 랜덤 숫자 보완 (0을 제외하고 1부터 45 사이의 숫자만 생성)
     while (numbers.length < 6) {
       const rand = Math.floor(Math.random() * 45) + 1 // 1부터 45 사이로만 랜덤
-      if (rand !== 0 && !numbers.includes(rand)) {
+      if (!numbers.includes(rand)) {
         numbers.push(rand)
       }
     }
-  
+
     setResult(numbers.sort((a, b) => a - b))
   }
-  
-  
-  
-  
 
   // 번호 저장
   const saveNumber = () => {
@@ -75,7 +73,7 @@ export default function LottoGenerator() {
 
   return (
     <div className="max-w-xl mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold text-center">🎯 운세 기반 로또 번호 추천기(수정)</h1>
+      <h1 className="text-2xl font-bold text-center">🎯 운세 기반 로또 번호 추천기</h1>
 
       <div className="space-y-4 border p-4 rounded bg-gray-50">
         <div>
