@@ -5,10 +5,14 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          {/* Test: Add meta tag */}
+          <meta name="author" content="JSTools Team" />
+          <meta name="description" content="This is a test page for adding extra tags." />
+
           {/* Google Analytics */}
           <script
             async
-            src={`https://www.googletagmanager.com/gtag/js?id=G-F8GPFH41SR`}  // GA4 측정 ID
+            src="https://www.googletagmanager.com/gtag/js?id=G-F8GPFH41SR"
           ></script>
           <script
             dangerouslySetInnerHTML={{
@@ -16,11 +20,16 @@ class MyDocument extends Document {
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                
-                gtag('config', 'G-F8GPFH41SR');  // GA4 측정 ID
+                gtag('config', 'G-F8GPFH41SR');
               `,
             }}
           />
+
+          {/* Test: Adding an external script */}
+          <script
+            async
+            src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+          ></script>
         </Head>
         <body>
           <Main />
