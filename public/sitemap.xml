@@ -1,40 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://jstools-app.vercel.app/</loc>
-    <lastmod>2025-04-04</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://jstools-app.vercel.app/tools/date-calculator</loc>
-    <lastmod>2025-04-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://jstools-app.vercel.app/tools/lotto-generator</loc>
-    <lastmod>2025-04-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://jstools-app.vercel.app/tools/password-generator</loc>
-    <lastmod>2025-04-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://jstools-app.vercel.app/tools/word-counter</loc>
-    <lastmod>2025-04-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://jstools-app.vercel.app/tools/qrcode-generator</loc>
-    <lastmod>2025-04-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <!-- 추가 페이지를 여기에 추가 -->
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<sitemap><loc>https://jstools-app.vercel.app/sitemap-0.xml</loc></sitemap>
+</sitemapindex>
