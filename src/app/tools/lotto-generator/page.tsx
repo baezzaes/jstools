@@ -10,7 +10,7 @@ export default function LottoGenerator() {
   const [selectedFeeling, setSelectedFeeling] = useState('')
   const [selectedColor, setSelectedColor] = useState('')
   const [favoriteNumber, setFavoriteNumber] = useState('')
-  const [result, setResult] = useState<number[]>([]) // result 초기화
+  const [result, setResult] = useState<number[]>([])
 
   const [savedNumbers, setSavedNumbers] = useState<number[][]>([])
 
@@ -21,13 +21,14 @@ export default function LottoGenerator() {
 
   const handleGenerate = () => {
     const numbers: number[] = []
-  
-    // 사용자 입력 반영
-    if (!isNaN(Number(favoriteNumber))) {
+
+    // 사용자 입력 반영 (favoriteNumber가 비어있거나 0인 경우 추가하지 않음)
+    if (favoriteNumber && !isNaN(Number(favoriteNumber)) && Number(favoriteNumber) >= 1 && Number(favoriteNumber) <= 45) {
       numbers.push(Number(favoriteNumber))
     }
+
     console.log("초기 numbers 배열:", numbers) // 초기 배열 출력
-  
+
     // 기분별 번호 편향
     const moodBias: Record<string, number[]> = {
       행복함: [7, 14, 21, 28, 35, 42],
@@ -36,7 +37,7 @@ export default function LottoGenerator() {
       짜증남: [5, 13, 22, 31, 38, 45],
       신남: [1, 8, 17, 26, 33, 41],
     }
-  
+
     const bias = moodBias[selectedFeeling] || []
     while (numbers.length < 4 && bias.length > 0) {
       const rand = bias[Math.floor(Math.random() * bias.length)]
@@ -46,7 +47,7 @@ export default function LottoGenerator() {
       }
       console.log("현재 numbers 배열 (기분 번호 추가 후):", numbers) // 기분 번호 추가 후 출력
     }
-  
+
     // 랜덤 숫자 보완 (0을 제외하고 1부터 45 사이의 숫자만 생성)
     while (numbers.length < 6) {
       const rand = Math.floor(Math.random() * 45) + 1 // 1부터 45 사이로만 랜덤
@@ -56,11 +57,10 @@ export default function LottoGenerator() {
       }
       console.log("현재 numbers 배열 (랜덤 번호 추가 후):", numbers) // 랜덤 번호 추가 후 출력
     }
-  
+
     console.log("최종 추천 번호:", numbers) // 최종 번호 로그
     setResult(numbers.sort((a, b) => a - b))
   }
-  
 
   // 번호 저장
   const saveNumber = () => {
