@@ -66,7 +66,7 @@ export default function Home() {
             입력한 텍스트나 URL을 QR 코드로 변환해주는 도구입니다.
           </p>
           <a
-            href="/tools/qr-code-generator"
+            href="/tools/qrcode-generator"
             className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
           >
             사용하기
