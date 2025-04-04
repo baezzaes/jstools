@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: 
+Sitemap: https://jstools-app.vercel.app/sitemap.xml
