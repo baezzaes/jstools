@@ -71,7 +71,21 @@ export default function Home() {
           >
             사용하기
           </a>
-        </div>                     
+        </div>  
+
+        <div className="border rounded-xl p-4 shadow-sm space-y-2">
+          <h2 className="text-xl font-semibold">🔠 텍스트 대소문자 변환기</h2>
+          <p className="text-sm text-gray-600">
+            입력한 문장의 대소문자를 한 번에 변환해주는 간단한 텍스트 도구입니다.
+          </p>
+          <a
+            href="/tools/case-converter"
+            className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
+          >
+            사용하기
+          </a>
+        </div>
+                   
 
       </section>
 
