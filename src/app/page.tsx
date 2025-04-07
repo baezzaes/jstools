@@ -14,7 +14,7 @@ export default function Home() {
             글자 수, 단어 수, 줄 수를 실시간으로 계산해주는 텍스트 분석 도구입니다.
           </p>
           <a
-            href="/tools/word-counter"
+            href="/tools/text/word-counter"
             className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
           >
             사용하기
@@ -27,7 +27,7 @@ export default function Home() {
             두 날짜 사이의 차이를 계산하거나, 기준일로부터 며칠 전/후 날짜를 계산합니다.
           </p>
           <a
-            href="/tools/date-calculator"
+            href="/tools/date/date-calculator"
             className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
           >
             사용하기
@@ -40,7 +40,7 @@ export default function Home() {
             원하는 길이와 옵션에 따라 보안성 높은 비밀번호를 생성합니다.
           </p>
           <a
-            href="/tools/password-generator"
+            href="/tools/security/password-generator"
             className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
           >
             사용하기
@@ -53,7 +53,7 @@ export default function Home() {
             기분과 색상, 좋아하는 숫자에 기반하여 로또 번호를 추천합니다.
           </p>
           <a
-            href="/tools/lotto-generator"
+            href="/tools/fun/lotto-generator"
             className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
           >
             사용하기
@@ -66,7 +66,7 @@ export default function Home() {
             입력한 텍스트나 URL을 QR 코드로 변환해주는 도구입니다.
           </p>
           <a
-            href="/tools/qrcode-generator"
+            href="/tools/utility/qrcode-generator"
             className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
           >
             사용하기
@@ -79,7 +79,7 @@ export default function Home() {
             입력한 문장의 대소문자를 한 번에 변환해주는 간단한 텍스트 도구입니다.
           </p>
           <a
-            href="/tools/case-converter"
+            href="/tools/test/case-converter"
             className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
           >
             사용하기
