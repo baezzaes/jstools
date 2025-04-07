@@ -79,7 +79,7 @@ export default function Home() {
             입력한 문장의 대소문자를 한 번에 변환해주는 간단한 텍스트 도구입니다.
           </p>
           <a
-            href="/tools/test/case-converter"
+            href="/tools/text/case-converter"
             className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
           >
             사용하기
@@ -89,9 +89,17 @@ export default function Home() {
 
       </section>
 
-      {/* 광고 자리 */}
+      {/* 광고 영역 */}
       <div className="border border-dashed border-gray-300 p-4 text-center text-sm text-gray-500 rounded-xl">
-        광고 영역 (Google AdSense 자리)
+              <ins className="adsbygoogle"
+          style={{ display: 'block' }}
+          data-ad-client="ca-pub-7836056065911594"
+          data-ad-slot="1234567890"   // 없으면 자동광고
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+        <script dangerouslySetInnerHTML={{
+          __html: `(adsbygoogle = window.adsbygoogle || []).push({});`
+        }} />
       </div>
 
       <footer className="text-center text-xs text-gray-400 mt-10">
