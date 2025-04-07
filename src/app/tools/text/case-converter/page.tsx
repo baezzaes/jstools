@@ -59,6 +59,19 @@ export default function CaseConverterPage() {
           ← JSTools 홈으로
         </Link>
       </div>
+
+      {/* 광고 영역 */}
+      <div className="border border-dashed border-gray-300 p-4 text-center text-sm text-gray-500 rounded-xl">
+              <ins className="adsbygoogle"
+          style={{ display: 'block' }}
+          data-ad-client="ca-pub-7836056065911594"
+          data-ad-slot="1234567890"   // 없으면 자동광고
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+        <script dangerouslySetInnerHTML={{
+          __html: `(adsbygoogle = window.adsbygoogle || []).push({});`
+        }} />
+      </div>
     </div>
   )
 }
