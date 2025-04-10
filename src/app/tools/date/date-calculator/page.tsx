@@ -81,6 +81,18 @@ export default function DateCalculatorPage() {
         )}
       </div>
 
+      <div className="space-y-4 text-sm text-gray-700 leading-relaxed">
+        <h2 className="text-lg font-semibold mt-8">📘 날짜 계산기란?</h2>
+        <p>
+          날짜 계산기는 두 날짜 사이의 차이를 계산하거나 기준일로부터 며칠 전 또는 후의 날짜를 구하는 도구입니다.
+          일정 관리, 프로젝트 마감일 계산, 기념일 확인 등 다양한 목적으로 활용할 수 있습니다.
+        </p>
+        <p>
+          시작일과 종료일을 입력하면 몇 일이 지났는지 자동으로 계산해주며, 기준일을 입력하고 원하는 일 수를 지정하면
+          그만큼 지난 날짜 또는 이후 날짜도 손쉽게 확인할 수 있습니다.
+        </p>
+      </div>
+
     {/* 홈으로 돌아가기 */}
     <div className="text-center mt-8">
         <Link href="/" className="text-sm text-blue-600 hover:underline">

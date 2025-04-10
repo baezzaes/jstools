@@ -160,6 +160,19 @@ export default function LottoGenerator() {
         </div>
       )}
 
+      <div className="space-y-4 text-sm text-gray-700 leading-relaxed">
+        <h2 className="text-lg font-semibold mt-8">📘 운세 기반 로또 번호 추천기란?</h2>
+        <p>
+          운세 기반 로또 번호 추천기는 사용자의 감정, 좋아하는 색상, 선호 숫자 등 간단한 정보를 바탕으로
+          랜덤 요소를 결합하여 재미있게 로또 번호를 추천해주는 도구입니다.
+        </p>
+        <p>
+          진지한 투자 목적보다는 일상 속 소소한 재미와 흥미를 위한 도구로 활용해보세요.
+          매주 다른 번호로 나만의 '행운 번호'를 만들어볼 수 있습니다.
+        </p>
+      </div>
+
+
       <div className="text-center mt-8">
         <Link href="/" className="text-sm text-blue-600 hover:underline">← JSTools 홈으로</Link>
       </div>

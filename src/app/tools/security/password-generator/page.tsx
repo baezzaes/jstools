@@ -136,6 +136,18 @@ export default function PasswordGeneratorPage() {
           </div>
         )}
       </div>
+      <div className="space-y-4 text-sm text-gray-700 leading-relaxed">
+        <h2 className="text-lg font-semibold mt-8">📘 랜덤 비밀번호 생성기란?</h2>
+        <p>
+          이 도구는 보안성이 높은 랜덤 비밀번호를 생성해주는 기능을 제공합니다. 문자, 숫자, 특수문자의 조합을 설정하고,
+          원하는 길이를 지정하여 안전하고 복잡한 비밀번호를 만들어줍니다.
+        </p>
+        <p>
+          회원가입, 계정 보안 강화, 암호 관리자 등에 사용할 비밀번호가 필요할 때 유용합니다. 생성된 비밀번호는 복사하여
+          바로 사용하실 수 있습니다.
+        </p>
+      </div>
+
 
       {/* 홈으로 돌아가기 */}
       <div className="text-center mt-8">

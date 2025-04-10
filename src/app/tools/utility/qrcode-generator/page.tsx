@@ -39,7 +39,19 @@ export default function QRCodeGenerator() {
         {/* Link 컴포넌트로 홈으로 이동 */}
         <Link href="/" className="text-sm text-blue-600 hover:underline">← JSTools 홈으로</Link>
       </div>
-      
+
+      <div className="space-y-4 text-sm text-gray-700 leading-relaxed">
+        <h2 className="text-lg font-semibold mt-8">📘 QR 코드 생성기란?</h2>
+        <p>
+          QR 코드 생성기는 입력한 텍스트, URL, 연락처 등의 정보를 기반으로 실시간 QR 코드를 생성해주는 도구입니다.
+          생성된 코드는 이미지로 저장하거나 스캔하여 다양한 용도로 활용할 수 있습니다.
+        </p>
+        <p>
+          명함, 전단지, 웹사이트 링크 공유, 와이파이 접속 정보 등 여러 상황에서 손쉽게 활용할 수 있습니다.
+        </p>
+      </div>
+
+
       {/* 광고 영역 */}
       <div className="border border-dashed border-gray-300 p-4 text-center text-sm text-gray-500 rounded-xl">
               <ins className="adsbygoogle"
