@@ -48,6 +48,25 @@ export default function WordCounterPage() {
         </div>
       </div>
 
+      {/* 설명 섹션 */}
+      <section className="space-y-4 text-sm text-gray-700 leading-relaxed">
+        <h2 className="text-lg font-semibold">이 도구에 대해</h2>
+        <p>
+          <strong>Word & Character Counter</strong>는 입력한 텍스트의 글자 수, 단어 수, 줄 수를
+          실시간으로 분석해주는 간단하고 직관적인 도구입니다. 블로그 작성, 과제 제출,
+          트위터 글쓰기처럼 글자 수 제한이 있는 경우에 특히 유용합니다.
+        </p>
+        <p>
+          글자 수는 공백 포함과 제외 버전으로 모두 제공되며, 단어 수는 공백 기준으로 자동 계산됩니다.
+          줄 수도 함께 확인할 수 있어, 다양한 텍스트 분석 작업에 활용할 수 있습니다.
+        </p>
+        <p>
+          이 도구는 <strong>설치나 로그인 없이</strong> 누구나 자유롭게 사용할 수 있으며,
+          JSTools는 앞으로도 더 많은 유용한 도구들을 제공할 예정입니다.
+        </p>
+      </section>
+
+
       {/* 홈으로 돌아가기 */}
       <div className="text-center mt-8">
         <Link href="/" className="text-sm text-blue-600 hover:underline">
