@@ -98,6 +98,20 @@ export default function Home() {
             사용하기
           </a>
         </div>
+
+        <div className="border rounded-xl p-4 shadow-sm space-y-2">
+          <h2 className="text-xl font-semibold">💬 명언 생성기</h2>
+          <p className="text-sm text-gray-600">
+            영감을 주는 영어 명언과 함께 자동 번역된 한글 해석도 제공합니다.
+          </p>
+          <a
+            href="/tools/fun/quote-generator"
+            className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
+          >
+            사용하기
+          </a>
+        </div>
+
                    
 
       </section>
