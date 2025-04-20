@@ -12,7 +12,7 @@ export default function QuoteGeneratorPage() {
   const fetchQuote = async () => {
     setLoading(true)
     try {
-      const res = await fetch('https://api.quotable.io/random')
+      const res = await fetch('http://api.quotable.io/random')
       const data = await res.json()
       setQuote(data.content)
       setAuthor(data.author)
