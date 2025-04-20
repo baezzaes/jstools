@@ -10,14 +10,14 @@ export default function JsonFormatterPage() {
 
   const formatJson = () => {
     try {
-      const parsed = JSON.parse(input)
-      const formatted = JSON.stringify(parsed, null, 2)
-      setOutput(formatted)
-      setError('')
-    } catch (e: any) {
-      setError('유효한 JSON 형식이 아닙니다.')
-      setOutput('')
-    }
+        const parsed = JSON.parse(input)
+        const formatted = JSON.stringify(parsed, null, 2)
+        setOutput(formatted)
+        setError('')
+      } catch {
+        setError('유효한 JSON 형식이 아닙니다.')
+        setOutput('')
+      }          
   }
 
   return (
