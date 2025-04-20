@@ -85,6 +85,19 @@ export default function Home() {
             사용하기
           </a>
         </div>
+
+        <div className="border rounded-xl p-4 shadow-sm space-y-2">
+          <h2 className="text-xl font-semibold">🧩 JSON 포맷터</h2>
+          <p className="text-sm text-gray-600">
+            복잡한 JSON 데이터를 보기 좋게 정렬해주는 개발자용 유틸리티 도구입니다.
+          </p>
+          <a
+            href="/tools/dev/json-formatter"
+            className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
+          >
+            사용하기
+          </a>
+        </div>
                    
 
       </section>
