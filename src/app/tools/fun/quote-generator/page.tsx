@@ -60,7 +60,7 @@ export default function QuoteGeneratorPage() {
 
       {quote && (
         <div className="bg-gray-100 p-4 rounded space-y-3 text-center">
-          <blockquote className="text-lg italic">"{quote}"</blockquote>
+          <blockquote className="text-lg italic">&quot;{quote}&quot;</blockquote>
           <p className="text-sm text-gray-500">— {author}</p>
           <hr />
           <p className="text-base text-gray-800 font-medium">{translated}</p>
