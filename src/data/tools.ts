@@ -50,6 +50,11 @@ const related = {
     title: 'QR 코드 생성기',
     description: '텍스트나 URL을 QR 코드로 빠르게 변환합니다.',
   },
+  imageCompressor: {
+    href: '/tools/image/image-compressor',
+    title: '이미지 용량 줄이기',
+    description: 'JPG, PNG, WEBP 이미지를 브라우저에서 압축합니다.',
+  },
   dateCalculator: {
     href: '/tools/date/date-calculator',
     title: '날짜 계산기',
@@ -392,6 +397,53 @@ export const quoteGeneratorTool: ToolDefinition = {
   relatedTools: [related.lottoGenerator, related.wordCounter, related.caseConverter],
 }
 
+export const imageCompressorTool: ToolDefinition = {
+  id: 'image-compressor',
+  name: '이미지 용량 줄이기',
+  title: '이미지 용량 줄이기 - JPG PNG WEBP 압축 | JSTools',
+  description:
+    'JPG, JPEG, PNG, WEBP 이미지를 서버 업로드 없이 브라우저에서 압축하고 개별 다운로드 또는 ZIP 다운로드할 수 있는 무료 이미지 압축 도구입니다.',
+  path: '/tools/image/image-compressor',
+  categoryName: '이미지 도구',
+  categoryPath: '/tools',
+  keywords: [
+    '이미지 용량 줄이기',
+    '이미지 압축',
+    'JPG 압축',
+    'PNG 압축',
+    'WEBP 압축',
+    'Image Compressor',
+    'JSTools',
+  ],
+  content: {
+    introHeading: '이미지 용량 줄이기 소개',
+    description: [
+      '이미지 용량 줄이기는 JPG, JPEG, PNG, WEBP 파일을 브라우저 안에서 압축하는 무료 도구입니다. 파일은 서버로 업로드되지 않고 사용 중인 기기에서만 처리됩니다.',
+      '여러 이미지를 한 번에 추가하고, 품질 슬라이더로 압축 강도를 조절한 뒤 개별 파일 또는 전체 ZIP 파일로 다운로드할 수 있습니다.',
+    ],
+    howTo: [
+      '이미지를 업로드 영역에 끌어다 놓거나 파일 선택 버튼으로 추가합니다.',
+      '품질 슬라이더를 조절하고 필요하면 품질 적용 버튼으로 다시 압축합니다.',
+      '결과 목록에서 원본 용량, 압축 후 용량, 절감률을 확인한 뒤 개별 또는 ZIP으로 다운로드합니다.',
+    ],
+    faq: [
+      {
+        question: '이미지가 서버로 업로드되나요?',
+        answer: '아니요. 이 도구는 브라우저 내부에서만 이미지를 처리하며 서버로 업로드하지 않습니다.',
+      },
+      {
+        question: '어떤 이미지 형식을 지원하나요?',
+        answer: 'JPG, JPEG, PNG, WEBP 파일을 지원합니다. 그 외 형식은 오류로 표시됩니다.',
+      },
+      {
+        question: 'PNG도 항상 용량이 줄어드나요?',
+        answer: 'PNG는 브라우저 재인코딩 특성상 절감률이 낮거나 원본보다 커질 수 있어, 결과가 더 크면 원본 파일을 유지합니다.',
+      },
+    ],
+  },
+  relatedTools: [related.qrCodeGenerator, related.wordCounter, related.jsonFormatter],
+}
+
 export const tools = [
   wordCounterTool,
   caseConverterTool,
@@ -401,4 +453,5 @@ export const tools = [
   passwordGeneratorTool,
   qrCodeGeneratorTool,
   quoteGeneratorTool,
+  imageCompressorTool,
 ]

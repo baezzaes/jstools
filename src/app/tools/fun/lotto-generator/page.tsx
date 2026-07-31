@@ -17,8 +17,12 @@ export default function LottoGenerator() {
   const [savedNumbers, setSavedNumbers] = useState<number[][]>([])
 
   useEffect(() => {
-    const storedNumbers = JSON.parse(localStorage.getItem('savedLottoNumbers') || '[]')
-    setSavedNumbers(storedNumbers)
+    const timer = window.setTimeout(() => {
+      const storedNumbers = JSON.parse(localStorage.getItem('savedLottoNumbers') || '[]')
+      setSavedNumbers(storedNumbers)
+    }, 0)
+
+    return () => window.clearTimeout(timer)
   }, [])
 
   const handleGenerate = () => {
