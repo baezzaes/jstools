@@ -60,6 +60,11 @@ const related = {
     title: '이미지 크기 조절기',
     description: 'JPG, PNG, WEBP 이미지의 픽셀과 사이즈를 브라우저에서 변경합니다.',
   },
+  imageConverter: {
+    href: '/tools/image/image-converter',
+    title: '이미지 변환기',
+    description: 'JPG, PNG, WebP 이미지 파일 형식을 브라우저에서 변환합니다.',
+  },
   dateCalculator: {
     href: '/tools/date/date-calculator',
     title: '날짜 계산기',
@@ -446,7 +451,7 @@ export const imageCompressorTool: ToolDefinition = {
       },
     ],
   },
-  relatedTools: [related.imageResizer, related.qrCodeGenerator, related.wordCounter],
+  relatedTools: [related.imageConverter, related.imageResizer, related.qrCodeGenerator],
 }
 
 export const imageResizerTool: ToolDefinition = {
@@ -498,7 +503,60 @@ export const imageResizerTool: ToolDefinition = {
       },
     ],
   },
-  relatedTools: [related.imageCompressor, related.qrCodeGenerator, related.wordCounter],
+  relatedTools: [related.imageConverter, related.imageCompressor, related.qrCodeGenerator],
+}
+
+export const imageConverterTool: ToolDefinition = {
+  id: 'image-converter',
+  name: '이미지 변환기',
+  title: '이미지 변환기 - JPG PNG WebP 포맷 변환 | JSTools',
+  description:
+    'JPG, JPEG, PNG, WebP 이미지를 서버 업로드 없이 브라우저에서 변환하고, 개별 파일 또는 ZIP으로 다운로드할 수 있는 무료 이미지 포맷 변환 도구입니다.',
+  path: '/tools/image/image-converter',
+  categoryName: '이미지 도구',
+  categoryPath: '/tools',
+  keywords: [
+    '이미지 변환',
+    '이미지 포맷 변환',
+    'JPG PNG 변환',
+    'PNG JPG 변환',
+    'WEBP JPG 변환',
+    'JPG WEBP 변환',
+    '사진 파일 형식 변환',
+    'JSTools',
+  ],
+  content: {
+    introHeading: '이미지 변환기 소개',
+    description: [
+      '이미지 변환기는 JPG, JPEG, PNG, WebP 파일을 브라우저 안에서 다른 이미지 형식으로 바꾸는 무료 도구입니다. 업로드한 이미지는 서버로 전송되지 않고 사용 중인 기기에서만 처리됩니다.',
+      '여러 이미지를 한 번에 추가하고 하나의 출력 형식을 선택해 일괄 변환할 수 있습니다. 해상도와 비율은 유지되며, 변환 결과는 개별 파일 또는 ZIP 파일로 다운로드할 수 있습니다.',
+    ],
+    howTo: [
+      '이미지를 업로드 영역에 끌어다 놓거나 파일 선택 버튼으로 추가합니다.',
+      'JPG, PNG, WebP 중 원본과 다른 출력 형식을 선택합니다.',
+      'JPG로 변환할 때는 투명 영역을 채울 배경색을 선택합니다.',
+      '결과 목록에서 원본 형식, 결과 형식, 용량을 확인하고 개별 파일 또는 전체 ZIP으로 다운로드합니다.',
+    ],
+    faq: [
+      {
+        question: '이미지가 서버로 업로드되나요?',
+        answer: '아니요. 이 도구는 브라우저 내부에서만 이미지를 처리하며 서버로 업로드하지 않습니다.',
+      },
+      {
+        question: '어떤 형식으로 변환할 수 있나요?',
+        answer: 'JPG, PNG, WebP 파일을 입력받아 JPG, PNG, WebP 중 원본과 다른 형식으로 변환할 수 있습니다.',
+      },
+      {
+        question: '투명 배경은 유지되나요?',
+        answer: 'PNG 또는 WebP로 출력하면 가능한 경우 투명 배경을 유지합니다. JPG는 투명을 지원하지 않아 선택한 배경색으로 채웁니다.',
+      },
+      {
+        question: 'GIF, SVG, HEIC, AVIF도 변환할 수 있나요?',
+        answer: '아니요. 현재 도구는 JPG, JPEG, PNG, WebP 형식만 지원합니다.',
+      },
+    ],
+  },
+  relatedTools: [related.imageCompressor, related.imageResizer, related.qrCodeGenerator],
 }
 
 export const tools = [
@@ -512,4 +570,5 @@ export const tools = [
   quoteGeneratorTool,
   imageCompressorTool,
   imageResizerTool,
+  imageConverterTool,
 ]

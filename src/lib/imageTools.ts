@@ -1,4 +1,11 @@
 export const SUPPORTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'] as const
+export const IMAGE_MIME_TYPES = {
+  jpg: 'image/jpeg',
+  png: 'image/png',
+  webp: 'image/webp',
+} as const
+
+export type ImageOutputFormat = keyof typeof IMAGE_MIME_TYPES
 
 export function isSupportedImageFile(file: File) {
   return SUPPORTED_IMAGE_TYPES.includes(file.type as (typeof SUPPORTED_IMAGE_TYPES)[number])
@@ -16,6 +23,17 @@ export function getImageFormatLabel(type?: string) {
   if (type === 'image/png') return 'PNG'
   if (type === 'image/jpeg') return 'JPG'
   return '파일'
+}
+
+export function getImageMimeType(format: ImageOutputFormat) {
+  return IMAGE_MIME_TYPES[format]
+}
+
+export function getImageFormatFromMime(type?: string): ImageOutputFormat | null {
+  if (type === 'image/jpeg') return 'jpg'
+  if (type === 'image/png') return 'png'
+  if (type === 'image/webp') return 'webp'
+  return null
 }
 
 export function getImageExtension(type: string) {
