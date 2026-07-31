@@ -292,7 +292,11 @@ export default function ImageCropperPage() {
 
     if (!insideCrop && !nearResizeHandle) return
 
-    event.currentTarget.setPointerCapture(event.pointerId)
+    try {
+      event.currentTarget.setPointerCapture(event.pointerId)
+    } catch {
+      // Some automated or older touch environments can fail pointer capture.
+    }
     setDragState({
       mode: nearResizeHandle ? 'resize' : 'move',
       pointerId: event.pointerId,
