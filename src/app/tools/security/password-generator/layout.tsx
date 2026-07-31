@@ -1,8 +1,16 @@
-import type { Metadata } from 'next'
-import { metadata as passwordgeneratorMetadata } from './metadata'
+import { ToolStructuredData } from '@/components/ToolStructuredData'
+import { passwordGeneratorTool } from '@/data/tools'
+import { generateToolMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = passwordgeneratorMetadata
+export function generateMetadata() {
+  return generateToolMetadata(passwordGeneratorTool)
+}
 
 export default function PasswordgeneratorLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+  return (
+    <>
+      <ToolStructuredData tool={passwordGeneratorTool} />
+      {children}
+    </>
+  )
 }

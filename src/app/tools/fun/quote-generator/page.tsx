@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { ToolSeoSections } from '@/components/ToolSeoSections'
+import { quoteGeneratorTool } from '@/data/tools'
 
 export default function QuoteGeneratorPage() {
   const [quote, setQuote] = useState('')
@@ -66,6 +68,8 @@ export default function QuoteGeneratorPage() {
           <p className="text-base text-gray-800 font-medium">{translated}</p>
         </div>
       )}
+
+      <ToolSeoSections tool={quoteGeneratorTool} />
 
       {/* 홈으로 돌아가기 */}
       <div className="text-center mt-8">

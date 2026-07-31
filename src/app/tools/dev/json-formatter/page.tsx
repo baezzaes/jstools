@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { ToolSeoSections } from '@/components/ToolSeoSections'
+import { jsonFormatterTool } from '@/data/tools'
 
 export default function JsonFormatterPage() {
   const [input, setInput] = useState('')
@@ -52,6 +54,8 @@ export default function JsonFormatterPage() {
           value={output}
         />
       )}
+
+      <ToolSeoSections tool={jsonFormatterTool} />
 
       <div className="text-center mt-8">
         <Link href="/" className="text-sm text-blue-600 hover:underline">

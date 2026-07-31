@@ -1,12 +1,16 @@
-import type { Metadata } from 'next'
-import { metadata as caseConverterMetadata } from './metadata'
+import { ToolStructuredData } from '@/components/ToolStructuredData'
+import { caseConverterTool } from '@/data/tools'
+import { generateToolMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = caseConverterMetadata
+export function generateMetadata() {
+  return generateToolMetadata(caseConverterTool)
+}
 
-export default function CaseConverterLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return <>{children}</>
+export default function CaseConverterLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <ToolStructuredData tool={caseConverterTool} />
+      {children}
+    </>
+  )
 }

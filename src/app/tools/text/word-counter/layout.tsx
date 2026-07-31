@@ -1,8 +1,16 @@
-import type { Metadata } from 'next'
-import { metadata as wordcounterMetadata } from './metadata'
+import { ToolStructuredData } from '@/components/ToolStructuredData'
+import { wordCounterTool } from '@/data/tools'
+import { generateToolMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = wordcounterMetadata
+export function generateMetadata() {
+  return generateToolMetadata(wordCounterTool)
+}
 
 export default function WordcounterLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+  return (
+    <>
+      <ToolStructuredData tool={wordCounterTool} />
+      {children}
+    </>
+  )
 }

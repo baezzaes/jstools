@@ -1,8 +1,16 @@
-import type { Metadata } from 'next'
-import { metadata as qrcodegeneratorMetadata } from './metadata'
+import { ToolStructuredData } from '@/components/ToolStructuredData'
+import { qrCodeGeneratorTool } from '@/data/tools'
+import { generateToolMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = qrcodegeneratorMetadata
+export function generateMetadata() {
+  return generateToolMetadata(qrCodeGeneratorTool)
+}
 
 export default function QrcodegeneratorLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+  return (
+    <>
+      <ToolStructuredData tool={qrCodeGeneratorTool} />
+      {children}
+    </>
+  )
 }
