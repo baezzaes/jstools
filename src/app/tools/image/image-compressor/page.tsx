@@ -37,6 +37,21 @@ function getSavings(originalSize: number, compressedSize?: number) {
   return Math.round(((originalSize - compressedSize) / originalSize) * 100)
 }
 
+function isLargerThanOriginal(item: ImageItem) {
+  return item.status === 'done' && Boolean(item.compressedSize && item.compressedSize > item.originalSize)
+}
+
+function getOutputFormatLabel(type?: string) {
+  if (type === 'image/webp') return 'WebP'
+  if (type === 'image/png') return 'PNG'
+  if (type === 'image/jpeg') return 'JPG'
+  return '파일'
+}
+
+function getDownloadButtonLabel(item: ImageItem) {
+  return `${getOutputFormatLabel(item.compressedBlob?.type || item.type)} 다운로드`
+}
+
 function getOutputName(fileName: string, type: string) {
   const baseName = fileName.replace(/\.[^.]+$/, '')
   const extension = type === 'image/png' ? 'png' : type === 'image/webp' ? 'webp' : 'jpg'
@@ -273,6 +288,7 @@ export default function ImageCompressorPage() {
           type="file"
           accept="image/jpeg,image/png,image/webp"
           multiple
+          aria-label="압축할 이미지 파일 선택"
           className="hidden"
           onChange={(event) => {
             if (event.target.files) addFiles(event.target.files)
@@ -281,7 +297,9 @@ export default function ImageCompressorPage() {
         />
         <div className="space-y-3">
           <h2 className="text-lg font-semibold">이미지를 끌어다 놓으세요</h2>
-          <p className="text-sm text-gray-600">JPG, JPEG, PNG, WEBP 파일을 여러 장 선택할 수 있습니다.</p>
+          <p className="text-sm text-gray-600">
+            JPG, JPEG, PNG, WEBP 파일을 여러 장 선택할 수 있습니다. PNG는 압축 결과가 WebP로 저장됩니다.
+          </p>
           <button
             type="button"
             onClick={() => inputRef.current?.click()}
@@ -302,12 +320,17 @@ export default function ImageCompressorPage() {
           </div>
           <strong className="text-lg">{quality}%</strong>
         </div>
+        <label htmlFor="image-quality" className="sr-only">
+          이미지 압축 품질
+        </label>
         <input
+          id="image-quality"
           type="range"
           min={40}
           max={100}
           step={5}
           value={quality}
+          aria-label="이미지 압축 품질"
           onChange={(event) => setQuality(Number(event.target.value))}
           className="w-full"
         />
@@ -323,7 +346,7 @@ export default function ImageCompressorPage() {
           <button
             type="button"
             onClick={downloadAll}
-            disabled={completedItems.length === 0 || isZipping}
+            disabled={completedItems.length === 0 || isZipping || isProcessing}
             className="px-4 py-2 bg-green-600 text-white rounded disabled:bg-gray-300 hover:bg-green-700 transition"
           >
             {isZipping ? 'ZIP 생성 중...' : '전체 ZIP 다운로드'}
@@ -351,8 +374,18 @@ export default function ImageCompressorPage() {
           </div>
         ) : (
           <div className="space-y-3">
-            {items.map((item) => (
-              <div key={item.id} className="grid gap-3 rounded-lg border p-3 md:grid-cols-[96px_1fr]">
+            {items.map((item) => {
+              const outputType = item.compressedBlob?.type || item.type
+              const isLarger = isLargerThanOriginal(item)
+              const savings = getSavings(item.originalSize, item.compressedSize)
+
+              return (
+              <div
+                key={item.id}
+                className={`grid gap-3 rounded-lg border p-3 md:grid-cols-[96px_1fr] ${
+                  isLarger ? 'border-amber-300 bg-amber-50' : ''
+                }`}
+              >
                 {/* Blob preview URLs are local-only and cannot be optimized by next/image. */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -367,6 +400,12 @@ export default function ImageCompressorPage() {
                       <p className="text-xs text-gray-500">{item.type || '알 수 없는 형식'}</p>
                       {item.type === 'image/png' && (
                         <p className="text-xs text-gray-500">품질 압축 결과는 WebP 파일로 다운로드됩니다.</p>
+                      )}
+                      {item.status === 'done' && (
+                        <p className="text-xs text-gray-500">
+                          결과 형식: {getOutputFormatLabel(outputType)}
+                          {item.type === 'image/png' && outputType === 'image/webp' ? ' (.webp)' : ''}
+                        </p>
                       )}
                     </div>
                     <button
@@ -394,13 +433,23 @@ export default function ImageCompressorPage() {
                       </div>
                       <div>
                         <strong className="block">절감률</strong>
-                        {item.status === 'done' ? `${getSavings(item.originalSize, item.compressedSize)}%` : '-'}
+                        {item.status === 'done'
+                          ? isLarger
+                            ? `${Math.abs(savings)}% 증가`
+                            : `${savings}%`
+                          : '-'}
                       </div>
                       <div>
                         <strong className="block">상태</strong>
-                        {item.status === 'done' ? '완료' : '진행 중'}
+                        {item.status === 'done' ? (isLarger ? '확인 필요' : '완료') : '진행 중'}
                       </div>
                     </div>
+                  )}
+
+                  {isLarger && (
+                    <p className="rounded bg-amber-100 p-2 text-sm text-amber-800">
+                      원본보다 용량이 커졌습니다. 원본 사용을 권장합니다.
+                    </p>
                   )}
 
                   <div className="flex flex-wrap gap-2">
@@ -413,12 +462,13 @@ export default function ImageCompressorPage() {
                       }
                       className="px-3 py-2 text-sm bg-black text-white rounded disabled:bg-gray-300 hover:bg-gray-800 transition"
                     >
-                      다운로드
+                      {getDownloadButtonLabel(item)}
                     </button>
                   </div>
                 </div>
               </div>
-            ))}
+              )
+            })}
           </div>
         )}
       </section>
