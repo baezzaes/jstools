@@ -402,7 +402,7 @@ export const imageCompressorTool: ToolDefinition = {
   name: '이미지 용량 줄이기',
   title: '이미지 용량 줄이기 - JPG PNG WEBP 압축 | JSTools',
   description:
-    'JPG, JPEG, PNG, WEBP 이미지를 서버 업로드 없이 브라우저에서 압축하고 개별 다운로드 또는 ZIP 다운로드할 수 있는 무료 이미지 압축 도구입니다.',
+    'JPG, JPEG, PNG, WEBP 이미지를 서버 업로드 없이 브라우저에서 압축하고 개별 다운로드 또는 ZIP 다운로드할 수 있는 무료 이미지 압축 도구입니다. PNG는 품질 압축을 위해 WebP로 변환됩니다.',
   path: '/tools/image/image-compressor',
   categoryName: '이미지 도구',
   categoryPath: '/tools',
@@ -419,7 +419,7 @@ export const imageCompressorTool: ToolDefinition = {
     introHeading: '이미지 용량 줄이기 소개',
     description: [
       '이미지 용량 줄이기는 JPG, JPEG, PNG, WEBP 파일을 브라우저 안에서 압축하는 무료 도구입니다. 파일은 서버로 업로드되지 않고 사용 중인 기기에서만 처리됩니다.',
-      '여러 이미지를 한 번에 추가하고, 품질 슬라이더로 압축 강도를 조절한 뒤 개별 파일 또는 전체 ZIP 파일로 다운로드할 수 있습니다.',
+      '여러 이미지를 한 번에 추가하고, 품질 슬라이더로 압축 강도를 조절한 뒤 개별 파일 또는 전체 ZIP 파일로 다운로드할 수 있습니다. PNG는 품질 설정이 적용되도록 WebP 파일로 저장됩니다.',
     ],
     howTo: [
       '이미지를 업로드 영역에 끌어다 놓거나 파일 선택 버튼으로 추가합니다.',
@@ -437,7 +437,7 @@ export const imageCompressorTool: ToolDefinition = {
       },
       {
         question: 'PNG도 항상 용량이 줄어드나요?',
-        answer: 'PNG는 브라우저 재인코딩 특성상 절감률이 낮거나 원본보다 커질 수 있어, 결과가 더 크면 원본 파일을 유지합니다.',
+        answer: 'PNG는 브라우저에서 품질 값을 직접 적용하기 어렵기 때문에 WebP로 변환해 압축합니다. 이미지에 따라 결과가 원본보다 커질 수도 있으므로 압축 후 용량을 확인해 주세요.',
       },
     ],
   },

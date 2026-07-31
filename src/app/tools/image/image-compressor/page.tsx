@@ -34,7 +34,7 @@ function formatBytes(bytes: number) {
 
 function getSavings(originalSize: number, compressedSize?: number) {
   if (!compressedSize) return 0
-  return Math.max(0, Math.round(((originalSize - compressedSize) / originalSize) * 100))
+  return Math.round(((originalSize - compressedSize) / originalSize) * 100)
 }
 
 function getOutputName(fileName: string, type: string) {
@@ -80,7 +80,7 @@ async function compressImage(file: File, quality: number) {
 
   context.drawImage(image, 0, 0)
 
-  const outputType = file.type === 'image/png' ? 'image/png' : file.type
+  const outputType = file.type === 'image/png' ? 'image/webp' : file.type
   const blob = await new Promise<Blob>((resolve, reject) => {
     canvas.toBlob(
       (result) => {
@@ -95,7 +95,7 @@ async function compressImage(file: File, quality: number) {
     )
   })
 
-  return blob.size < file.size ? blob : file
+  return file.type === 'image/png' || blob.size < file.size ? blob : file
 }
 
 export default function ImageCompressorPage() {
@@ -249,7 +249,7 @@ export default function ImageCompressorPage() {
         <h1 className="text-2xl font-bold">이미지 용량 줄이기</h1>
         <p className="text-sm text-gray-600 leading-relaxed">
           JPG, PNG, WEBP 이미지를 브라우저 안에서 압축합니다. 파일은 서버로 업로드되지 않으며,
-          여러 장을 한 번에 처리하고 ZIP으로 내려받을 수 있습니다.
+          여러 장을 한 번에 처리하고 ZIP으로 내려받을 수 있습니다. PNG는 품질 압축을 위해 WebP로 변환됩니다.
         </p>
       </header>
 
@@ -296,7 +296,9 @@ export default function ImageCompressorPage() {
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="font-semibold">품질 설정</h2>
-            <p className="text-sm text-gray-600">낮출수록 용량은 줄어들지만 화질 손실이 커질 수 있습니다.</p>
+            <p className="text-sm text-gray-600">
+              낮출수록 용량은 줄어들지만 화질 손실이 커질 수 있습니다. PNG는 품질 적용 시 WebP로 저장됩니다.
+            </p>
           </div>
           <strong className="text-lg">{quality}%</strong>
         </div>
@@ -363,6 +365,9 @@ export default function ImageCompressorPage() {
                     <div className="min-w-0">
                       <h3 className="truncate font-semibold">{item.name}</h3>
                       <p className="text-xs text-gray-500">{item.type || '알 수 없는 형식'}</p>
+                      {item.type === 'image/png' && (
+                        <p className="text-xs text-gray-500">품질 압축 결과는 WebP 파일로 다운로드됩니다.</p>
+                      )}
                     </div>
                     <button
                       type="button"
