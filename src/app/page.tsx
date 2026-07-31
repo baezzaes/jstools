@@ -160,6 +160,22 @@ export default function Home() {
           </a>
         </div>
 
+        <div className="border rounded-xl p-4 shadow-sm space-y-2">
+          <a href="/tools/image" className="text-xs font-medium text-blue-600 hover:underline">
+            이미지 도구
+          </a>
+          <h2 className="text-xl font-semibold">✂️ 이미지 자르기</h2>
+          <p className="text-sm text-gray-600">
+            원하는 영역을 자유 비율 또는 고정 비율로 선택해 이미지를 자릅니다.
+          </p>
+          <a
+            href="/tools/image/image-cropper"
+            className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
+          >
+            사용하기
+          </a>
+        </div>
+
                    
 
       </section>

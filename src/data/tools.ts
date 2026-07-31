@@ -65,6 +65,11 @@ const related = {
     title: '이미지 변환기',
     description: 'JPG, PNG, WebP 이미지 파일 형식을 브라우저에서 변환합니다.',
   },
+  imageCropper: {
+    href: '/tools/image/image-cropper',
+    title: '이미지 자르기',
+    description: '사진에서 원하는 영역만 선택해 브라우저에서 자릅니다.',
+  },
   dateCalculator: {
     href: '/tools/date/date-calculator',
     title: '날짜 계산기',
@@ -451,7 +456,7 @@ export const imageCompressorTool: ToolDefinition = {
       },
     ],
   },
-  relatedTools: [related.imageResizer, related.imageConverter, related.qrCodeGenerator],
+  relatedTools: [related.imageResizer, related.imageCropper, related.imageConverter],
 }
 
 export const imageResizerTool: ToolDefinition = {
@@ -503,7 +508,7 @@ export const imageResizerTool: ToolDefinition = {
       },
     ],
   },
-  relatedTools: [related.imageCompressor, related.imageConverter, related.qrCodeGenerator],
+  relatedTools: [related.imageCompressor, related.imageCropper, related.imageConverter],
 }
 
 export const imageConverterTool: ToolDefinition = {
@@ -556,7 +561,59 @@ export const imageConverterTool: ToolDefinition = {
       },
     ],
   },
-  relatedTools: [related.imageCompressor, related.imageResizer, related.qrCodeGenerator],
+  relatedTools: [related.imageCompressor, related.imageResizer, related.imageCropper],
+}
+
+export const imageCropperTool: ToolDefinition = {
+  id: 'image-cropper',
+  name: '이미지 자르기',
+  title: '이미지 자르기 - 사진 원하는 영역 크롭 | JSTools',
+  description:
+    '자유 비율, 1:1, 4:3, 16:9 등 원하는 비율로 JPG, PNG, WebP 이미지를 브라우저에서 자르는 무료 도구입니다. 이미지는 서버로 업로드되지 않습니다.',
+  path: '/tools/image/image-cropper',
+  categoryName: '이미지 도구',
+  categoryPath: '/tools/image',
+  keywords: [
+    '이미지 자르기',
+    '사진 자르기',
+    '이미지 크롭',
+    '사진 원하는 부분 자르기',
+    '정사각형 이미지 자르기',
+    '증명사진 비율 자르기',
+    'JSTools',
+  ],
+  content: {
+    introHeading: '이미지 자르기 소개',
+    description: [
+      '이미지 자르기는 JPG, JPEG, PNG, WebP 파일에서 원하는 영역만 선택해 잘라내는 무료 도구입니다. 업로드한 이미지는 서버로 전송되지 않고 브라우저 안에서만 처리됩니다.',
+      '자유 비율부터 1:1, 4:3, 3:4, 16:9, 9:16 비율까지 선택할 수 있으며, 확대·축소를 조절해 필요한 부분을 더 정확히 선택할 수 있습니다.',
+    ],
+    howTo: [
+      '이미지를 업로드 영역에 끌어다 놓거나 파일 선택 버튼으로 추가합니다.',
+      '자르기 영역을 드래그해 이동하고 오른쪽 아래 핸들로 크기를 조절합니다.',
+      '필요한 경우 자유, 1:1, 4:3, 16:9 등 자르기 비율과 확대·축소 값을 선택합니다.',
+      '자르기 실행 버튼을 누른 뒤 결과 미리보기를 확인하고 다운로드합니다.',
+    ],
+    faq: [
+      {
+        question: '이미지가 서버로 업로드되나요?',
+        answer: '아니요. 이 도구는 브라우저 내부에서만 이미지를 처리하며 서버로 업로드하지 않습니다.',
+      },
+      {
+        question: '어떤 자르기 비율을 지원하나요?',
+        answer: '자유 비율, 1:1, 4:3, 3:4, 16:9, 9:16 비율을 지원합니다.',
+      },
+      {
+        question: 'PNG 투명 배경이 유지되나요?',
+        answer: '네. PNG는 PNG 형식으로 출력해 투명 배경을 유지합니다.',
+      },
+      {
+        question: '확대하면 이미지 품질이 좋아지나요?',
+        answer: '아니요. 확대는 편집 화면에서 영역을 고르기 위한 기능이며 원본보다 높은 화질을 새로 만들지는 않습니다.',
+      },
+    ],
+  },
+  relatedTools: [related.imageResizer, related.imageCompressor, related.imageConverter],
 }
 
 export const tools = [
@@ -571,4 +628,5 @@ export const tools = [
   imageCompressorTool,
   imageResizerTool,
   imageConverterTool,
+  imageCropperTool,
 ]

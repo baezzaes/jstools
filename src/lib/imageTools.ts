@@ -58,6 +58,22 @@ export function downloadBlob(blob: Blob, fileName: string) {
   URL.revokeObjectURL(url)
 }
 
+export function createCanvasBlob(canvas: HTMLCanvasElement, type: string, quality?: number) {
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (result) => {
+        if (!result || result.size === 0) {
+          reject(new Error('이미지 파일 생성에 실패했습니다.'))
+          return
+        }
+        resolve(result)
+      },
+      type,
+      quality
+    )
+  })
+}
+
 export async function loadImage(file: File) {
   const url = URL.createObjectURL(file)
 

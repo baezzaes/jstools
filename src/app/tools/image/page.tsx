@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { JsonLd } from '@/components/JsonLd'
-import { imageCompressorTool, imageConverterTool, imageResizerTool } from '@/data/tools'
+import { imageCompressorTool, imageConverterTool, imageCropperTool, imageResizerTool } from '@/data/tools'
 import { absoluteUrl, SITE_NAME, SITE_URL } from '@/lib/seo'
 
 const imageTools = [
@@ -22,6 +22,12 @@ const imageTools = [
     description: 'JPG, PNG, WebP 이미지 파일 형식을 브라우저에서 변환합니다.',
     features: ['JPG 변환', 'PNG 변환', 'WebP 변환'],
     cta: '포맷 변환하기',
+  },
+  {
+    tool: imageCropperTool,
+    description: '사진에서 원하는 영역만 선택해 원본 형식 그대로 잘라냅니다.',
+    features: ['자유 비율', '고정 비율', '확대·축소'],
+    cta: '이미지 자르기',
   },
 ]
 
@@ -103,7 +109,7 @@ export default function ImageToolsPage() {
         </p>
       </header>
 
-      <section className="grid gap-4 md:grid-cols-3">
+      <section className="grid gap-4 md:grid-cols-2">
         {imageTools.map(({ tool, description, features, cta }) => (
           <article key={tool.id} className="rounded-lg border p-4 space-y-4 bg-white">
             <div className="space-y-2">
@@ -130,7 +136,8 @@ export default function ImageToolsPage() {
         <h2 className="text-lg font-semibold text-gray-900">어떤 이미지 도구를 선택해야 하나요?</h2>
         <p>
           이미지 용량을 줄여 웹페이지나 메시지에 더 가볍게 올리고 싶다면 이미지 용량 줄이기를 사용하세요. 사진의
-          가로세로 픽셀을 바꿔야 한다면 이미지 크기 조절기가 적합합니다.
+          가로세로 픽셀을 바꿔야 한다면 이미지 크기 조절기가 적합합니다. 사진에서 필요한 영역만 남기고 싶다면
+          이미지 자르기를 사용하세요.
         </p>
         <p>
           JPG, PNG, WebP처럼 파일 형식 자체를 바꿔야 할 때는 이미지 변환기를 사용하면 됩니다. 목적에 맞는 도구를
