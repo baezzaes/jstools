@@ -16,6 +16,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "JSTools",
   description: "작지만 유용한 웹도구 모음",
+  verification: {
+    other: {
+      "naver-site-verification": "3ee6cae7160885e796f35ab29a70f5152f426ab8",
+    },
+  },
 };
 
 export default function RootLayout({
