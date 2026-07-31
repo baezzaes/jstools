@@ -125,6 +125,19 @@ export default function Home() {
           </a>
         </div>
 
+        <div className="border rounded-xl p-4 shadow-sm space-y-2">
+          <h2 className="text-xl font-semibold">📐 이미지 크기 조절기</h2>
+          <p className="text-sm text-gray-600">
+            JPG, PNG, WEBP 이미지의 가로세로 크기를 픽셀 또는 퍼센트 기준으로 변경합니다.
+          </p>
+          <a
+            href="/tools/image/image-resizer"
+            className="inline-block mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
+          >
+            사용하기
+          </a>
+        </div>
+
                    
 
       </section>

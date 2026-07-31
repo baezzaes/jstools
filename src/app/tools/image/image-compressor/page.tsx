@@ -5,6 +5,14 @@ import JSZip from 'jszip'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { imageCompressorTool } from '@/data/tools'
+import {
+  downloadBlob,
+  formatBytes,
+  getImageFormatLabel,
+  getImageOutputName,
+  isSupportedImageFile,
+  loadImage,
+} from '@/lib/imageTools'
 
 type ImageStatus = 'pending' | 'processing' | 'done' | 'error'
 
@@ -23,15 +31,6 @@ type ImageItem = {
   error?: string
 }
 
-const SUPPORTED_TYPES = ['image/jpeg', 'image/png', 'image/webp']
-
-function formatBytes(bytes: number) {
-  if (bytes === 0) return '0 B'
-  const units = ['B', 'KB', 'MB', 'GB']
-  const index = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1)
-  return `${(bytes / 1024 ** index).toFixed(index === 0 ? 0 : 1)} ${units[index]}`
-}
-
 function getSavings(originalSize: number, compressedSize?: number) {
   if (!compressedSize) return 0
   return Math.round(((originalSize - compressedSize) / originalSize) * 100)
@@ -42,10 +41,7 @@ function isLargerThanOriginal(item: ImageItem) {
 }
 
 function getOutputFormatLabel(type?: string) {
-  if (type === 'image/webp') return 'WebP'
-  if (type === 'image/png') return 'PNG'
-  if (type === 'image/jpeg') return 'JPG'
-  return '파일'
+  return getImageFormatLabel(type)
 }
 
 function getDownloadButtonLabel(item: ImageItem) {
@@ -53,33 +49,7 @@ function getDownloadButtonLabel(item: ImageItem) {
 }
 
 function getOutputName(fileName: string, type: string) {
-  const baseName = fileName.replace(/\.[^.]+$/, '')
-  const extension = type === 'image/png' ? 'png' : type === 'image/webp' ? 'webp' : 'jpg'
-  return `${baseName}-compressed.${extension}`
-}
-
-function downloadBlob(blob: Blob, fileName: string) {
-  const url = URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.download = fileName
-  document.body.appendChild(link)
-  link.click()
-  link.remove()
-  URL.revokeObjectURL(url)
-}
-
-async function loadImage(file: File) {
-  const url = URL.createObjectURL(file)
-
-  try {
-    const image = new Image()
-    image.src = url
-    await image.decode()
-    return image
-  } finally {
-    URL.revokeObjectURL(url)
-  }
+  return getImageOutputName(fileName, 'compressed', type)
 }
 
 async function compressImage(file: File, quality: number) {
@@ -183,7 +153,7 @@ export default function ImageCompressorPage() {
   const addFiles = (fileList: FileList | File[]) => {
     const files = Array.from(fileList)
     const nextItems: ImageItem[] = files.map((file) => {
-      const isSupported = SUPPORTED_TYPES.includes(file.type)
+      const isSupported = isSupportedImageFile(file)
 
       return {
         id: `${file.name}-${file.size}-${file.lastModified}-${crypto.randomUUID()}`,
@@ -226,7 +196,7 @@ export default function ImageCompressorPage() {
 
   const recompressAll = () => {
     items
-      .filter((item) => SUPPORTED_TYPES.includes(item.type))
+      .filter((item) => isSupportedImageFile(item.file))
       .forEach((item) => {
         void processItem(item, quality)
       })

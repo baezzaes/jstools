@@ -55,6 +55,11 @@ const related = {
     title: '이미지 용량 줄이기',
     description: 'JPG, PNG, WEBP 이미지를 브라우저에서 압축합니다.',
   },
+  imageResizer: {
+    href: '/tools/image/image-resizer',
+    title: '이미지 크기 조절기',
+    description: 'JPG, PNG, WEBP 이미지의 픽셀과 사이즈를 브라우저에서 변경합니다.',
+  },
   dateCalculator: {
     href: '/tools/date/date-calculator',
     title: '날짜 계산기',
@@ -441,7 +446,59 @@ export const imageCompressorTool: ToolDefinition = {
       },
     ],
   },
-  relatedTools: [related.qrCodeGenerator, related.wordCounter, related.jsonFormatter],
+  relatedTools: [related.imageResizer, related.qrCodeGenerator, related.wordCounter],
+}
+
+export const imageResizerTool: ToolDefinition = {
+  id: 'image-resizer',
+  name: '이미지 크기 조절기',
+  title: '이미지 크기 조절기 - 사진 픽셀과 사이즈 변경 | JSTools',
+  description:
+    'JPG, PNG, WEBP 이미지를 서버 업로드 없이 브라우저에서 크기 조절하고, 픽셀 또는 퍼센트 기준으로 여러 이미지를 한 번에 리사이즈할 수 있는 무료 도구입니다.',
+  path: '/tools/image/image-resizer',
+  categoryName: '이미지 도구',
+  categoryPath: '/tools',
+  keywords: [
+    '이미지 크기 조절',
+    '사진 크기 조절',
+    '이미지 사이즈 변경',
+    '사진 사이즈 줄이기',
+    '이미지 픽셀 변경',
+    '이미지 리사이즈',
+    'JSTools',
+  ],
+  content: {
+    introHeading: '이미지 크기 조절기 소개',
+    description: [
+      '이미지 크기 조절기는 JPG, JPEG, PNG, WEBP 파일의 가로세로 크기를 브라우저 안에서 변경하는 무료 도구입니다. 업로드한 이미지는 서버로 전송되지 않으며 사용 중인 기기에서만 처리됩니다.',
+      '픽셀 기준으로 원하는 가로 또는 세로 크기를 지정하거나, 25%, 50%, 75% 및 직접 입력한 퍼센트 기준으로 여러 이미지를 한 번에 리사이즈할 수 있습니다.',
+    ],
+    howTo: [
+      '이미지를 업로드 영역에 끌어다 놓거나 파일 선택 버튼으로 추가합니다.',
+      '픽셀 기준 또는 퍼센트 기준 중 원하는 크기 조절 방식을 선택합니다.',
+      '가로세로 비율 유지 여부와 크기 값을 확인한 뒤 크기 적용 버튼을 누릅니다.',
+      '결과 목록에서 원본 크기, 결과 크기, 결과 형식을 확인하고 개별 파일 또는 전체 ZIP으로 다운로드합니다.',
+    ],
+    faq: [
+      {
+        question: '이미지가 서버로 업로드되나요?',
+        answer: '아니요. 이 도구는 브라우저 내부에서만 이미지를 처리하며 서버로 업로드하지 않습니다.',
+      },
+      {
+        question: 'PNG 투명 배경이 유지되나요?',
+        answer: '네. PNG는 PNG 형식으로 출력해 투명 배경을 유지합니다.',
+      },
+      {
+        question: '원본보다 크게 확대하면 화질이 좋아지나요?',
+        answer: '아니요. 원본보다 크게 확대하면 픽셀 수는 늘어나지만 이미지가 흐려질 수 있습니다.',
+      },
+      {
+        question: '여러 이미지의 원본 크기가 달라도 사용할 수 있나요?',
+        answer: '네. 퍼센트 기준은 각 이미지의 원본 크기를 기준으로 적용하고, 픽셀 기준은 입력한 가로 또는 세로 값을 각 이미지에 맞게 적용합니다.',
+      },
+    ],
+  },
+  relatedTools: [related.imageCompressor, related.qrCodeGenerator, related.wordCounter],
 }
 
 export const tools = [
@@ -454,4 +511,5 @@ export const tools = [
   qrCodeGeneratorTool,
   quoteGeneratorTool,
   imageCompressorTool,
+  imageResizerTool,
 ]
