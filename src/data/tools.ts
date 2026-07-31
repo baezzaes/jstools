@@ -415,7 +415,7 @@ export const imageCompressorTool: ToolDefinition = {
     'JPG, JPEG, PNG, WEBP 이미지를 서버 업로드 없이 브라우저에서 압축하고 개별 다운로드 또는 ZIP 다운로드할 수 있는 무료 이미지 압축 도구입니다. PNG는 품질 압축을 위해 WebP로 변환됩니다.',
   path: '/tools/image/image-compressor',
   categoryName: '이미지 도구',
-  categoryPath: '/tools',
+  categoryPath: '/tools/image',
   keywords: [
     '이미지 용량 줄이기',
     '이미지 압축',
@@ -451,7 +451,7 @@ export const imageCompressorTool: ToolDefinition = {
       },
     ],
   },
-  relatedTools: [related.imageConverter, related.imageResizer, related.qrCodeGenerator],
+  relatedTools: [related.imageResizer, related.imageConverter, related.qrCodeGenerator],
 }
 
 export const imageResizerTool: ToolDefinition = {
@@ -462,7 +462,7 @@ export const imageResizerTool: ToolDefinition = {
     'JPG, PNG, WEBP 이미지를 서버 업로드 없이 브라우저에서 크기 조절하고, 픽셀 또는 퍼센트 기준으로 여러 이미지를 한 번에 리사이즈할 수 있는 무료 도구입니다.',
   path: '/tools/image/image-resizer',
   categoryName: '이미지 도구',
-  categoryPath: '/tools',
+  categoryPath: '/tools/image',
   keywords: [
     '이미지 크기 조절',
     '사진 크기 조절',
@@ -503,7 +503,7 @@ export const imageResizerTool: ToolDefinition = {
       },
     ],
   },
-  relatedTools: [related.imageConverter, related.imageCompressor, related.qrCodeGenerator],
+  relatedTools: [related.imageCompressor, related.imageConverter, related.qrCodeGenerator],
 }
 
 export const imageConverterTool: ToolDefinition = {
@@ -514,7 +514,7 @@ export const imageConverterTool: ToolDefinition = {
     'JPG, JPEG, PNG, WebP 이미지를 서버 업로드 없이 브라우저에서 변환하고, 개별 파일 또는 ZIP으로 다운로드할 수 있는 무료 이미지 포맷 변환 도구입니다.',
   path: '/tools/image/image-converter',
   categoryName: '이미지 도구',
-  categoryPath: '/tools',
+  categoryPath: '/tools/image',
   keywords: [
     '이미지 변환',
     '이미지 포맷 변환',

@@ -113,6 +113,9 @@ export default function Home() {
         </div>
 
         <div className="border rounded-xl p-4 shadow-sm space-y-2">
+          <a href="/tools/image" className="text-xs font-medium text-blue-600 hover:underline">
+            이미지 도구
+          </a>
           <h2 className="text-xl font-semibold">🖼️ 이미지 용량 줄이기</h2>
           <p className="text-sm text-gray-600">
             JPG, PNG, WEBP 이미지를 브라우저에서 압축하고 ZIP으로 다운로드합니다.
@@ -126,6 +129,9 @@ export default function Home() {
         </div>
 
         <div className="border rounded-xl p-4 shadow-sm space-y-2">
+          <a href="/tools/image" className="text-xs font-medium text-blue-600 hover:underline">
+            이미지 도구
+          </a>
           <h2 className="text-xl font-semibold">📐 이미지 크기 조절기</h2>
           <p className="text-sm text-gray-600">
             JPG, PNG, WEBP 이미지의 가로세로 크기를 픽셀 또는 퍼센트 기준으로 변경합니다.
@@ -139,6 +145,9 @@ export default function Home() {
         </div>
 
         <div className="border rounded-xl p-4 shadow-sm space-y-2">
+          <a href="/tools/image" className="text-xs font-medium text-blue-600 hover:underline">
+            이미지 도구
+          </a>
           <h2 className="text-xl font-semibold">🔁 이미지 변환기</h2>
           <p className="text-sm text-gray-600">
             JPG, PNG, WebP 이미지 파일 형식을 브라우저에서 변환하고 ZIP으로 다운로드합니다.
