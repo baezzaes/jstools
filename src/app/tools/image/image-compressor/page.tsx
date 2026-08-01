@@ -5,6 +5,7 @@ import JSZip from 'jszip'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { imageCompressorTool } from '@/data/tools'
+import { trackDownloadClick, trackToolExecute, trackToolView } from '@/lib/analytics'
 import {
   downloadBlob,
   formatBytes,
@@ -91,6 +92,10 @@ export default function ImageCompressorPage() {
   const inputRef = useRef<HTMLInputElement>(null)
   const itemsRef = useRef<ImageItem[]>([])
 
+  useEffect(() => {
+    trackToolView(imageCompressorTool)
+  }, [])
+
   const completedItems = useMemo(
     () => items.filter((item) => item.status === 'done' && item.compressedBlob),
     [items]
@@ -168,6 +173,9 @@ export default function ImageCompressorPage() {
     })
 
     updateItems((current) => [...current, ...nextItems])
+    if (nextItems.some((item) => item.status === 'pending')) {
+      trackToolExecute(imageCompressorTool)
+    }
     nextItems.filter((item) => item.status === 'pending').forEach((item) => {
       void processItem(item, quality)
     })
@@ -195,6 +203,7 @@ export default function ImageCompressorPage() {
   }
 
   const recompressAll = () => {
+    trackToolExecute(imageCompressorTool)
     items
       .filter((item) => isSupportedImageFile(item.file))
       .forEach((item) => {
@@ -213,6 +222,7 @@ export default function ImageCompressorPage() {
       })
 
       const zipBlob = await zip.generateAsync({ type: 'blob' })
+      trackDownloadClick(imageCompressorTool, 'zip')
       downloadBlob(zipBlob, 'jstools-compressed-images.zip')
     } finally {
       setIsZipping(false)
@@ -427,8 +437,10 @@ export default function ImageCompressorPage() {
                       type="button"
                       disabled={!item.compressedBlob || item.status !== 'done'}
                       onClick={() =>
-                        item.compressedBlob &&
-                        downloadBlob(item.compressedBlob, item.outputName || getOutputName(item.name, item.type))
+                        item.compressedBlob && (() => {
+                          trackDownloadClick(imageCompressorTool, item.compressedBlob.type || item.outputName || item.type)
+                          downloadBlob(item.compressedBlob, item.outputName || getOutputName(item.name, item.type))
+                        })()
                       }
                       className="px-3 py-2 text-sm bg-black text-white rounded disabled:bg-gray-300 hover:bg-gray-800 transition"
                     >

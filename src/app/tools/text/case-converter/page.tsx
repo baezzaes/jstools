@@ -1,19 +1,33 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { caseConverterTool } from '@/data/tools'
+import { trackToolExecute, trackToolView } from '@/lib/analytics'
 
 export default function CaseConverterPage() {
   const [text, setText] = useState('')
   const [result, setResult] = useState('')
 
-  const toUpperCase = () => setResult(text.toUpperCase())
-  const toLowerCase = () => setResult(text.toLowerCase())
-  const toCapitalize = () =>
+  useEffect(() => {
+    trackToolView(caseConverterTool)
+  }, [])
+
+  const toUpperCase = () => {
+    trackToolExecute(caseConverterTool)
+    setResult(text.toUpperCase())
+  }
+  const toLowerCase = () => {
+    trackToolExecute(caseConverterTool)
+    setResult(text.toLowerCase())
+  }
+  const toCapitalize = () => {
+    trackToolExecute(caseConverterTool)
     setResult(text.replace(/\b\w/g, (c) => c.toUpperCase()))
-  const toTitleCase = () =>
+  }
+  const toTitleCase = () => {
+    trackToolExecute(caseConverterTool)
     setResult(
       text
         .toLowerCase()
@@ -21,7 +35,9 @@ export default function CaseConverterPage() {
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ')
     )
-  const toSwapCase = () =>
+  }
+  const toSwapCase = () => {
+    trackToolExecute(caseConverterTool)
     setResult(
       text
         .split('')
@@ -30,6 +46,7 @@ export default function CaseConverterPage() {
         )
         .join('')
     )
+  }
 
   return (
     <div className="max-w-2xl mx-auto p-4 space-y-6">

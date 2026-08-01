@@ -1,16 +1,22 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { jsonFormatterTool } from '@/data/tools'
+import { trackToolExecute, trackToolView } from '@/lib/analytics'
 
 export default function JsonFormatterPage() {
   const [input, setInput] = useState('')
   const [output, setOutput] = useState('')
   const [error, setError] = useState('')
 
+  useEffect(() => {
+    trackToolView(jsonFormatterTool)
+  }, [])
+
   const formatJson = () => {
+    trackToolExecute(jsonFormatterTool)
     try {
         const parsed = JSON.parse(input)
         const formatted = JSON.stringify(parsed, null, 2)

@@ -5,6 +5,7 @@ import JSZip from 'jszip'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { imageResizerTool } from '@/data/tools'
+import { trackDownloadClick, trackToolExecute, trackToolView } from '@/lib/analytics'
 import {
   downloadBlob,
   formatBytes,
@@ -155,6 +156,10 @@ export default function ImageResizerPage() {
   const inputRef = useRef<HTMLInputElement>(null)
   const itemsRef = useRef<ImageItem[]>([])
 
+  useEffect(() => {
+    trackToolView(imageResizerTool)
+  }, [])
+
   const completedItems = useMemo(
     () => items.filter((item) => item.status === 'done' && item.resizedBlob),
     [items]
@@ -292,6 +297,9 @@ export default function ImageResizerPage() {
       pixelWidth: nextPixelWidth,
       pixelHeight: nextPixelHeight,
     })
+    if (loadedItems.some((item) => item.status === 'pending')) {
+      trackToolExecute(imageResizerTool)
+    }
     loadedItems.filter((item) => item.status === 'pending').forEach((item) => {
       void processItem(item, nextOptions)
     })
@@ -319,6 +327,7 @@ export default function ImageResizerPage() {
   }
 
   const applyResize = () => {
+    trackToolExecute(imageResizerTool)
     const nextOptions = getCurrentOptions()
     items
       .filter((item) => isSupportedImageFile(item.file))
@@ -338,6 +347,7 @@ export default function ImageResizerPage() {
       })
 
       const zipBlob = await zip.generateAsync({ type: 'blob' })
+      trackDownloadClick(imageResizerTool, 'zip')
       downloadBlob(zipBlob, 'jstools-resized-images.zip')
     } finally {
       setIsZipping(false)
@@ -627,8 +637,10 @@ export default function ImageResizerPage() {
                       type="button"
                       disabled={!item.resizedBlob || item.status !== 'done'}
                       onClick={() =>
-                        item.resizedBlob &&
-                        downloadBlob(item.resizedBlob, item.outputName || getImageOutputName(item.name, 'resized', item.type))
+                        item.resizedBlob && (() => {
+                          trackDownloadClick(imageResizerTool, item.resizedBlob.type || item.outputName || item.type)
+                          downloadBlob(item.resizedBlob, item.outputName || getImageOutputName(item.name, 'resized', item.type))
+                        })()
                       }
                       className="px-3 py-2 text-sm bg-black text-white rounded disabled:bg-gray-300 hover:bg-gray-800 transition"
                     >

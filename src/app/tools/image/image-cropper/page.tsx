@@ -4,6 +4,7 @@ import { PointerEvent, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { imageCropperTool } from '@/data/tools'
+import { trackDownloadClick, trackToolExecute, trackToolView } from '@/lib/analytics'
 import {
   createCanvasBlob,
   downloadBlob,
@@ -128,6 +129,10 @@ export default function ImageCropperPage() {
   const inputRef = useRef<HTMLInputElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const imageElementRef = useRef<HTMLImageElement | null>(null)
+
+  useEffect(() => {
+    trackToolView(imageCropperTool)
+  }, [])
 
   const imageMetrics = useMemo(() => {
     if (!loadedImage) return null
@@ -352,6 +357,7 @@ export default function ImageCropperPage() {
 
   const cropImage = async () => {
     if (!loadedImage || !cropRect || !imageElementRef.current || isProcessing) return
+    trackToolExecute(imageCropperTool)
     setError('')
     setIsProcessing(true)
     resetResult()
@@ -624,7 +630,10 @@ export default function ImageCropperPage() {
             </div>
             <button
               type="button"
-              onClick={() => downloadBlob(result.blob, result.fileName)}
+              onClick={() => {
+                trackDownloadClick(imageCropperTool, result.blob.type || result.fileName)
+                downloadBlob(result.blob, result.fileName)
+              }}
               className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
             >
               다운로드

@@ -1,12 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { wordCounterTool } from '@/data/tools'
+import { trackToolExecute, trackToolView } from '@/lib/analytics'
 
 export default function WordCounterPage() {
   const [text, setText] = useState('')
+  const hasTrackedExecute = useRef(false)
+
+  useEffect(() => {
+    trackToolView(wordCounterTool)
+  }, [])
 
   const getWordCount = (input: string) =>
     input.trim().split(/\s+/).filter(Boolean).length
@@ -34,7 +40,13 @@ export default function WordCounterPage() {
         rows={10}
         placeholder="여기에 텍스트를 입력하세요."
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => {
+          if (!hasTrackedExecute.current && e.target.value.trim()) {
+            trackToolExecute(wordCounterTool)
+            hasTrackedExecute.current = true
+          }
+          setText(e.target.value)
+        }}
       />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm md:text-base bg-gray-50 p-4 rounded-md shadow-inner">

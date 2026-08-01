@@ -5,6 +5,7 @@ import JSZip from 'jszip'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { imageConverterTool } from '@/data/tools'
+import { trackDownloadClick, trackToolExecute, trackToolView } from '@/lib/analytics'
 import {
   downloadBlob,
   formatBytes,
@@ -103,6 +104,10 @@ export default function ImageConverterPage() {
   const [isZipping, setIsZipping] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const itemsRef = useRef<ImageItem[]>([])
+
+  useEffect(() => {
+    trackToolView(imageConverterTool)
+  }, [])
 
   const completedItems = useMemo(
     () => items.filter((item) => item.status === 'done' && item.convertedBlob),
@@ -245,6 +250,9 @@ export default function ImageConverterPage() {
     }
 
     updateItems((current) => [...current, ...loadedItems])
+    if (loadedItems.some((item) => item.status === 'pending')) {
+      trackToolExecute(imageConverterTool)
+    }
     processAll(outputFormat, jpgBackgroundColor, loadedItems)
   }
 
@@ -290,6 +298,7 @@ export default function ImageConverterPage() {
   }
 
   const convertAll = () => {
+    trackToolExecute(imageConverterTool)
     processAll(outputFormat, jpgBackgroundColor)
   }
 
@@ -311,6 +320,7 @@ export default function ImageConverterPage() {
       })
 
       const zipBlob = await zip.generateAsync({ type: 'blob' })
+      trackDownloadClick(imageConverterTool, 'zip')
       downloadBlob(zipBlob, 'jstools-converted-images.zip')
     } finally {
       setIsZipping(false)
@@ -544,12 +554,14 @@ export default function ImageConverterPage() {
                       type="button"
                       disabled={!item.convertedBlob || item.status !== 'done'}
                       onClick={() =>
-                        item.convertedBlob &&
-                        downloadBlob(
-                          item.convertedBlob,
-                          item.outputName ||
-                            getImageOutputName(item.name, 'converted', item.convertedBlob.type || getImageMimeType(outputFormat))
-                        )
+                        item.convertedBlob && (() => {
+                          trackDownloadClick(imageConverterTool, item.convertedBlob.type || item.outputName || getImageMimeType(outputFormat))
+                          downloadBlob(
+                            item.convertedBlob,
+                            item.outputName ||
+                              getImageOutputName(item.name, 'converted', item.convertedBlob.type || getImageMimeType(outputFormat))
+                          )
+                        })()
                       }
                       className="px-3 py-2 text-sm bg-black text-white rounded disabled:bg-gray-300 hover:bg-gray-800 transition"
                     >
