@@ -14,8 +14,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://jstools-app.vercel.app"),
   title: "JSTools",
   description: "작지만 유용한 웹도구 모음",
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    url: "https://jstools-app.vercel.app",
+    siteName: "JSTools",
+    title: "JSTools - 작지만 유용한 웹도구 모음",
+    description:
+      "이미지, 텍스트, 날짜, 개발자 도구 등 작지만 유용한 웹도구를 무료로 제공합니다.",
+  },
+  twitter: {
+    card: "summary",
+    title: "JSTools - 작지만 유용한 웹도구 모음",
+    description:
+      "이미지, 텍스트, 날짜, 개발자 도구 등 작지만 유용한 웹도구를 무료로 제공합니다.",
+  },
   verification: {
     other: {
       "naver-site-verification": "3ee6cae7160885e796f35ab29a70f5152f426ab8",
