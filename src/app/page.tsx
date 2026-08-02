@@ -4,6 +4,9 @@ export default function Home() {
       <header className="text-center space-y-2">
         <h1 className="text-4xl font-bold">🧰 JSTools</h1>
         <p className="text-gray-600">작지만 유용한 웹도구 모음 플랫폼</p>
+        <a href="/guide" className="inline-block text-sm text-blue-600 hover:underline">
+          이미지 최적화 가이드 보기
+        </a>
       </header>
 
       <section className="grid gap-6 md:grid-cols-2">
