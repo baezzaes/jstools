@@ -2,6 +2,12 @@ import type { ToolDefinition } from '@/data/tools'
 
 type AnalyticsParameters = Record<string, string | number | boolean | undefined>
 
+type GuideCtaClickParameters = {
+  guideName: string
+  targetTool: string
+  targetUrl: string
+}
+
 declare global {
   interface Window {
     gtag?: (command: 'event', eventName: string, parameters?: AnalyticsParameters) => void
@@ -70,5 +76,13 @@ export function trackDownloadClick(tool: ToolDefinition, fileType: string) {
 export function trackCopyClick(tool: ToolDefinition) {
   trackEvent('copy_click', {
     tool_name: tool.name,
+  })
+}
+
+export function trackGuideCtaClick({ guideName, targetTool, targetUrl }: GuideCtaClickParameters) {
+  trackEvent('guide_cta_click', {
+    guide_name: guideName,
+    target_tool: targetTool,
+    target_url: targetUrl,
   })
 }

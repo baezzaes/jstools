@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { GuideCtaLink } from '@/components/GuideCtaLink'
 import { JsonLd } from '@/components/JsonLd'
 import { absoluteUrl, SITE_NAME, SITE_URL } from '@/lib/seo'
 
@@ -73,8 +74,8 @@ export default function JpgVsWebpGuidePage() {
         </div>
         <h1 className="text-3xl font-bold">JPG와 WebP 차이 - 어떤 이미지 형식을 사용해야 할까?</h1>
         <p className="text-sm text-gray-600 leading-relaxed">
-          JPG와 WebP는 모두 웹에서 자주 쓰이는 이미지 형식입니다. 어떤 형식이 더 좋다고 단정하기보다, 이미지의
-          용도, 호환성, 투명 배경 필요 여부, 파일 크기 목표를 함께 보고 선택하는 것이 좋습니다.
+          JPG와 WebP는 모두 웹에서 자주 쓰이는 이미지 형식입니다. 어떤 형식이 더 좋다고 단정하기보다, 이미지 용도,
+          호환성, 투명 배경 필요 여부, 파일 크기 목표를 함께 보고 선택하는 것이 좋습니다.
         </p>
       </header>
 
@@ -82,8 +83,8 @@ export default function JpgVsWebpGuidePage() {
         <h2 className="text-2xl font-semibold">JPG란?</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           JPG는 사진 저장에 널리 사용되는 손실 압축 이미지 형식입니다. 대부분의 브라우저, 운영체제, 편집 프로그램,
-          오래된 장비에서도 열 수 있어 호환성이 매우 높습니다. 다만 투명 배경은 지원하지 않으며, 같은 파일을
-          반복해서 저장하면 압축 과정에서 품질이 점차 떨어질 수 있습니다.
+          오래된 장비에서도 열 수 있어 호환성이 매우 높습니다. 다만 투명 배경은 지원하지 않으며, 같은 파일을 반복해서
+          저장하면 압축 과정에서 화질이 조금씩 떨어질 수 있습니다.
         </p>
       </section>
 
@@ -111,12 +112,12 @@ export default function JpgVsWebpGuidePage() {
               <tr className="border-b">
                 <td className="p-3 font-medium text-gray-900">파일 용량</td>
                 <td className="p-3">사진 압축에 적합하지만 설정에 따라 용량이 커질 수 있습니다.</td>
-                <td className="p-3">웹용 설정에서는 더 작아질 수 있지만 항상 그런 것은 아닙니다.</td>
+                <td className="p-3">많은 경우 더 작아질 수 있지만 항상 그런 것은 아닙니다.</td>
               </tr>
               <tr className="border-b">
                 <td className="p-3 font-medium text-gray-900">화질</td>
-                <td className="p-3">사진 표현에 안정적이며 품질 조절이 쉽습니다.</td>
-                <td className="p-3">비슷한 체감 품질에서 용량을 줄이기 유리한 경우가 있습니다.</td>
+                <td className="p-3">사진 표현이 안정적이며 품질 조절이 쉽습니다.</td>
+                <td className="p-3">비슷한 체감 화질에서 용량을 줄이기 유리한 경우가 있습니다.</td>
               </tr>
               <tr className="border-b">
                 <td className="p-3 font-medium text-gray-900">투명 배경</td>
@@ -151,8 +152,8 @@ export default function JpgVsWebpGuidePage() {
       <section className="space-y-3">
         <h2 className="text-2xl font-semibold">JPG를 사용하면 좋은 경우</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
-          JPG는 범용 호환성이 가장 중요한 상황에 적합합니다. 이메일 첨부, 오래된 프로그램이나 장비 사용, 사진
-          원본을 여러 환경에서 열어야 하는 경우에는 JPG가 더 안전한 선택일 수 있습니다.
+          JPG는 범용 호환성이 가장 중요한 상황에 적합합니다. 이메일 첨부, 오래된 프로그램이나 장비 사용, 사진 원본을
+          여러 환경에서 열어야 하는 경우에는 JPG가 더 안전한 선택일 수 있습니다.
         </p>
         <ul className="list-disc space-y-2 pl-5 text-sm text-gray-700">
           <li>받는 사람이 어떤 기기나 프로그램을 쓰는지 알 수 없는 경우</li>
@@ -169,7 +170,7 @@ export default function JpgVsWebpGuidePage() {
         </p>
         <ul className="list-disc space-y-2 pl-5 text-sm text-gray-700">
           <li>웹사이트나 블로그 이미지의 로딩 속도를 개선하고 싶은 경우</li>
-          <li>쇼핑몰 상세 이미지나 썸네일 파일 크기를 줄이고 싶은 경우</li>
+          <li>쇼핑몰 상세 이미지와 썸네일 파일 크기를 줄이고 싶은 경우</li>
           <li>투명 배경이 필요한 웹 이미지를 더 효율적으로 저장하고 싶은 경우</li>
         </ul>
       </section>
@@ -178,7 +179,7 @@ export default function JpgVsWebpGuidePage() {
         <h2 className="text-2xl font-semibold">JPG를 WebP로 변환하는 방법</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           JSTools 이미지 변환기를 사용하면 JPG 이미지를 브라우저에서 WebP로 변환할 수 있습니다. 이미지는 서버로
-          전송되지 않으며, 결과 파일을 바로 다운로드할 수 있습니다.
+          전송되지 않으며 결과 파일을 바로 다운로드할 수 있습니다.
         </p>
         <ol className="list-decimal space-y-2 pl-5 text-sm text-gray-700">
           <li>JPG 이미지를 선택합니다.</li>
@@ -192,21 +193,39 @@ export default function JpgVsWebpGuidePage() {
         <div className="rounded-xl border bg-gray-50 p-5 space-y-3">
           <h2 className="text-xl font-semibold">JPG를 WebP로 변환하기</h2>
           <p className="text-sm text-gray-600">이미지 형식을 바꿔 웹용 파일로 저장해 보세요.</p>
-          <Link
+          <GuideCtaLink
             href="/tools/image/image-converter"
+            guideName="JPG와 WebP 차이"
+            targetTool="이미지 변환기"
+            targetUrl="/tools/image/image-converter"
             className="inline-block px-5 py-3 bg-black text-white rounded hover:bg-gray-800 transition"
           >
             JPG를 WebP로 변환하기
-          </Link>
+          </GuideCtaLink>
         </div>
         <div className="rounded-xl border bg-gray-50 p-5 space-y-3">
           <h2 className="text-xl font-semibold">이미지 용량 더 줄이기</h2>
-          <p className="text-sm text-gray-600">이미 압축된 결과도 용도에 맞게 한 번 더 확인할 수 있습니다.</p>
-          <Link
+          <p className="text-sm text-gray-600">이미 압축한 결과를 용도에 맞게 한 번 더 확인할 수 있습니다.</p>
+          <GuideCtaLink
             href="/tools/image/image-compressor"
+            guideName="JPG와 WebP 차이"
+            targetTool="이미지 용량 줄이기"
+            targetUrl="/tools/image/image-compressor"
             className="inline-block px-5 py-3 bg-black text-white rounded hover:bg-gray-800 transition"
           >
             이미지 용량 더 줄이기
+          </GuideCtaLink>
+        </div>
+      </section>
+
+      <section className="rounded-xl border p-5 space-y-3">
+        <h2 className="text-xl font-semibold">관련 가이드</h2>
+        <div className="grid gap-2 text-sm">
+          <Link href="/guide/image-compression" className="text-blue-600 hover:underline">
+            이미지 용량 줄이는 방법 보기
+          </Link>
+          <Link href="/guide/image-resize" className="text-blue-600 hover:underline">
+            이미지 크기 조절 방법 보기
           </Link>
         </div>
       </section>

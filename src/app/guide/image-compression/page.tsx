@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { GuideCtaLink } from '@/components/GuideCtaLink'
 import { JsonLd } from '@/components/JsonLd'
 import { absoluteUrl, SITE_NAME, SITE_URL } from '@/lib/seo'
 
@@ -38,6 +39,7 @@ function buildArticleSchema() {
     '@id': `${pageUrl}#article`,
     headline: pageTitle,
     description: pageDescription,
+    url: pageUrl,
     datePublished: publishedDate,
     dateModified: publishedDate,
     mainEntityOfPage: pageUrl,
@@ -70,7 +72,7 @@ export default function ImageCompressionGuidePage() {
         <h1 className="text-3xl font-bold">사진 용량 줄이는 방법 - JPG 이미지 압축 가이드</h1>
         <p className="text-sm text-gray-600 leading-relaxed">
           사진 파일이 너무 커서 업로드가 느리거나 첨부가 되지 않는 경우가 있습니다. JPG 이미지 압축, 해상도 조절,
-          WebP 변환을 적절히 사용하면 품질 손상을 줄이면서 파일 크기를 관리할 수 있습니다.
+          WebP 변환을 적절히 사용하면 화질 손실을 줄이면서 파일 크기를 관리할 수 있습니다.
         </p>
       </header>
 
@@ -78,20 +80,20 @@ export default function ImageCompressionGuidePage() {
         <h2 className="text-2xl font-semibold">사진 용량이 커지는 이유</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           최근 스마트폰 카메라는 고해상도 사진을 기본으로 저장합니다. 원본 사진은 픽셀 수가 많고 색상 정보도 많이
-          담고 있어 선명하지만, 웹 업로드나 메신저 첨부에는 불필요하게 큰 파일이 될 수 있습니다.
+          담고 있어 선명하지만, 웹 업로드나 메신저 첨부에는 부담스러운 파일이 될 수 있습니다.
         </p>
         <ul className="list-disc space-y-2 pl-5 text-sm text-gray-700">
           <li>스마트폰 카메라 해상도가 높아지면서 원본 사진의 픽셀 수가 커졌습니다.</li>
-          <li>원본 JPG는 세부 정보를 많이 보존하기 때문에 파일 용량이 커질 수 있습니다.</li>
-          <li>웹사이트, 블로그, 쇼핑몰에 큰 사진을 그대로 올리면 로딩 속도와 업로드 시간이 늘어납니다.</li>
+          <li>원본 JPG는 촬영 정보를 많이 보존하기 때문에 파일 용량이 커질 수 있습니다.</li>
+          <li>웹사이트, 블로그, 쇼핑몰에 큰 사진을 그대로 올리면 로딩 속도와 업로드 시간이 느려집니다.</li>
         </ul>
       </section>
 
       <section className="space-y-3">
         <h2 className="text-2xl font-semibold">JPG 이미지 용량을 줄이는 방법</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
-          JPG 용량을 줄이는 핵심은 화질과 파일 크기의 균형입니다. 무조건 가장 낮은 품질로 압축하기보다, 실제로
-          보여줄 크기와 용도에 맞춰 조절하는 것이 좋습니다.
+          JPG 용량을 줄이는 핵심은 화질과 파일 크기의 균형입니다. 무조건 가장 낮은 품질로 압축하기보다, 실제로 보여줄
+          크기와 용도에 맞춰 조절하는 것이 좋습니다.
         </p>
         <div className="grid gap-3 md:grid-cols-3">
           <div className="rounded-xl border p-4">
@@ -103,7 +105,7 @@ export default function ImageCompressionGuidePage() {
           <div className="rounded-xl border p-4">
             <h3 className="font-semibold">해상도 변경</h3>
             <p className="mt-2 text-sm text-gray-700">
-              실제 표시 크기보다 큰 사진은 가로세로 픽셀을 줄이면 용량을 크게 낮출 수 있습니다.
+              실제 표시 크기보다 큰 사진은 가로세로 픽셀을 줄이면 용량이 크게 줄어들 수 있습니다.
             </p>
           </div>
           <div className="rounded-xl border p-4">
@@ -124,7 +126,7 @@ export default function ImageCompressionGuidePage() {
                 <th className="p-3 font-semibold">형식</th>
                 <th className="p-3 font-semibold">적합한 용도</th>
                 <th className="p-3 font-semibold">장점</th>
-                <th className="p-3 font-semibold">주의할 점</th>
+                <th className="p-3 font-semibold">주의점</th>
               </tr>
             </thead>
             <tbody className="text-gray-700">
@@ -154,8 +156,8 @@ export default function ImageCompressionGuidePage() {
       <section className="space-y-3">
         <h2 className="text-2xl font-semibold">JSTools 이미지 압축기 사용 방법</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
-          JSTools 이미지 압축기는 브라우저에서 JPG, PNG, WebP 이미지를 처리합니다. 선택한 이미지는 서버로
-          업로드되지 않으며, 압축 결과를 개별 파일 또는 ZIP으로 내려받을 수 있습니다.
+          JSTools 이미지 압축기는 브라우저에서 JPG, PNG, WebP 이미지를 처리합니다. 선택한 이미지는 서버로 업로드되지
+          않으며, 압축 결과를 개별 파일 또는 ZIP으로 다운로드할 수 있습니다.
         </p>
         <ol className="list-decimal space-y-2 pl-5 text-sm text-gray-700">
           <li>이미지 선택 버튼을 누르거나 사진 파일을 끌어다 놓습니다.</li>
@@ -169,22 +171,27 @@ export default function ImageCompressionGuidePage() {
         <p className="text-sm text-gray-600">
           설치 없이 브라우저에서 JPG, PNG, WebP 이미지를 압축할 수 있습니다.
         </p>
-        <Link
+        <GuideCtaLink
           href="/tools/image/image-compressor"
+          guideName="사진 용량 줄이는 방법"
+          targetTool="이미지 용량 줄이기"
+          targetUrl="/tools/image/image-compressor"
           className="inline-block px-5 py-3 bg-black text-white rounded hover:bg-gray-800 transition"
         >
           이미지 용량 줄이기 바로가기
-        </Link>
+        </GuideCtaLink>
       </section>
 
       <section className="rounded-xl border p-5 space-y-3">
         <h2 className="text-xl font-semibold">관련 가이드</h2>
-        <p className="text-sm text-gray-600">
-          JPG를 계속 사용할지 WebP로 변환할지 고민된다면 이미지 형식별 차이를 먼저 비교해 보세요.
-        </p>
-        <Link href="/guide/jpg-vs-webp" className="text-sm text-blue-600 hover:underline">
-          JPG와 WebP 차이 보기
-        </Link>
+        <div className="grid gap-2 text-sm">
+          <Link href="/guide/jpg-vs-webp" className="text-blue-600 hover:underline">
+            JPG와 WebP 차이 보기
+          </Link>
+          <Link href="/guide/image-resize" className="text-blue-600 hover:underline">
+            이미지 크기 조절 방법 보기
+          </Link>
+        </div>
       </section>
     </article>
   )
