@@ -33,6 +33,12 @@ export const metadata: Metadata = {
 
 const guides = [
   {
+    href: '/guide/image-compress',
+    title: '사진 용량 줄이는 방법',
+    description: 'JPG 사진 용량을 줄이는 방법과 이미지 품질, 해상도, WebP 변환 기준을 정리합니다.',
+    category: '이미지 최적화',
+  },
+  {
     href: '/guide/image-compression',
     title: 'JPG 이미지 용량 줄이는 방법',
     description: '이미지 용량이 커지는 이유와 JPG, PNG, WebP 차이를 이해하고 압축 방법을 확인합니다.',
