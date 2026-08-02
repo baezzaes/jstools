@@ -38,6 +38,12 @@ const guides = [
     description: 'JPG 사진 용량을 줄이는 방법과 이미지 품질, 해상도, WebP 변환 기준을 정리합니다.',
     category: '이미지 최적화',
   },
+  {
+    href: '/guide/jpg-vs-webp',
+    title: 'JPG와 WebP 차이',
+    description: '파일 용량, 화질, 투명 배경, 호환성을 비교하고 용도에 맞는 이미지 형식을 고르는 기준을 정리합니다.',
+    category: '이미지 형식',
+  },
 ]
 
 function buildArticleSchema() {

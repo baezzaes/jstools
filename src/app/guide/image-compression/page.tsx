@@ -176,6 +176,16 @@ export default function ImageCompressionGuidePage() {
           이미지 용량 줄이기 바로가기
         </Link>
       </section>
+
+      <section className="rounded-xl border p-5 space-y-3">
+        <h2 className="text-xl font-semibold">관련 가이드</h2>
+        <p className="text-sm text-gray-600">
+          JPG를 계속 사용할지 WebP로 변환할지 고민된다면 이미지 형식별 차이를 먼저 비교해 보세요.
+        </p>
+        <Link href="/guide/jpg-vs-webp" className="text-sm text-blue-600 hover:underline">
+          JPG와 WebP 차이 보기
+        </Link>
+      </section>
     </article>
   )
 }
