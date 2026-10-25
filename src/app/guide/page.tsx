@@ -7,7 +7,6 @@ const pageTitle = 'JSTools 가이드 - 이미지 최적화와 웹도구 사용�
 const pageDescription =
   '이미지 최적화, 파일 용량 줄이기, 웹도구 사용법을 쉽게 이해할 수 있는 JSTools 가이드 모음입니다.'
 const pageUrl = absoluteUrl('/guide')
-const publishedDate = '2026-08-02'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -52,20 +51,22 @@ const guides = [
   },
 ]
 
-function buildArticleSchema() {
+function buildCollectionSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Article',
-    '@id': `${pageUrl}#article`,
-    headline: pageTitle,
+    '@type': 'CollectionPage',
+    '@id': `${pageUrl}#collection`,
+    name: pageTitle,
     description: pageDescription,
     url: pageUrl,
-    datePublished: publishedDate,
-    dateModified: publishedDate,
-    mainEntityOfPage: pageUrl,
-    author: {
-      '@type': 'Organization',
-      name: SITE_NAME,
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: guides.map((guide, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: guide.title,
+        url: absoluteUrl(guide.href),
+      })),
     },
     publisher: {
       '@type': 'Organization',
@@ -78,7 +79,7 @@ function buildArticleSchema() {
 export default function GuidePage() {
   return (
     <div className="max-w-3xl mx-auto p-6 space-y-8">
-      <JsonLd id="guide-article-schema" data={buildArticleSchema()} />
+      <JsonLd id="guide-collection-schema" data={buildCollectionSchema()} />
 
       <header className="space-y-3 text-center">
         <Link href="/" className="text-sm text-blue-600 hover:underline">

@@ -51,7 +51,7 @@ function buildArticleSchema() {
       url: SITE_URL,
     },
     datePublished: publishedDate,
-    dateModified: publishedDate,
+    dateModified: '2026-10-25',
   }
 }
 
@@ -80,6 +80,15 @@ export default function ImageResizeGuidePage() {
           사진을 업로드하거나 문서에 넣을 때는 파일 용량뿐 아니라 가로와 세로 픽셀도 중요합니다. 이미지 크기와 용량의
           차이를 이해하면 목적에 맞는 사이즈로 더 쉽게 조절할 수 있습니다.
         </p>
+        <GuideCtaLink
+          href="/tools/image/image-resizer"
+          guideName="이미지 크기 조절 방법"
+          targetTool="이미지 크기 조절기"
+          targetUrl="/tools/image/image-resizer"
+          className="inline-block rounded bg-black px-5 py-3 text-white hover:bg-gray-800"
+        >
+          사진 크기 바로 조절하기
+        </GuideCtaLink>
       </header>
 
       <section className="space-y-3">
@@ -190,7 +199,7 @@ export default function ImageResizeGuidePage() {
           <li>이미지를 선택하거나 업로드 영역에 끌어다 놓습니다.</li>
           <li>픽셀 또는 퍼센트 방식 중 하나를 선택합니다.</li>
           <li>가로세로 비율 유지 여부를 설정합니다.</li>
-          <li>결과 크기를 확인합니다.</li>
+          <li>크기 적용 버튼을 누르고 결과 크기를 확인합니다.</li>
           <li>조절된 이미지를 다운로드합니다.</li>
         </ol>
       </section>
@@ -222,6 +231,21 @@ export default function ImageResizeGuidePage() {
             이미지 용량 줄이기
           </GuideCtaLink>
         </div>
+      </section>
+
+      <section className="space-y-3 text-sm text-gray-700 leading-relaxed">
+        <h2 className="text-xl font-semibold text-gray-900">크기 조절 후 다음 작업</h2>
+        <p>
+          다운로드한 이미지의 KB·MB 용량이 여전히 크다면 <Link href="/tools/image/image-compressor" className="text-blue-600 underline">이미지 압축</Link>을 사용하세요.
+          제출 사이트에서 다른 형식을 요구하면 <Link href="/tools/image/image-converter" className="text-blue-600 underline">JPG·PNG·WebP 변환</Link>으로 바꿀 수 있습니다.
+          필요한 영역만 남길 때는 <Link href="/tools/image/image-cropper" className="text-blue-600 underline">이미지 자르기</Link>를 사용하세요.
+          각 도구에서 이전 결과 파일을 직접 선택해야 하며, 영역을 잘라 정확한 규격을 맞추려면 자르기를 먼저 진행하는 편이 좋습니다.
+        </p>
+        <h2 className="text-xl font-semibold text-gray-900">자주 묻는 질문</h2>
+        <h3 className="font-semibold">휴대폰에서도 사진 크기를 바꿀 수 있나요?</h3>
+        <p>모바일 브라우저에서 이미지 선택 버튼을 누르고 사진을 선택한 뒤 크기를 적용할 수 있습니다. 다운로드한 파일의 위치는 브라우저와 기기에 따라 다릅니다.</p>
+        <h3 className="font-semibold">크기를 바꾸면 원하는 KB 용량에 맞춰지나요?</h3>
+        <p>아니요. 픽셀 크기와 파일 용량은 다른 기준입니다. 크기 조절 후 용량을 확인하고, 필요하면 압축 도구에서 품질을 조절하세요. 정확한 KB 용량을 자동으로 맞추는 기능은 제공하지 않습니다.</p>
       </section>
 
       <section className="rounded-xl border p-5 space-y-3">

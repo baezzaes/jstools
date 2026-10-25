@@ -38,6 +38,13 @@ export function ToolSeoSections({ tool }: ToolSeoSectionsProps) {
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">관련 도구</h2>
+        {tool.categoryPath === '/tools/image' && (
+          <p className="text-sm text-gray-600">
+            다음 작업을 할 때는 다운로드한 결과 파일을 해당 도구에서 선택해 주세요.
+            {' '}<Link href="/guide/image-resize" className="text-blue-600 hover:underline">사진 크기 조절 방법</Link>
+            {' · '}<Link href="/guide/image-compression" className="text-blue-600 hover:underline">용량 줄이기 가이드</Link>
+          </p>
+        )}
         <div className="grid gap-3 md:grid-cols-3">
           {tool.relatedTools.map((relatedTool) => (
             <Link

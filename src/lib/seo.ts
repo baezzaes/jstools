@@ -79,7 +79,7 @@ export function buildBreadcrumbSchema(tool: ToolDefinition) {
       {
         '@type': 'ListItem',
         position: 2,
-        name: tool.categoryName,
+        name: tool.categoryPath === '/tools' ? '전체 도구' : tool.categoryName,
         item: absoluteUrl(tool.categoryPath),
       },
       {

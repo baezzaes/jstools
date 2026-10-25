@@ -1,3 +1,17 @@
+import type { Metadata } from 'next'
+import { absoluteUrl } from '@/lib/seo'
+
+const title = 'JSTools - 이미지 크기 조절, 글자수 계산기, 날짜 계산기'
+const description = '이미지 크기 조절과 압축, 글자수 세기, 날짜 계산, QR 코드 생성을 무료로 이용하세요. 설치나 로그인 없이 브라우저에서 바로 사용할 수 있습니다.'
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: absoluteUrl('/') },
+  openGraph: { title, description, url: absoluteUrl('/'), siteName: 'JSTools', type: 'website', locale: 'ko_KR' },
+  twitter: { card: 'summary', title, description },
+}
+
 export default function Home() {
   return (
     <div className="max-w-3xl mx-auto p-6 space-y-8">
@@ -12,7 +26,7 @@ export default function Home() {
       <section className="grid gap-6 md:grid-cols-2">
         {/* Word & Character Counter Tool */}
         <div className="border rounded-xl p-4 shadow-sm space-y-2">
-          <h2 className="text-xl font-semibold">🔤 Word & Character Counter</h2>
+          <h2 className="text-xl font-semibold">🔤 글자수 계산기 · 글자 수 세기</h2>
           <p className="text-sm text-gray-600">
             글자 수, 단어 수, 줄 수를 실시간으로 계산해주는 텍스트 분석 도구입니다.
           </p>

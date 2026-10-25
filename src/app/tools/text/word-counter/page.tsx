@@ -36,7 +36,8 @@ export default function WordCounterPage() {
       </header>
 
       <textarea
-        className="w-full border p-3 rounded-md shadow-sm text-sm focus:outline-none focus:ring focus:border-blue-300"
+        aria-label="글자 수를 계산할 텍스트"
+        className="w-full border p-3 rounded-md shadow-sm text-base focus:outline-none focus:ring focus:border-blue-300"
         rows={10}
         placeholder="여기에 텍스트를 입력하세요."
         value={text}

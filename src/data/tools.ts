@@ -95,9 +95,9 @@ const related = {
 export const wordCounterTool: ToolDefinition = {
   id: 'word-counter',
   name: '글자 수 세기',
-  title: '글자 수 세기 - 단어 수, 공백 제외 글자 수 계산 | JSTools',
+  title: '글자수 계산기 - 공백 포함·제외 글자 수 세기 | JSTools',
   description:
-    '텍스트를 입력하면 글자 수, 공백 제외 글자 수, 단어 수, 줄 수를 실시간으로 계산하는 무료 Word Counter 도구입니다.',
+    '자기소개서, 블로그 글, 문서의 글자 수를 공백 포함·제외 기준으로 실시간 확인하세요. 단어 수와 빈 줄을 제외한 줄 수도 계산합니다.',
   path: '/tools/text/word-counter',
   categoryName: '텍스트 도구',
   categoryPath: '/tools',
@@ -115,6 +115,7 @@ export const wordCounterTool: ToolDefinition = {
     description: [
       '글자 수 세기는 입력한 텍스트의 길이를 빠르게 확인하는 무료 온라인 도구입니다. 별도 설치나 로그인 없이 브라우저에서 바로 사용할 수 있으며, 입력 내용은 현재 화면에서만 계산됩니다.',
       '글자 수는 공백 포함과 공백 제외 기준을 함께 보여주고, 단어 수는 공백 기준으로 자동 계산합니다. 줄 수까지 같이 확인할 수 있어 짧은 문구부터 긴 문서 초안까지 간단히 점검할 수 있습니다.',
+      '자기소개서 500자 문항이나 문서 분량을 점검할 때 활용하세요. 줄 수는 빈 줄을 제외하며, 글자 수는 JavaScript 문자열 길이 기준이므로 일부 이모지는 여러 글자로 계산될 수 있습니다. 최종 제출처의 계산 기준도 확인하세요.',
     ],
     howTo: [
       '텍스트 입력창에 확인할 문장을 붙여넣거나 직접 입력합니다.',
@@ -181,7 +182,7 @@ export const caseConverterTool: ToolDefinition = {
 export const dateCalculatorTool: ToolDefinition = {
   id: 'date-calculator',
   name: '날짜 계산기',
-  title: '날짜 계산기 - 날짜 차이와 기준일 전후 계산 | JSTools',
+  title: '날짜 계산기 - 날짜 차이, 며칠 전·후 날짜 계산 | JSTools',
   description:
     '두 날짜 사이의 일수 차이를 계산하거나 기준일로부터 며칠 전후 날짜를 확인할 수 있는 무료 날짜 계산 도구입니다.',
   path: '/tools/date/date-calculator',
@@ -193,6 +194,8 @@ export const dateCalculatorTool: ToolDefinition = {
     description: [
       '날짜 계산기는 두 날짜 사이의 차이를 계산하거나 기준일로부터 며칠 전 또는 후의 날짜를 구하는 도구입니다.',
       '일정 관리, 프로젝트 마감일 계산, 기념일 확인처럼 날짜 기준이 필요한 작업에 활용할 수 있습니다.',
+      '예를 들어 2026년 10월 25일부터 11월 1일까지는 7일 차이입니다. 시작일을 1일째로 포함하지 않으며 주말과 공휴일도 포함합니다. D-day까지 남은 일수는 시작일에 오늘, 종료일에 목표일을 직접 입력해 확인하세요.',
+      '기준일을 2026년 10월 25일, 방향을 후, 일 수를 30으로 설정하면 2026년 11월 24일을 확인할 수 있습니다. 자동 D-day 알림이나 영업일 계산 기능은 제공하지 않습니다.',
     ],
     howTo: [
       '날짜 차이를 계산하려면 시작일과 종료일을 입력합니다.',
@@ -347,8 +350,8 @@ export const qrCodeGeneratorTool: ToolDefinition = {
   content: {
     introHeading: 'QR 코드 생성기 소개',
     description: [
-      'QR 코드 생성기는 입력한 텍스트, URL, 연락처 등의 정보를 기반으로 실시간 QR 코드를 생성하는 도구입니다.',
-      '웹사이트 링크 공유, 명함, 전단지, 와이파이 접속 정보 안내 등 다양한 상황에서 사용할 수 있습니다.',
+      'QR 코드 생성기는 입력한 일반 텍스트나 URL을 실시간으로 SVG QR 코드로 표시하는 도구입니다. 웹사이트를 공유하려면 https://로 시작하는 전체 주소를 입력하세요.',
+      '생성한 QR 코드를 휴대폰 카메라로 스캔해 원하는 페이지가 열리는지 확인하세요. 전용 연락처·와이파이 설정 폼, 크기·색상 옵션, PNG·SVG 다운로드 버튼은 현재 제공하지 않습니다.',
     ],
     howTo: [
       'QR 코드로 변환할 텍스트나 URL을 입력합니다.',
@@ -367,6 +370,10 @@ export const qrCodeGeneratorTool: ToolDefinition = {
       {
         question: 'QR 코드는 언제 생성되나요?',
         answer: '텍스트나 URL을 입력하면 화면에서 바로 QR 코드가 생성됩니다.',
+      },
+      {
+        question: 'QR 코드를 이미지 파일로 다운로드할 수 있나요?',
+        answer: '현재 화면에 SVG QR 코드를 표시하며 별도 다운로드 버튼은 제공하지 않습니다.',
       },
     ],
   },
@@ -456,7 +463,7 @@ export const imageCompressorTool: ToolDefinition = {
       },
     ],
   },
-  relatedTools: [related.imageResizer, related.imageCropper, related.imageConverter],
+  relatedTools: [related.imageConverter, related.imageCropper, related.imageResizer],
 }
 
 export const imageResizerTool: ToolDefinition = {
@@ -482,6 +489,7 @@ export const imageResizerTool: ToolDefinition = {
     description: [
       '이미지 크기 조절기는 JPG, JPEG, PNG, WEBP 파일의 가로세로 크기를 브라우저 안에서 변경하는 무료 도구입니다. 업로드한 이미지는 서버로 전송되지 않으며 사용 중인 기기에서만 처리됩니다.',
       '픽셀 기준으로 원하는 가로 또는 세로 크기를 지정하거나, 25%, 50%, 75% 및 직접 입력한 퍼센트 기준으로 여러 이미지를 한 번에 리사이즈할 수 있습니다.',
+      '예를 들어 가로 2400px인 블로그 사진을 1200px로 줄이려면 비율 유지를 켜고 가로를 1200으로 입력합니다. KB·MB 용량을 줄이는 압축과 픽셀 크기 변경은 다른 작업이며, 정확한 파일 용량을 자동 지정하지는 않습니다.',
     ],
     howTo: [
       '이미지를 업로드 영역에 끌어다 놓거나 파일 선택 버튼으로 추가합니다.',
@@ -508,7 +516,7 @@ export const imageResizerTool: ToolDefinition = {
       },
     ],
   },
-  relatedTools: [related.imageCompressor, related.imageCropper, related.imageConverter],
+  relatedTools: [related.imageCompressor, related.imageConverter, related.imageCropper],
 }
 
 export const imageConverterTool: ToolDefinition = {

@@ -1,15 +1,23 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import QRCode from 'react-qr-code'  // react-qr-code 라이브러리 임포트
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { qrCodeGeneratorTool } from '@/data/tools'
+import { trackToolExecute, trackToolView } from '@/lib/analytics'
 
 export default function QRCodeGenerator() {
   const [inputText, setInputText] = useState('')
+  const hasTrackedExecute = useRef(false)
+
+  useEffect(() => { trackToolView(qrCodeGeneratorTool) }, [])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!hasTrackedExecute.current && e.target.value.trim()) {
+      trackToolExecute(qrCodeGeneratorTool)
+      hasTrackedExecute.current = true
+    }
     setInputText(e.target.value)
   }
 
@@ -19,12 +27,13 @@ export default function QRCodeGenerator() {
 
       <div className="space-y-4 border p-4 rounded bg-gray-50">
         <div>
-          <label className="font-semibold">QR 코드로 변환할 텍스트나 URL을 입력하세요:</label>
+          <label htmlFor="qr-input" className="font-semibold">QR 코드로 변환할 텍스트나 URL을 입력하세요:</label>
           <input
+            id="qr-input"
             type="text"
             value={inputText}
             onChange={handleInputChange}
-            className="w-full p-2 border rounded mt-1"
+            className="w-full p-2 border rounded mt-1 text-base"
             placeholder="여기에 입력하세요..."
           />
         </div>
@@ -32,7 +41,7 @@ export default function QRCodeGenerator() {
         <div className="text-center mt-4">
           {/* QR 코드 출력 */}
           {inputText && (
-            <QRCode value={inputText} size={256} />
+            <QRCode value={inputText} size={256} style={{ maxWidth: '100%', height: 'auto', margin: '0 auto' }} />
           )}
         </div>
       </div>
