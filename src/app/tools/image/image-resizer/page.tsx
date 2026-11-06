@@ -5,7 +5,7 @@ import JSZip from 'jszip'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { imageResizerTool } from '@/data/tools'
-import { trackDownloadClick, trackToolExecute, trackToolView } from '@/lib/analytics'
+import { trackDownloadClick, trackToolExecute, trackToolResult, trackToolView, type ToolActionSource } from '@/lib/analytics'
 import {
   downloadBlob,
   formatBytes,
@@ -45,6 +45,11 @@ type ResizeOptions = {
   keepAspectRatio: boolean
   pixelAxis: PixelAxis
   percent: number
+}
+
+type ResizeAction = {
+  itemIds: Set<string>
+  cancelled: boolean
 }
 
 const MIN_DIMENSION = 1
@@ -155,9 +160,18 @@ export default function ImageResizerPage() {
   const [isZipping, setIsZipping] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const itemsRef = useRef<ImageItem[]>([])
+  const actionsRef = useRef(new Set<ResizeAction>())
+  const mountedRef = useRef(false)
 
   useEffect(() => {
+    mountedRef.current = true
+    const actions = actionsRef.current
     trackToolView(imageResizerTool)
+    return () => {
+      mountedRef.current = false
+      actions.forEach((action) => { action.cancelled = true })
+      actions.clear()
+    }
   }, [])
 
   const completedItems = useMemo(
@@ -186,7 +200,7 @@ export default function ImageResizerPage() {
   })
 
   const processItem = async (item: ImageItem, nextOptions = options) => {
-    if (!isSupportedImageFile(item.file)) return
+    if (!isSupportedImageFile(item.file)) return false
 
     updateItems((current) =>
       current.map((currentItem) =>
@@ -224,6 +238,7 @@ export default function ImageResizerPage() {
           }
         })
       )
+      return true
     } catch (error) {
       updateItems((current) =>
         current.map((currentItem) =>
@@ -236,6 +251,32 @@ export default function ImageResizerPage() {
             : currentItem
         )
       )
+      return false
+    }
+  }
+
+  const processAction = async (actionItems: ImageItem[], nextOptions: ResizeOptions, actionSource: ToolActionSource) => {
+    trackToolExecute(imageResizerTool, { actionSource, fileCount: actionItems.length })
+    // Keep the existing attempt event for an apply with no supported files,
+    // but do not report an empty action as a successful result.
+    if (actionItems.length === 0) return
+
+    const action: ResizeAction = { itemIds: new Set(actionItems.map((item) => item.id)), cancelled: false }
+    actionsRef.current.add(action)
+    try {
+      // Capture this action's files/options; other batches cannot affect its counts.
+      const outcomes = await Promise.all(actionItems.map((item) => processItem(item, nextOptions)))
+      if (!mountedRef.current || action.cancelled) return
+
+      const successCount = outcomes.filter(Boolean).length
+      trackToolResult(imageResizerTool, {
+        actionSource,
+        fileCount: actionItems.length,
+        successCount,
+        failureCount: actionItems.length - successCount,
+      })
+    } finally {
+      actionsRef.current.delete(action)
     }
   }
 
@@ -297,15 +338,16 @@ export default function ImageResizerPage() {
       pixelWidth: nextPixelWidth,
       pixelHeight: nextPixelHeight,
     })
-    if (loadedItems.some((item) => item.status === 'pending')) {
-      trackToolExecute(imageResizerTool)
+    const pendingItems = loadedItems.filter((item) => item.status === 'pending')
+    if (pendingItems.length > 0) {
+      void processAction(pendingItems, nextOptions, 'file_add')
     }
-    loadedItems.filter((item) => item.status === 'pending').forEach((item) => {
-      void processItem(item, nextOptions)
-    })
   }
 
   const removeItem = (id: string) => {
+    actionsRef.current.forEach((action) => {
+      if (action.itemIds.has(id)) action.cancelled = true
+    })
     updateItems((current) => {
       const target = current.find((item) => item.id === id)
       if (target) {
@@ -317,6 +359,7 @@ export default function ImageResizerPage() {
   }
 
   const clearAll = () => {
+    actionsRef.current.forEach((action) => { action.cancelled = true })
     updateItems((current) => {
       current.forEach((item) => {
         URL.revokeObjectURL(item.originalUrl)
@@ -327,13 +370,8 @@ export default function ImageResizerPage() {
   }
 
   const applyResize = () => {
-    trackToolExecute(imageResizerTool)
     const nextOptions = getCurrentOptions()
-    items
-      .filter((item) => isSupportedImageFile(item.file))
-      .forEach((item) => {
-        void processItem(item, nextOptions)
-      })
+    void processAction(items.filter((item) => isSupportedImageFile(item.file)), nextOptions, 'apply')
   }
 
   const downloadAll = async () => {
@@ -346,8 +384,9 @@ export default function ImageResizerPage() {
         zip.file(item.outputName || getImageOutputName(item.name, 'resized', item.type), item.resizedBlob as Blob)
       })
 
+      const fileCount = Object.values(zip.files).filter((file) => !file.dir).length
       const zipBlob = await zip.generateAsync({ type: 'blob' })
-      trackDownloadClick(imageResizerTool, 'zip')
+      trackDownloadClick(imageResizerTool, 'zip', { downloadType: 'zip', fileCount })
       downloadBlob(zipBlob, 'jstools-resized-images.zip')
     } finally {
       setIsZipping(false)
@@ -638,7 +677,9 @@ export default function ImageResizerPage() {
                       disabled={!item.resizedBlob || item.status !== 'done'}
                       onClick={() =>
                         item.resizedBlob && (() => {
-                          trackDownloadClick(imageResizerTool, item.resizedBlob.type || item.outputName || item.type)
+                          trackDownloadClick(imageResizerTool, item.resizedBlob.type || item.outputName || item.type, {
+                            downloadType: 'individual', fileCount: 1,
+                          })
                           downloadBlob(item.resizedBlob, item.outputName || getImageOutputName(item.name, 'resized', item.type))
                         })()
                       }

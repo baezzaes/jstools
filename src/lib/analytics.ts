@@ -2,6 +2,23 @@ import type { ToolDefinition } from '@/data/tools'
 
 type AnalyticsParameters = Record<string, string | number | boolean | undefined>
 
+export type ToolActionSource = 'file_add' | 'apply'
+
+type ToolExecuteDetails = {
+  actionSource: ToolActionSource
+  fileCount: number
+}
+
+type ToolResultDetails = ToolExecuteDetails & {
+  successCount: number
+  failureCount: number
+}
+
+type DownloadDetails = {
+  downloadType: 'individual' | 'zip'
+  fileCount: number
+}
+
 type GuideCtaClickParameters = {
   guideName: string
   targetTool: string
@@ -59,17 +76,37 @@ export function trackToolView(tool: ToolDefinition) {
   })
 }
 
-export function trackToolExecute(tool: ToolDefinition) {
+export function trackToolExecute(tool: ToolDefinition, details?: ToolExecuteDetails) {
   trackEvent('tool_execute', {
     tool_name: tool.name,
     tool_category: getToolCategory(tool),
+    ...(details && {
+      action_source: details.actionSource,
+      file_count: details.fileCount,
+    }),
   })
 }
 
-export function trackDownloadClick(tool: ToolDefinition, fileType: string) {
+export function trackToolResult(tool: ToolDefinition, details: ToolResultDetails) {
+  trackEvent('tool_result', {
+    tool_name: tool.name,
+    tool_category: getToolCategory(tool),
+    action_source: details.actionSource,
+    result: details.failureCount === 0 ? 'success' : details.successCount === 0 ? 'error' : 'partial',
+    file_count: details.fileCount,
+    success_count: details.successCount,
+    failure_count: details.failureCount,
+  })
+}
+
+export function trackDownloadClick(tool: ToolDefinition, fileType: string, details?: DownloadDetails) {
   trackEvent('download_click', {
     tool_name: tool.name,
     file_type: getFileType(fileType),
+    ...(details && {
+      download_type: details.downloadType,
+      file_count: details.fileCount,
+    }),
   })
 }
 

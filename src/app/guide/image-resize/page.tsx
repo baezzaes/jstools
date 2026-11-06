@@ -51,7 +51,7 @@ function buildArticleSchema() {
       url: SITE_URL,
     },
     datePublished: publishedDate,
-    dateModified: '2026-10-25',
+    dateModified: '2026-11-06',
   }
 }
 
@@ -117,6 +117,12 @@ export default function ImageResizeGuidePage() {
           원본보다 크게 확대하면 없던 디테일이 생기지는 않습니다. 오히려 이미지가 흐려지거나 가장자리가 부드럽게
           번져 보일 수 있으므로, 크기 조절은 보통 축소 목적에 맞춰 사용하는 것이 좋습니다.
         </p>
+        <h3 className="text-lg font-semibold">픽셀 크기 변경과 모자이크 같은 픽셀화는 다른가요?</h3>
+        <p className="text-sm text-gray-700 leading-relaxed">
+          픽셀 크기 변경은 사진의 가로·세로 픽셀 수를 바꾸는 작업입니다. 반면 모자이크처럼 사진을 큰 사각형으로
+          보이게 만드는 픽셀화는 이미지에 시각 효과를 적용하는 작업입니다. JSTools 이미지 크기 조절기는 픽셀
+          크기를 변경하며, 모자이크나 픽셀화 효과는 제공하지 않습니다.
+        </p>
       </section>
 
       <section className="space-y-3">
@@ -142,8 +148,15 @@ export default function ImageResizeGuidePage() {
           계산되어 자연스러운 형태를 유지합니다.
         </p>
         <p className="text-sm text-gray-700 leading-relaxed">
-          다만 제출 규격이 정확한 가로와 세로 픽셀을 요구하는 경우에는 비율 유지 옵션을 끄고 직접 값을 입력해야 할 수
-          있습니다. 이때 이미지가 찌그러지지 않는지 결과 미리보기를 확인하는 것이 좋습니다.
+          JSTools에서 가로세로 비율 유지를 켜면 마지막으로 입력한 가로 또는 세로 값을 기준으로 다른 값이 다시
+          계산됩니다. 원본 비율과 목표 비율이 다르면 가로와 세로를 입력해도 두 치수가 동시에 그대로 적용되지
+          않습니다. 예를 들어 800×600px 사진에서 가로를 160으로 입력하면 세로는 120이 되고, 이어서 세로를
+          200으로 입력하면 가로는 약 267로 바뀝니다.
+        </p>
+        <p className="text-sm text-gray-700 leading-relaxed">
+          이 옵션을 끄면 가로와 세로를 각각 지정할 수 있지만, 도구가 사진 일부를 잘라내는 대신 전체 사진을 입력한
+          크기로 늘리거나 줄입니다. 원본과 다른 비율로 맞추면 인물이나 사물이 납작하거나 길게 보일 수 있으므로,
+          정확한 치수뿐 아니라 사진의 형태도 확인하세요.
         </p>
       </section>
 
@@ -196,12 +209,70 @@ export default function ImageResizeGuidePage() {
           퍼센트 기준 중 하나를 선택하고 결과 크기를 확인한 뒤 다운로드할 수 있습니다.
         </p>
         <ol className="list-decimal space-y-2 pl-5 text-sm text-gray-700">
-          <li>이미지를 선택하거나 업로드 영역에 끌어다 놓습니다.</li>
-          <li>픽셀 또는 퍼센트 방식 중 하나를 선택합니다.</li>
-          <li>가로세로 비율 유지 여부를 설정합니다.</li>
-          <li>크기 적용 버튼을 누르고 결과 크기를 확인합니다.</li>
-          <li>조절된 이미지를 다운로드합니다.</li>
+          <li>이미지 크기 조절기에서 파일 선택을 눌러 사진을 선택하거나 업로드 영역에 끌어다 놓습니다.</li>
+          <li>정확한 픽셀 수를 지정하려면 픽셀 기준을 선택합니다. 원본 크기의 일정 비율로 줄이려면 퍼센트 기준을 선택합니다.</li>
+          <li>픽셀 기준에서는 가로세로 비율 유지 여부를 정한 뒤 가로 크기(px) 또는 세로 크기(px)를 입력합니다.</li>
+          <li>크기 적용을 누르고 처리 결과의 원본 크기와 결과 크기를 비교합니다. 파일을 처음 추가할 때도 현재 설정으로 자동 처리되므로, 값을 바꾼 뒤에는 크기 적용을 다시 눌러 주세요.</li>
+          <li>처리가 완료되면 PNG 다운로드 등 결과 형식이 표시된 다운로드 버튼을 누릅니다. 여러 파일은 전체 ZIP 다운로드로 받을 수 있습니다.</li>
         </ol>
+      </section>
+
+      <section id="resize-160-200" className="space-y-3">
+        <h2 className="text-2xl font-semibold">사진을 가로 160px·세로 200px로 바꾸는 예시</h2>
+        <p className="text-sm text-gray-700 leading-relaxed">
+          아래 순서는 원본 비율과 관계없이 결과 파일을 정확히 160×200px로 만드는 방법입니다. 사진의 원래 비율이
+          4:5가 아니라면 모양이 변할 수 있습니다. 얼굴이나 사물의 형태를 보존해야 한다면 아래의 자르기 안내를 먼저 확인하세요.
+        </p>
+        <ol className="list-decimal space-y-2 pl-5 text-sm text-gray-700">
+          <li>파일 선택으로 사진을 추가하고 픽셀 기준을 선택합니다.</li>
+          <li>가로세로 비율 유지 체크를 해제합니다.</li>
+          <li>가로 크기(px)에 160, 세로 크기(px)에 200을 입력합니다.</li>
+          <li>크기 적용을 누르고 처리 결과의 결과 크기가 160 x 200px인지 확인합니다.</li>
+          <li>결과 형식의 다운로드 버튼으로 파일을 저장합니다. 픽셀 조건 외에 제출처의 파일 형식·KB 용량 조건도 확인하세요.</li>
+        </ol>
+        <p className="text-sm text-gray-700 leading-relaxed">
+          원본이 800×1000px처럼 이미 4:5 비율이면 가로세로 비율 유지를 켜고 가로만 160으로 입력해도 세로가
+          200으로 계산됩니다. 원본 비율이 다를 때는 같은 결과가 나오지 않습니다.
+        </p>
+        <GuideCtaLink
+          href="/tools/image/image-resizer"
+          guideName="이미지 크기 조절 방법"
+          targetTool="이미지 크기 조절기"
+          targetUrl="/tools/image/image-resizer"
+          className="inline-block rounded bg-black px-5 py-3 text-white hover:bg-gray-800"
+        >
+          160×200px 크기 설정하기
+        </GuideCtaLink>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-2xl font-semibold">사진 비율이 다르면 먼저 자른 뒤 크기 조절하기</h2>
+        <p className="text-sm text-gray-700 leading-relaxed">
+          사진을 찌그러뜨리지 않으려면 필요한 부분만 남겨 목표 비율에 맞춘 다음 크기를 줄이는 방법을 사용하세요.
+          160×200px의 가로:세로 비율은 4:5입니다. 자르기 도구의 3:4는 4:5와 다르므로 대체할 수 없습니다.
+        </p>
+        <ol className="list-decimal space-y-2 pl-5 text-sm text-gray-700">
+          <li>이미지 자르기에서 파일 선택으로 원본 사진을 추가합니다.</li>
+          <li>자르기 비율에서 자유를 선택하고 영역을 드래그해 이동하거나 오른쪽 아래 핸들로 크기를 조절합니다. 4:5에 맞추려면 선택 영역의 가로가 세로의 0.8배인지 확인합니다. 예를 들어 400×500px는 4:5입니다.</li>
+          <li>자르기 실행을 누르고 결과 크기와 미리보기를 확인한 뒤 다운로드를 누릅니다.</li>
+          <li>이미지 크기 조절기를 열고, 방금 다운로드한 파일을 파일 선택으로 다시 추가합니다. 도구 사이에 파일이 자동 전달되지는 않습니다.</li>
+          <li>잘린 결과가 실제로 4:5이면 픽셀 기준에서 가로세로 비율 유지를 켜고 가로 160을 입력합니다. 크기 적용 후 결과가 160×200px인지 확인하고 다운로드합니다.</li>
+        </ol>
+        <p className="rounded-xl border bg-gray-50 p-4 text-sm text-gray-700 leading-relaxed">
+          현재 자르기 도구는 자유·1:1·4:3·3:4·16:9·9:16을 제공하며, 4:5 프리셋이나 가로·세로 수치 입력 기능은
+          없습니다. 자유 드래그만으로 정확한 4:5를 맞추기 어려울 수 있습니다. 결과가 4:5가 아닌 상태에서 비율 유지를
+          켜면 160×200px가 보장되지 않고, 끈 뒤 두 값을 지정하면 남은 비율 차이만큼 모양이 변할 수 있습니다.
+          정확한 비율과 형태 보존이 모두 필수라면 4:5를 수치로 지정할 수 있는 편집 도구에서 먼저 자른 뒤 가져오세요.
+        </p>
+        <GuideCtaLink
+          href="/tools/image/image-cropper"
+          guideName="이미지 크기 조절 방법"
+          targetTool="이미지 자르기"
+          targetUrl="/tools/image/image-cropper"
+          className="inline-block rounded border px-5 py-3 text-blue-600 hover:bg-blue-50"
+        >
+          이미지 자르기 열기
+        </GuideCtaLink>
       </section>
 
       <section className="grid gap-3 md:grid-cols-2">
