@@ -210,9 +210,6 @@ export default function Home() {
         }} />
       </div>
 
-      <footer className="text-center text-xs text-gray-400 mt-10">
-        © 2025 JSTools. Made by Jason.
-      </footer>
     </div>
   );
 }

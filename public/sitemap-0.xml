@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 <url><loc>https://jstools-app.vercel.app</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jstools-app.vercel.app/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jstools-app.vercel.app/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://jstools-app.vercel.app/guide</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://jstools-app.vercel.app/guide/image-compression</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://jstools-app.vercel.app/guide/image-resize</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://jstools-app.vercel.app/guide/jpg-vs-webp</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jstools-app.vercel.app/privacy</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://jstools-app.vercel.app/tools</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://jstools-app.vercel.app/tools/date/date-calculator</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://jstools-app.vercel.app/tools/dev/json-formatter</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script"; // ✅ 스크립트 컴포넌트 추가
 import "./globals.css";
+import { SiteFooter } from '@/components/SiteFooter';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -92,6 +93,7 @@ export default function RootLayout({
         </Script>
 
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
