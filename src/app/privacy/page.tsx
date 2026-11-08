@@ -50,7 +50,7 @@ export default function PrivacyPage() {
       <section className="space-y-3 leading-relaxed">
         <h2 className="text-xl font-semibold">5. 외부 요청과 서비스 제공자</h2>
         <p>사이트는 Vercel을 통해 제공됩니다. 페이지와 리소스를 전달하고 보안을 유지하는 과정에서 IP 주소, 요청 주소, 접속 시각과 기기·브라우저 정보 같은 요청 정보가 호스팅 제공자에게 처리될 수 있습니다. 자세한 사항은 <a href="https://vercel.com/legal/privacy-notice" className="text-blue-600 underline">Vercel 개인정보 안내</a>를 참고해 주세요.</p>
-        <p>명언 생성기를 실행하면 외부 명언 서비스와 LibreTranslate 번역 서비스에 요청할 수 있으며, 번역 요청에는 불러온 명언 문장이 포함됩니다. 외부 서비스는 요청을 받는 과정에서 접속 정보 등을 처리할 수 있습니다.</p>
+        <p>명언 생성기를 실행하면 JSTools 서버가 ZenQuotes의 공개 명언 묶음을 캐시에 보관하고 2시간 간격으로 갱신을 시도하며 그중 하나를 제공합니다. 번역은 브라우저가 MyMemory에 불러온 명언 문장을 보내 요청합니다. 이용자가 직접 입력한 문장을 번역하는 기능은 없습니다. MyMemory는 번역 요청 문장과 IP 주소 등 접속 정보를 처리할 수 있으며, 자세한 기준은 <a href="https://mymemory.translated.net/terms-and-conditions" className="text-blue-600 underline">MyMemory 이용·개인정보 안내</a>에서 확인할 수 있습니다.</p>
         <p>외부 제공자의 처리 환경에 따라 정보가 대한민국 밖의 서버에서 처리될 수 있습니다. 제공자별 처리·보관 조건은 각 서비스의 정책과 설정에 따릅니다.</p>
       </section>
       <section className="space-y-3 leading-relaxed">

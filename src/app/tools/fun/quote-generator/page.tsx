@@ -1,46 +1,68 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { quoteGeneratorTool } from '@/data/tools'
+import { parseQuote, quoteFailureMessage, QuoteRequestError, requestQuoteJson, translateQuote, type Quote } from '@/lib/quotes'
 
 export default function QuoteGeneratorPage() {
-  const [quote, setQuote] = useState('')
-  const [author, setAuthor] = useState('')
+  const [quote, setQuote] = useState<Quote | null>(null)
   const [translated, setTranslated] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [phase, setPhase] = useState<'idle' | 'quote' | 'translation'>('idle')
+  const [error, setError] = useState('')
+  const [translationError, setTranslationError] = useState('')
+  const [translationRetryable, setTranslationRetryable] = useState(true)
+  const requestRef = useRef<AbortController | null>(null)
+  const loading = phase !== 'idle'
+
+  useEffect(() => () => requestRef.current?.abort(), [])
+
+  const fetchTranslation = async (text: string, controller: AbortController) => {
+    setPhase('translation')
+    setTranslationRetryable(true)
+    try {
+      const result = await translateQuote(text, controller.signal)
+      if (!controller.signal.aborted) setTranslated(result)
+    } catch (failure) {
+      if (!controller.signal.aborted) {
+        setTranslationError(quoteFailureMessage(failure, true))
+        setTranslationRetryable(!(failure instanceof QuoteRequestError && failure.kind === 'limit'))
+      }
+    }
+  }
 
   const fetchQuote = async () => {
-    setLoading(true)
+    if (requestRef.current) return
+    const controller = new AbortController()
+    requestRef.current = controller
+    setPhase('quote')
+    setQuote(null)
+    setTranslated('')
+    setError('')
+    setTranslationError('')
     try {
-      const res = await fetch('http://api.quotable.io/random')
-      const data = await res.json()
-      setQuote(data.content)
-      setAuthor(data.author)
-
-      const translatedRes = await fetch('https://libretranslate.com/translate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-        },
-        body: JSON.stringify({
-          q: data.content,
-          source: 'en',
-          target: 'ko',
-          format: 'text',
-        }),
-      })
-      const translatedData = await translatedRes.json()
-      setTranslated(translatedData.translatedText)
-    } catch (error) {
-      console.error('명언 가져오기 실패:', error)
-      setQuote('명언을 불러오는 데 실패했습니다.')
-      setAuthor('')
-      setTranslated('')
+      const result = parseQuote(await requestQuoteJson('/api/quotes', controller.signal))
+      if (controller.signal.aborted) return
+      setQuote(result)
+      await fetchTranslation(result.quote, controller)
+    } catch (failure) {
+      if (!controller.signal.aborted) setError(quoteFailureMessage(failure))
+    } finally {
+      if (!controller.signal.aborted) setPhase('idle')
+      if (requestRef.current === controller) requestRef.current = null
     }
-    setLoading(false)
+  }
+
+  const retryTranslation = async () => {
+    if (requestRef.current || !quote) return
+    const controller = new AbortController()
+    requestRef.current = controller
+    setTranslationError('')
+    try { await fetchTranslation(quote.quote, controller) } finally {
+      if (!controller.signal.aborted) setPhase('idle')
+      if (requestRef.current === controller) requestRef.current = null
+    }
   }
 
   return (
@@ -56,18 +78,21 @@ export default function QuoteGeneratorPage() {
           className="px-6 py-2 bg-black text-white rounded hover:bg-gray-800 transition"
           disabled={loading}
         >
-          {loading ? '불러오는 중...' : '명언 생성하기'}
+          {phase === 'quote' ? '명언 불러오는 중...' : phase === 'translation' ? '번역하는 중...' : error ? '명언 다시 시도' : quote ? '다른 명언 보기' : '명언 생성하기'}
         </button>
       </div>
 
+      <p className="text-sm text-gray-600" role="status">{phase === 'quote' ? '영어 명언을 가져오고 있습니다.' : phase === 'translation' ? '한국어 번역을 가져오고 있습니다. 영어 원문을 먼저 확인할 수 있습니다.' : ''}</p>
+      {error && <div className="quote-error" role="alert"><h2 className="font-semibold">명언을 가져오지 못했습니다</h2><p>{error}</p></div>}
       {quote && (
-        <div className="bg-gray-100 p-4 rounded space-y-3 text-center">
-          <blockquote className="text-lg italic">&quot;{quote}&quot;</blockquote>
-          <p className="text-sm text-gray-500">— {author}</p>
-          <hr />
-          <p className="text-base text-gray-800 font-medium">{translated}</p>
-        </div>
+        <section className="quote-result space-y-5" aria-label="명언 결과">
+          <blockquote lang="en">&ldquo;{quote.quote}&rdquo;<cite>— {quote.author}</cite></blockquote>
+          {translated && <div className="border-t pt-4"><h2 className="font-semibold">한국어 번역</h2><p lang="ko" className="mt-2">{translated}</p><p className="text-sm text-gray-600 mt-2">자동 번역은 참고용입니다. 원문과 함께 확인하세요.</p></div>}
+          {translationError && <div className="quote-translation-note" role="alert"><h2 className="font-semibold">번역을 확인하지 못했습니다</h2><p>{translationError}</p>{translationRetryable && <button type="button" className="btn mt-3" disabled={loading} onClick={retryTranslation}>번역 다시 시도</button>}</div>}
+        </section>
       )}
+
+      <p className="text-sm text-gray-600">명언 제공: <a href="https://zenquotes.io/" className="text-blue-700 underline">ZenQuotes</a> · 번역: <a href="https://mymemory.translated.net/" className="text-blue-700 underline">MyMemory</a>. 외부 서비스의 연결 상태와 무료 이용 한도에 따라 제공이 제한될 수 있습니다.</p>
 
       <ToolSeoSections tool={quoteGeneratorTool} />
 

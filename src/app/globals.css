@@ -89,6 +89,10 @@ button:disabled { cursor: not-allowed; }
 .tool-card:hover { border-color: #93b4ef; box-shadow: 0 3px 12px #1d4ed80a; }
 .card-icon { color: var(--primary); background: #eff6ff; display: grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: 10px; }
 .tool-card h3 { font-weight: 700; font-size: 17px; line-height: 1.5; }
+.tool-card-copy { min-width: 0; }
+.tool-card-grid.image-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.tool-category-label { display: block; color: var(--primary); font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+.other-tool-grid > a[id] { scroll-margin-top: 24px; }
 .tool-card p { color: var(--muted); font-size: 14px; margin-top: 6px; line-height: 1.7; }
 .card-arrow { width: 18px; margin-left: auto; color: #64748b; }
 .guide-card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
@@ -97,7 +101,7 @@ button:disabled { cursor: not-allowed; }
 .guide-card h3 { font-weight: 700; }
 .guide-card p { margin: 8px 0 20px; font-size: 14px; color: var(--muted); }
 .guide-card > span { font-size: 14px; color: var(--primary); font-weight: 600; }
-.resizer-workspace { display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: 24px; align-items: start; }
+.resizer-workspace { display: grid; grid-template-columns: minmax(360px, 1fr) minmax(0, 1.25fr); gap: 24px; align-items: start; }
 .resizer-controls { display: grid; gap: 20px; }
 .resizer-upload, .resizer-settings, .resizer-results { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px; min-width: 0; }
 .resizer-upload { border: 2px dashed #a5bdf5; text-align: center; }
@@ -154,11 +158,28 @@ button:disabled { cursor: not-allowed; }
 .info-page { max-width: 800px; margin: 40px auto; padding: 32px; background: white; border: 1px solid var(--border); border-radius: 12px; }
 .info-page p, .info-page li { font-size: 16px; line-height: 1.9; }
 .info-page a { color: var(--primary); }
+/* 서비스 설명만 어절 단위로 줄바꿈하고, 긴 단일 문자열에는 넘침 방지 규칙을 둔다. */
+:where(.directory-header, .section-heading, .tool-card, .guide-card, .guide-list, .reading-article, .info-page) :is(h1, h2, h3, p, li),
+.tool-page > :is(h1, p), .tool-page > header :is(h1, p),
+.seo-section :is(h2, h3, p, li), .resizer-controls :is(h2, p, label), .empty-results :is(h3, p) {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.tool-page button, .category-links a, .site-header nav a { word-break: keep-all; }
+.tool-sidebar a, .reading-article :is(th, td) { word-break: keep-all; overflow-wrap: anywhere; }
+.file-result h3, .tool-page textarea, .tool-page input, .tool-page pre, .tool-page code, .quote-result [lang="en"] {
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+.quote-error { padding: 16px; border: 1px solid #fecaca; border-radius: 8px; background: #fff1f2; color: #991b1b; }
+.quote-translation-note { padding: 16px; border: 1px solid #fde68a; border-radius: 8px; background: #fffbeb; color: #854d0e; }
+.quote-result blockquote { font-size: 22px; line-height: 1.8; }
+.quote-result cite { display: block; margin-top: 12px; font-style: normal; color: var(--muted); }
 @media (min-width: 1280px) { .tool-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 1100px) {
   .workspace-shell { grid-template-columns: 180px minmax(0, 1fr); }
   .workspace-content { padding: 24px; }
-  .resizer-workspace { grid-template-columns: minmax(230px, 300px) minmax(0, 1fr); gap: 16px; }
+  .resizer-workspace { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .guide-card-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 900px) {
@@ -180,6 +201,7 @@ button:disabled { cursor: not-allowed; }
   .workspace-content { padding: 24px 16px; }
   .tool-page > h1, .tool-page > header h1, .directory-header h1 { font-size: 28px; }
   .tool-card-grid { grid-template-columns: 1fr; gap: 12px; }
+  .tool-card-grid.image-card-grid { grid-template-columns: 1fr; }
   .tool-card { padding: 18px 16px; }
   .directory-header { margin-bottom: 24px; }
   .section-heading h2 { font-size: 20px; }

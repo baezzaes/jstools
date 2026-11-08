@@ -4,4 +4,4 @@ export const siteOperator = {
   email: 'baezzaes0@gmail.com',
 }
 
-export const privacyUpdatedAt = '2026-11-06'
+export const privacyUpdatedAt = '2026-11-08'
