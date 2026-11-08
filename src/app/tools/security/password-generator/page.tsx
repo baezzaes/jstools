@@ -51,13 +51,14 @@ export default function PasswordGeneratorPage() {
   }
 
   return (
-    <div className="max-w-xl mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold text-center">🔐 랜덤 비밀번호 생성기</h1>
+    <div className="tool-page space-y-6">
+      <h1 className="text-2xl font-bold">랜덤 비밀번호 생성기</h1>
 
       <div className="border p-4 rounded bg-gray-50 space-y-4">
         <div className="flex items-center gap-2">
-          <label className="w-32">비밀번호 길이:</label>
+          <label htmlFor="password-length" className="w-32">비밀번호 길이:</label>
           <input
+            id="password-length"
             type="number"
             value={length}
             onChange={(e) => setLength(Number(e.target.value))}

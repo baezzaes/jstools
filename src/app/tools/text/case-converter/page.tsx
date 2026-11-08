@@ -49,10 +49,12 @@ export default function CaseConverterPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold text-center">🔁 대소문자 변환기</h1>
+    <div className="tool-page space-y-6">
+      <h1 className="text-2xl font-bold">대소문자 변환기</h1>
 
+      <label htmlFor="case-input" className="block font-semibold">변환할 텍스트</label>
       <textarea
+        id="case-input"
         className="w-full border p-3 rounded-md shadow-sm text-sm"
         rows={6}
         placeholder="텍스트를 입력하세요..."

@@ -255,8 +255,8 @@ export default function ImageCompressorPage() {
   }, [])
 
   return (
-    <div className="max-w-4xl mx-auto p-4 space-y-6">
-      <header className="space-y-3 text-center">
+    <div className="tool-page space-y-6">
+      <header className="space-y-3">
         <h1 className="text-2xl font-bold">이미지 용량 줄이기</h1>
         <p className="text-sm text-gray-600 leading-relaxed">
           JPG, PNG, WEBP 이미지를 브라우저 안에서 압축합니다. 파일은 서버로 업로드되지 않으며,

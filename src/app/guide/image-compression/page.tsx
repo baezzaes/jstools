@@ -1,3 +1,4 @@
+import { GuideContents } from '@/components/GuideContents'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { GuideCtaLink } from '@/components/GuideCtaLink'
@@ -56,9 +57,11 @@ function buildArticleSchema() {
   }
 }
 
+const contents = [{"id": "guide-section-1", "title": "KB·MB 용량과 픽셀 크기는 다릅니다"}, {"id": "guide-section-2", "title": "사진 용량이 커지는 이유"}, {"id": "guide-section-3", "title": "JPG 이미지 용량을 줄이는 방법"}, {"id": "guide-section-4", "title": "JPG, PNG, WebP 차이"}, {"id": "guide-section-5", "title": "JSTools 이미지 압축기 사용 방법"}, {"id": "guide-section-6", "title": "압축 후에도 용량이 크다면"}, {"id": "guide-section-7", "title": "휴대폰과 여러 사진에서 사용하는 방법"}, {"id": "guide-section-8", "title": "사진 용량을 바로 줄여보세요"}, {"id": "guide-section-9", "title": "관련 가이드"}]
+
 export default function ImageCompressionGuidePage() {
   return (
-    <article className="max-w-3xl mx-auto p-6 space-y-8">
+    <div className="reading-layout"><article className="reading-article space-y-8">
       <JsonLd id="image-compression-guide-article-schema" data={buildArticleSchema()} />
 
       <header className="space-y-3">
@@ -80,14 +83,15 @@ export default function ImageCompressionGuidePage() {
           guideName="사진 용량 줄이는 방법"
           targetTool="이미지 용량 줄이기"
           targetUrl="/tools/image/image-compressor"
-          className="inline-block px-5 py-3 bg-black text-white rounded hover:bg-gray-800 transition"
+          className="guide-cta"
         >
           사진 용량 줄이기 시작
         </GuideCtaLink>
       </header>
+      <GuideContents sections={contents} mobile />
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">KB·MB 용량과 픽셀 크기는 다릅니다</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-1">KB·MB 용량과 픽셀 크기는 다릅니다</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           KB·MB는 파일이 차지하는 데이터의 양이고, 픽셀 크기는 사진의 가로와 세로에 담긴 점의 수입니다.
           같은 픽셀 크기여도 사진 내용, 저장 형식, 압축 품질에 따라 파일 용량은 달라집니다.
@@ -101,7 +105,7 @@ export default function ImageCompressionGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">사진 용량이 커지는 이유</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-2">사진 용량이 커지는 이유</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           최근 스마트폰 카메라는 고해상도 사진을 기본으로 저장합니다. 원본 사진은 픽셀 수가 많고 색상 정보도 많이
           담고 있어 선명하지만, 웹 업로드나 메신저 첨부에는 부담스러운 파일이 될 수 있습니다.
@@ -114,7 +118,7 @@ export default function ImageCompressionGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">JPG 이미지 용량을 줄이는 방법</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-3">JPG 이미지 용량을 줄이는 방법</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           JPG 용량을 줄이는 핵심은 화질과 파일 크기의 균형입니다. 무조건 가장 낮은 품질로 압축하기보다, 실제로 보여줄
           크기와 용도에 맞춰 조절하는 것이 좋습니다.
@@ -142,8 +146,9 @@ export default function ImageCompressionGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">JPG, PNG, WebP 차이</h2>
-        <div className="overflow-x-auto">
+        <h2 className="text-2xl font-semibold" id="guide-section-4">JPG, PNG, WebP 차이</h2>
+        <p className="table-scroll-hint">표가 화면보다 넓으면 좌우로 움직여 모든 항목을 확인하세요.</p>
+        <div className="table-scroll" tabIndex={0} role="region" aria-label="이미지 형식 비교표, 가로 스크롤 가능">
           <table className="w-full min-w-[560px] border-collapse text-left text-sm">
             <thead>
               <tr className="border-b bg-gray-50">
@@ -178,7 +183,7 @@ export default function ImageCompressionGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">JSTools 이미지 압축기 사용 방법</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-5">JSTools 이미지 압축기 사용 방법</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           JSTools 이미지 압축기는 브라우저에서 JPG, PNG, WebP 이미지를 처리합니다. 선택한 이미지는 서버로 업로드되지
           않으며, 압축 결과를 개별 파일 또는 ZIP으로 다운로드할 수 있습니다.
@@ -197,7 +202,7 @@ export default function ImageCompressionGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">압축 후에도 용량이 크다면</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-6">압축 후에도 용량이 크다면</h2>
         <ul className="list-disc space-y-2 pl-5 text-sm text-gray-700">
           <li>품질을 조금씩 낮춰 적용하고 확인하세요. 손실 압축에서는 세부 무늬나 작은 글자가 흐려지거나 경계에 얼룩이 생길 수 있습니다.</li>
           <li>
@@ -220,7 +225,7 @@ export default function ImageCompressionGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">휴대폰과 여러 사진에서 사용하는 방법</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-7">휴대폰과 여러 사진에서 사용하는 방법</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           휴대폰에서도 ‘파일 선택’으로 사진을 불러올 수 있습니다. 사진 선택 화면에서 여러 장 선택을 지원하면 한 번에
           추가하고 같은 품질을 적용할 수 있습니다. HEIC 사진은 지원하지 않으므로 JPG·PNG·WebP 파일을 준비하세요.
@@ -234,7 +239,7 @@ export default function ImageCompressionGuidePage() {
       </section>
 
       <section className="rounded-xl border bg-gray-50 p-5 text-center space-y-3">
-        <h2 className="text-xl font-semibold">사진 용량을 바로 줄여보세요</h2>
+        <h2 className="text-xl font-semibold" id="guide-section-8">사진 용량을 바로 줄여보세요</h2>
         <p className="text-sm text-gray-600">
           설치 없이 브라우저에서 JPG, PNG, WebP 이미지를 압축할 수 있습니다.
         </p>
@@ -243,14 +248,14 @@ export default function ImageCompressionGuidePage() {
           guideName="사진 용량 줄이는 방법"
           targetTool="이미지 용량 줄이기"
           targetUrl="/tools/image/image-compressor"
-          className="inline-block px-5 py-3 bg-black text-white rounded hover:bg-gray-800 transition"
+          className="guide-cta"
         >
           이미지 용량 줄이기 바로가기
         </GuideCtaLink>
       </section>
 
       <section className="rounded-xl border p-5 space-y-3">
-        <h2 className="text-xl font-semibold">관련 가이드</h2>
+        <h2 className="text-xl font-semibold" id="guide-section-9">관련 가이드</h2>
         <div className="grid gap-2 text-sm">
           <Link href="/guide/jpg-vs-webp" className="text-blue-600 hover:underline">
             JPG와 WebP 차이 보기
@@ -260,6 +265,6 @@ export default function ImageCompressionGuidePage() {
           </Link>
         </div>
       </section>
-    </article>
+    </article><GuideContents sections={contents} /></div>
   )
 }

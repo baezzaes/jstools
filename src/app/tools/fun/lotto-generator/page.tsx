@@ -84,13 +84,14 @@ export default function LottoGenerator() {
   }
 
   return (
-    <div className="max-w-xl mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold text-center">🎯 운세 기반 로또 번호 추천기</h1>
+    <div className="tool-page space-y-6">
+      <h1 className="text-2xl font-bold">운세 기반 로또 번호 추천기</h1>
 
       <div className="space-y-4 border p-4 rounded bg-gray-50">
         <div>
-          <label className="font-semibold">1. 오늘 기분은?</label>
+          <label htmlFor="lotto-feeling" className="font-semibold">1. 오늘 기분은?</label>
           <select
+            id="lotto-feeling"
             value={selectedFeeling}
             onChange={(e) => setSelectedFeeling(e.target.value)}
             className="w-full p-2 border rounded mt-1"
@@ -103,8 +104,9 @@ export default function LottoGenerator() {
         </div>
 
         <div>
-          <label className="font-semibold">2. 좋아하는 색은?</label>
+          <label htmlFor="lotto-color" className="font-semibold">2. 좋아하는 색은?</label>
           <select
+            id="lotto-color"
             value={selectedColor}
             onChange={(e) => setSelectedColor(e.target.value)}
             className="w-full p-2 border rounded mt-1"
@@ -117,8 +119,9 @@ export default function LottoGenerator() {
         </div>
 
         <div>
-          <label className="font-semibold">3. 좋아하는 숫자 (선택)</label>
+          <label htmlFor="lotto-number" className="font-semibold">3. 좋아하는 숫자 (선택)</label>
           <input
+            id="lotto-number"
             type="number"
             min={1}
             max={45}

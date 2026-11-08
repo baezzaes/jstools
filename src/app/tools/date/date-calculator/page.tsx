@@ -45,8 +45,8 @@ export default function DateCalculatorPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold text-center">📅 날짜 계산기</h1>
+    <div className="tool-page space-y-6">
+      <h1 className="text-2xl font-bold">날짜 계산기</h1>
       <p className="text-sm text-gray-600">두 날짜 사이의 일수 또는 기준일에서 며칠 전·후 날짜를 계산합니다. D-day는 오늘과 목표일을 입력해 확인하세요.</p>
 
       {/* 날짜 차이 계산 */}

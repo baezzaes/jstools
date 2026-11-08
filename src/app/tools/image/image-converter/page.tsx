@@ -337,8 +337,8 @@ export default function ImageConverterPage() {
   }, [])
 
   return (
-    <div className="max-w-4xl mx-auto p-4 space-y-6">
-      <header className="space-y-3 text-center">
+    <div className="tool-page space-y-6">
+      <header className="space-y-3">
         <h1 className="text-2xl font-bold">이미지 변환기</h1>
         <p className="text-sm text-gray-600 leading-relaxed">
           JPG, PNG, WebP 이미지를 원하는 형식으로 변환합니다. 업로드한 이미지는 서버로 전송되지 않으며

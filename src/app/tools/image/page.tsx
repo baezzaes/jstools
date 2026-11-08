@@ -97,11 +97,11 @@ function buildItemListSchema() {
 
 export default function ImageToolsPage() {
   return (
-    <div className="max-w-4xl mx-auto p-4 space-y-8">
+    <div className="tool-page space-y-8">
       <JsonLd id="image-tools-breadcrumb-schema" data={buildBreadcrumbSchema()} />
       <JsonLd id="image-tools-itemlist-schema" data={buildItemListSchema()} />
 
-      <header className="space-y-3 text-center">
+      <header className="space-y-3">
         <h1 className="text-3xl font-bold">이미지 도구</h1>
         <p className="text-sm text-gray-600 leading-relaxed">
           이미지 압축, 크기 조절, 파일 형식 변환을 브라우저에서 바로 처리할 수 있습니다. 업로드한 이미지는

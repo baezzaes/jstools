@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="mx-auto max-w-3xl space-y-8 p-6 text-gray-800">
+    <main className="info-page space-y-8">
       <header className="space-y-3">
         <Link href="/" className="text-sm text-blue-600 hover:underline">JSTools 홈</Link>
         <h1 className="text-3xl font-bold">JSTools 소개</h1>

@@ -26,8 +26,8 @@ export default function WordCounterPage() {
     input.split('\n').filter(Boolean).length
 
   return (
-    <div className="max-w-2xl mx-auto p-4 space-y-6">
-      <header className="space-y-3 text-center">
+    <div className="tool-page space-y-6">
+      <header className="space-y-3">
         <h1 className="text-2xl font-bold">{wordCounterTool.name}</h1>
         <p className="text-sm text-gray-600 leading-relaxed">
           텍스트를 입력하면 글자 수, 공백 제외 글자 수, 단어 수, 줄 수를 실시간으로 계산합니다.
@@ -35,7 +35,11 @@ export default function WordCounterPage() {
         </p>
       </header>
 
+      <div className="word-workspace">
+      <div className="word-input">
+      <label htmlFor="word-counter-input">입력할 텍스트</label>
       <textarea
+        id="word-counter-input"
         aria-label="글자 수를 계산할 텍스트"
         className="w-full border p-3 rounded-md shadow-sm text-base focus:outline-none focus:ring focus:border-blue-300"
         rows={10}
@@ -49,25 +53,31 @@ export default function WordCounterPage() {
           setText(e.target.value)
         }}
       />
-
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm md:text-base bg-gray-50 p-4 rounded-md shadow-inner">
-        <div>
-          <strong>글자 수(공백 포함)</strong>
-          <div>{getCharCount(text)}</div>
-        </div>
-        <div>
-          <strong>글자 수(공백 제외)</strong>
-          <div>{getCharCountNoSpaces(text)}</div>
-        </div>
-        <div>
-          <strong>단어 수</strong>
-          <div>{getWordCount(text)}</div>
-        </div>
-        <div>
-          <strong>줄 수</strong>
-          <div>{getLineCount(text)}</div>
-        </div>
       </div>
+
+      <section className="word-results" aria-label="글자 수 계산 결과">
+        <h2>집계 결과</h2>
+      <dl className="word-metrics">
+        <div>
+          <dt>글자 수(공백 포함)</dt>
+          <dd>{getCharCount(text)}</dd>
+        </div>
+        <div>
+          <dt>글자 수(공백 제외)</dt>
+          <dd>{getCharCountNoSpaces(text)}</dd>
+        </div>
+        <div>
+          <dt>단어 수</dt>
+          <dd>{getWordCount(text)}</dd>
+        </div>
+        <div>
+          <dt>줄 수(빈 줄 제외)</dt>
+          <dd>{getLineCount(text)}</dd>
+        </div>
+      </dl>
+      </section>
+      </div>
+      <p className="text-sm text-gray-600">입력과 동시에 계산됩니다. 줄 수는 완전히 빈 줄만 제외하며 공백만 있는 줄은 포함합니다. 일부 이모지는 여러 글자로 계산될 수 있으므로 제출처의 기준도 확인하세요.</p>
 
       <ToolSeoSections tool={wordCounterTool} />
 

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import JSZip from 'jszip'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
+import { UiIcon } from '@/components/UiIcon'
 import { imageResizerTool } from '@/data/tools'
 import { trackDownloadClick, trackToolExecute, trackToolResult, trackToolView, type ToolActionSource } from '@/lib/analytics'
 import {
@@ -427,8 +428,8 @@ export default function ImageResizerPage() {
   }, [])
 
   return (
-    <div className="max-w-4xl mx-auto p-4 space-y-6">
-      <header className="space-y-3 text-center">
+    <div className="tool-page space-y-6">
+      <header className="space-y-3">
         <h1 className="text-2xl font-bold">이미지 크기 조절기</h1>
         <p className="text-sm text-gray-600 leading-relaxed">
           JPG, PNG, WEBP 이미지의 가로세로 크기를 브라우저 안에서 조절합니다. 업로드한 이미지는 서버로
@@ -436,6 +437,8 @@ export default function ImageResizerPage() {
         </p>
       </header>
 
+      <div className="resizer-workspace">
+      <div className="resizer-controls">
       <section
         onDragOver={(event) => {
           event.preventDefault()
@@ -447,9 +450,7 @@ export default function ImageResizerPage() {
           setIsDragging(false)
           void addFiles(event.dataTransfer.files)
         }}
-        className={`rounded-lg border-2 border-dashed p-6 text-center transition ${
-          isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 bg-gray-50'
-        }`}
+        className={`resizer-upload ${isDragging ? 'is-dragging' : ''}`}
       >
         <input
           ref={inputRef}
@@ -464,6 +465,7 @@ export default function ImageResizerPage() {
           }}
         />
         <div className="space-y-3">
+          <UiIcon name="image" className="mx-auto text-blue-700" />
           <h2 className="text-lg font-semibold">이미지를 끌어다 놓으세요</h2>
           <p className="text-sm text-gray-600">JPG, JPEG, PNG, WEBP 파일을 여러 장 선택할 수 있습니다.</p>
           <button
@@ -473,21 +475,23 @@ export default function ImageResizerPage() {
           >
             파일 선택
           </button>
+          <p className="text-sm text-gray-600">파일을 추가하면 현재 설정으로 자동 처리됩니다.</p>
         </div>
       </section>
 
-      <section className="border rounded-lg p-4 space-y-4 bg-white">
-        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <section className="resizer-settings space-y-4">
+        <div className="space-y-4">
           <div>
             <h2 className="font-semibold">크기 조절 설정</h2>
             <p className="text-sm text-gray-600">
               원본보다 크게 확대하면 이미지가 흐려질 수 있습니다. 크기 조절은 압축 품질 설정과 별도로 동작합니다.
             </p>
           </div>
-          <div className="inline-flex rounded-md border p-1 text-sm">
+          <div className="resizer-modes" role="group" aria-label="크기 조절 기준">
             <button
               type="button"
               onClick={() => setResizeMode('pixels')}
+              aria-pressed={resizeMode === 'pixels'}
               className={`rounded px-3 py-2 ${resizeMode === 'pixels' ? 'bg-black text-white' : 'text-gray-700'}`}
             >
               픽셀 기준
@@ -495,6 +499,7 @@ export default function ImageResizerPage() {
             <button
               type="button"
               onClick={() => setResizeMode('percent')}
+              aria-pressed={resizeMode === 'percent'}
               className={`rounded px-3 py-2 ${resizeMode === 'percent' ? 'bg-black text-white' : 'text-gray-700'}`}
             >
               퍼센트 기준
@@ -504,7 +509,7 @@ export default function ImageResizerPage() {
 
         {resizeMode === 'pixels' ? (
           <div className="space-y-3">
-            <div className="grid gap-3 md:grid-cols-2">
+            <div className="grid grid-cols-2 gap-3">
               <label className="space-y-1 text-sm">
                 <span className="font-medium">가로 크기(px)</span>
                 <input
@@ -571,7 +576,8 @@ export default function ImageResizerPage() {
           </div>
         )}
 
-        <div className="flex flex-wrap gap-2">
+        <p className="text-sm text-gray-600">설정을 바꾼 뒤에는 ‘크기 적용’을 눌러 결과를 갱신하세요.</p>
+        <div className="resizer-actions">
           <button
             type="button"
             onClick={applyResize}
@@ -580,6 +586,19 @@ export default function ImageResizerPage() {
           >
             크기 적용
           </button>
+          {items.length === 0 && <p className="text-sm text-gray-600">이미지를 추가하면 크기를 적용할 수 있습니다.</p>}
+        </div>
+      </section>
+      </div>
+
+      <section className="resizer-results space-y-4" aria-labelledby="resize-results-heading" aria-busy={isProcessing}>
+        <div className="result-heading">
+          <h2 id="resize-results-heading">처리 결과</h2>
+          <p className="text-sm text-gray-600" role="status">
+            {isProcessing ? '크기 조절 중...' : `완료 ${completedItems.length}개 · 오류 ${items.filter(item => item.status === 'error').length}개`}
+          </p>
+        </div>
+        <div className="result-toolbar">
           <button
             type="button"
             onClick={downloadAll}
@@ -592,38 +611,35 @@ export default function ImageResizerPage() {
             type="button"
             onClick={clearAll}
             disabled={items.length === 0}
-            className="px-4 py-2 bg-gray-700 text-white rounded disabled:bg-gray-300 hover:bg-gray-800 transition"
+            className="secondary-button"
           >
             전체 초기화
           </button>
         </div>
-      </section>
-
-      <section className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">처리 결과</h2>
-          {isProcessing && <span className="text-sm text-blue-600">크기 조절 중...</span>}
-        </div>
 
         {items.length === 0 ? (
-          <div className="rounded-lg border p-4 text-center text-sm text-gray-500">
-            아직 추가된 이미지가 없습니다.
+          <div className="empty-results">
+            <UiIcon name="image" />
+            <h3 className="font-semibold text-gray-900">아직 추가된 이미지가 없습니다.</h3>
+            <p className="mt-2 text-sm">파일을 선택하면 원본과 결과의 크기·용량을 비교할 수 있습니다.</p>
           </div>
         ) : (
           <div className="space-y-3">
             {items.map((item) => (
-              <div key={item.id} className="grid gap-3 rounded-lg border p-3 md:grid-cols-[96px_1fr]">
+              <div key={item.id} className="file-result space-y-3">
+                <div className="flex items-start gap-3">
                 {/* Blob preview URLs are local-only and cannot be optimized by next/image. */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={item.resizedUrl || item.originalUrl}
                   alt={`${item.name} 미리보기`}
-                  className="h-24 w-24 rounded border object-cover"
+                  className="h-14 w-14 rounded border object-contain"
                 />
-                <div className="space-y-3 min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
                     <div className="min-w-0">
-                      <h3 className="truncate font-semibold">{item.name}</h3>
+                      <span className={`status-label ${item.status === 'error' ? 'error' : ''}`}>{item.status === 'done' ? '✓ 완료' : item.status === 'error' ? '! 오류' : '처리 중'}</span>
+                      <h3 className="font-semibold text-sm mt-1">{item.name}</h3>
                       <p className="text-xs text-gray-500">{item.type || '알 수 없는 형식'}</p>
                       {item.status === 'done' && (
                         <p className="text-xs text-gray-500">
@@ -639,11 +655,13 @@ export default function ImageResizerPage() {
                       삭제
                     </button>
                   </div>
+                </div>
+                </div>
 
                   {item.status === 'error' ? (
                     <p className="rounded bg-red-50 p-2 text-sm text-red-600">{item.error}</p>
                   ) : (
-                    <div className="grid gap-2 text-sm md:grid-cols-5">
+                    <div className="file-facts">
                       <div>
                         <strong className="block">원본 크기</strong>
                         {item.originalWidth && item.originalHeight
@@ -688,12 +706,12 @@ export default function ImageResizerPage() {
                       {getImageFormatLabel(item.resizedBlob?.type || item.type)} 다운로드
                     </button>
                   </div>
-                </div>
               </div>
             ))}
           </div>
         )}
       </section>
+      </div>
 
       <section className="rounded-lg border bg-gray-50 p-4 text-sm text-gray-700 leading-relaxed">
         <h2 className="font-semibold text-gray-900">개인정보 안내</h2>

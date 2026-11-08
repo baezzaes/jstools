@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script"; // ✅ 스크립트 컴포넌트 추가
 import "./globals.css";
 import { SiteFooter } from '@/components/SiteFooter';
+import { SiteHeader } from '@/components/SiteHeader';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -92,7 +93,8 @@ export default function RootLayout({
           `}
         </Script>
 
-        {children}
+        <SiteHeader />
+        <div id="main-content" tabIndex={-1}>{children}</div>
         <SiteFooter />
       </body>
     </html>

@@ -22,8 +22,8 @@ export default function QRCodeGenerator() {
   }
 
   return (
-    <div className="max-w-xl mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold text-center">📱 QR 코드 생성기</h1>
+    <div className="tool-page space-y-6">
+      <h1 className="text-2xl font-bold">QR 코드 생성기</h1>
 
       <div className="space-y-4 border p-4 rounded bg-gray-50">
         <div>

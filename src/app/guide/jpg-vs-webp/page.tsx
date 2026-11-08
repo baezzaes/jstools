@@ -1,3 +1,4 @@
+import { GuideContents } from '@/components/GuideContents'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { GuideCtaLink } from '@/components/GuideCtaLink'
@@ -56,9 +57,11 @@ function buildArticleSchema() {
   }
 }
 
+const contents = [{"id": "guide-section-1", "title": "JPG란?"}, {"id": "guide-section-2", "title": "PNG란? 투명 로고와 글자 이미지에 적합한 형식"}, {"id": "guide-section-3", "title": "WebP란?"}, {"id": "guide-section-4", "title": "JPG와 WebP 차이"}, {"id": "guide-section-5", "title": "JPG를 사용하면 좋은 경우"}, {"id": "guide-section-6", "title": "WebP를 사용하면 좋은 경우"}, {"id": "guide-section-7", "title": "제출 조건과 투명 배경에 맞춰 고르기"}, {"id": "guide-section-8", "title": "JPG·PNG·WebP를 변환하는 순서"}, {"id": "guide-section-9", "title": "용도에 맞는 이미지 형식으로 변환하기"}, {"id": "guide-section-10", "title": "이미지 용량 더 줄이기"}, {"id": "guide-section-11", "title": "관련 가이드"}]
+
 export default function JpgVsWebpGuidePage() {
   return (
-    <article className="max-w-3xl mx-auto p-6 space-y-8">
+    <div className="reading-layout"><article className="reading-article space-y-8">
       <JsonLd id="jpg-vs-webp-guide-article-schema" data={buildArticleSchema()} />
 
       <header className="space-y-3">
@@ -83,14 +86,15 @@ export default function JpgVsWebpGuidePage() {
           guideName="JPG와 WebP 차이"
           targetTool="이미지 변환기"
           targetUrl="/tools/image/image-converter"
-          className="inline-block px-5 py-3 bg-black text-white rounded hover:bg-gray-800 transition"
+          className="guide-cta"
         >
           이미지 형식 변환기 열기
         </GuideCtaLink>
       </header>
+      <GuideContents sections={contents} mobile />
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">JPG란?</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-1">JPG란?</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           JPG는 사진 저장에 널리 사용되는 손실 압축 이미지 형식입니다. 대부분의 브라우저, 운영체제, 편집 프로그램,
           오래된 장비에서도 열 수 있어 호환성이 매우 높습니다. 다만 투명 배경은 지원하지 않으며, 같은 파일을 반복해서
@@ -99,7 +103,7 @@ export default function JpgVsWebpGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">PNG란? 투명 로고와 글자 이미지에 적합한 형식</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-2">PNG란? 투명 로고와 글자 이미지에 적합한 형식</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           PNG는 무손실 압축과 투명도를 지원합니다. 로고, 아이콘, 화면 캡처처럼 글자와 선을 선명하게 보관하려는
           경우에 적합하지만, 복잡한 사진은 JPG보다 파일 용량이 클 수 있습니다. 브라우저에서 널리 지원되더라도
@@ -112,7 +116,7 @@ export default function JpgVsWebpGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">WebP란?</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-3">WebP란?</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           WebP는 웹 이미지 전송 효율을 고려해 만들어진 이미지 형식입니다. 이미지 종류와 인코딩 설정에 따라 JPG보다
           더 작은 용량이 될 수 있고, 손실 압축과 무손실 압축을 모두 사용할 수 있습니다. 투명 배경도 지원할 수 있어
@@ -121,8 +125,9 @@ export default function JpgVsWebpGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">JPG와 WebP 차이</h2>
-        <div className="overflow-x-auto">
+        <h2 className="text-2xl font-semibold" id="guide-section-4">JPG와 WebP 차이</h2>
+        <p className="table-scroll-hint">표가 화면보다 넓으면 좌우로 움직여 모든 항목을 확인하세요.</p>
+        <div className="table-scroll" tabIndex={0} role="region" aria-label="이미지 형식 비교표, 가로 스크롤 가능">
           <table className="w-full min-w-[640px] border-collapse text-left text-sm">
             <thead>
               <tr className="border-b bg-gray-50">
@@ -173,7 +178,7 @@ export default function JpgVsWebpGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">JPG를 사용하면 좋은 경우</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-5">JPG를 사용하면 좋은 경우</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           JPG는 범용 호환성이 가장 중요한 상황에 적합합니다. 이메일 첨부, 오래된 프로그램이나 장비 사용, 사진을
           여러 환경에서 열어야 하는 경우에는 JPG가 더 안전한 선택일 수 있습니다.
@@ -186,7 +191,7 @@ export default function JpgVsWebpGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">WebP를 사용하면 좋은 경우</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-6">WebP를 사용하면 좋은 경우</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           WebP는 웹사이트 속도 개선과 이미지 전송량 절감이 중요한 경우에 검토할 만합니다. 블로그, 쇼핑몰, 랜딩
           페이지처럼 여러 이미지를 노출하는 화면에서는 파일 크기를 줄이는 효과가 체감될 수 있습니다.
@@ -199,7 +204,7 @@ export default function JpgVsWebpGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">제출 조건과 투명 배경에 맞춰 고르기</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-7">제출 조건과 투명 배경에 맞춰 고르기</h2>
         <ul className="list-disc space-y-2 pl-5 text-sm text-gray-700">
           <li>JPG만 받는 지원서·첨부 사이트: PNG 또는 WebP 원본을 JPG로 변환하세요. 투명 영역은 선택한 배경색으로 채워집니다. 변환 후 용량과 픽셀 규격도 확인하세요.</li>
           <li>투명 로고를 문서나 디자인에 사용: PNG를 우선 검토하세요. 웹용이라면 투명도를 지원하는 WebP도 비교하되 사용 프로그램에서 열리는지 확인하세요.</li>
@@ -213,7 +218,7 @@ export default function JpgVsWebpGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">JPG·PNG·WebP를 변환하는 순서</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-8">JPG·PNG·WebP를 변환하는 순서</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           JSTools 이미지 변환기는 JPG, PNG, WebP 입력과 출력을 지원합니다. 이미지는 서버로 전송되지 않으며
           브라우저에서 처리됩니다. 픽셀 크기와 비율은 유지되므로 규격을 바꾸려면{' '}
@@ -242,27 +247,27 @@ export default function JpgVsWebpGuidePage() {
 
       <section className="grid gap-3 md:grid-cols-2">
         <div className="rounded-xl border bg-gray-50 p-5 space-y-3">
-          <h2 className="text-xl font-semibold">용도에 맞는 이미지 형식으로 변환하기</h2>
+          <h2 className="text-xl font-semibold" id="guide-section-9">용도에 맞는 이미지 형식으로 변환하기</h2>
           <p className="text-sm text-gray-600">이미지 형식을 바꿔 웹용 파일로 저장해 보세요.</p>
           <GuideCtaLink
             href="/tools/image/image-converter"
             guideName="JPG와 WebP 차이"
             targetTool="이미지 변환기"
             targetUrl="/tools/image/image-converter"
-            className="inline-block px-5 py-3 bg-black text-white rounded hover:bg-gray-800 transition"
+            className="guide-cta"
           >
             이미지 변환기 바로가기
           </GuideCtaLink>
         </div>
         <div className="rounded-xl border bg-gray-50 p-5 space-y-3">
-          <h2 className="text-xl font-semibold">이미지 용량 더 줄이기</h2>
+          <h2 className="text-xl font-semibold" id="guide-section-10">이미지 용량 더 줄이기</h2>
           <p className="text-sm text-gray-600">형식 변환 후에도 용량 제한을 넘는다면 품질을 조절해 결과를 비교하세요.</p>
           <GuideCtaLink
             href="/tools/image/image-compressor"
             guideName="JPG와 WebP 차이"
             targetTool="이미지 용량 줄이기"
             targetUrl="/tools/image/image-compressor"
-            className="inline-block px-5 py-3 bg-black text-white rounded hover:bg-gray-800 transition"
+            className="guide-cta"
           >
             이미지 용량 더 줄이기
           </GuideCtaLink>
@@ -270,7 +275,7 @@ export default function JpgVsWebpGuidePage() {
       </section>
 
       <section className="rounded-xl border p-5 space-y-3">
-        <h2 className="text-xl font-semibold">관련 가이드</h2>
+        <h2 className="text-xl font-semibold" id="guide-section-11">관련 가이드</h2>
         <div className="grid gap-2 text-sm">
           <Link href="/guide/image-compression" className="text-blue-600 hover:underline">
             이미지 용량 줄이는 방법 보기
@@ -280,6 +285,6 @@ export default function JpgVsWebpGuidePage() {
           </Link>
         </div>
       </section>
-    </article>
+    </article><GuideContents sections={contents} /></div>
   )
 }

@@ -29,13 +29,15 @@ export default function JsonFormatterPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold text-center">🧩 JSON 포맷터</h1>
+    <div className="tool-page space-y-6">
+      <h1 className="text-2xl font-bold">JSON 포맷터</h1>
       <p className="text-sm text-gray-600 text-center">
         JSON 문자열을 보기 좋게 정렬해주는 도구입니다. 개발할 때 유용하게 사용할 수 있어요.
       </p>
 
+      <label htmlFor="json-input" className="block font-semibold">정렬할 JSON</label>
       <textarea
+        id="json-input"
         className="w-full border p-3 rounded-md shadow-sm text-sm font-mono h-40"
         placeholder="여기에 JSON을 입력하세요..."
         value={input}
@@ -55,6 +57,7 @@ export default function JsonFormatterPage() {
 
       {output && (
         <textarea
+          aria-label="정렬된 JSON 결과"
           readOnly
           className="w-full border p-3 rounded-md shadow-sm text-sm font-mono bg-gray-50 h-60"
           value={output}

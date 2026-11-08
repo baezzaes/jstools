@@ -78,10 +78,10 @@ function buildCollectionSchema() {
 
 export default function GuidePage() {
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-8">
+    <div className="guide-list space-y-8">
       <JsonLd id="guide-collection-schema" data={buildCollectionSchema()} />
 
-      <header className="space-y-3 text-center">
+      <header className="space-y-3">
         <Link href="/" className="text-sm text-blue-600 hover:underline">
           JSTools 홈으로
         </Link>

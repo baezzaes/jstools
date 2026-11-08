@@ -1,3 +1,4 @@
+import { GuideContents } from '@/components/GuideContents'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { GuideCtaLink } from '@/components/GuideCtaLink'
@@ -55,9 +56,11 @@ function buildArticleSchema() {
   }
 }
 
+const contents = [{"id": "guide-section-1", "title": "이미지 크기와 파일 용량은 무엇이 다른가?"}, {"id": "guide-section-2", "title": "이미지 픽셀이란?"}, {"id": "guide-section-3", "title": "이미지 크기를 줄여야 하는 경우"}, {"id": "guide-section-4", "title": "가로세로 비율을 유지해야 하는 이유"}, {"id": "guide-section-5", "title": "픽셀 기준과 퍼센트 기준의 차이"}, {"id": "guide-section-6", "title": "JSTools 이미지 크기 조절기 사용 방법"}, {"id": "guide-section-7", "title": "사진을 가로 160px·세로 200px로 바꾸는 예시"}, {"id": "guide-section-8", "title": "사진 비율이 다르면 먼저 자른 뒤 크기 조절하기"}, {"id": "guide-section-9", "title": "이미지 크기 조절하기"}, {"id": "guide-section-10", "title": "이미지 용량 줄이기"}, {"id": "guide-section-11", "title": "크기 조절 후 다음 작업"}, {"id": "guide-section-12", "title": "자주 묻는 질문"}, {"id": "guide-section-13", "title": "관련 가이드"}]
+
 export default function ImageResizeGuidePage() {
   return (
-    <article className="max-w-3xl mx-auto p-6 space-y-8">
+    <div className="reading-layout"><article className="reading-article space-y-8">
       <JsonLd id="image-resize-guide-article-schema" data={buildArticleSchema()} />
 
       <header className="space-y-3">
@@ -90,9 +93,10 @@ export default function ImageResizeGuidePage() {
           사진 크기 바로 조절하기
         </GuideCtaLink>
       </header>
+      <GuideContents sections={contents} mobile />
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">이미지 크기와 파일 용량은 무엇이 다른가?</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-1">이미지 크기와 파일 용량은 무엇이 다른가?</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           이미지 크기는 가로와 세로 픽셀 수를 의미합니다. 예를 들어 1920 x 1080 이미지는 가로 1920개, 세로 1080개의
           픽셀로 구성됩니다. 반면 파일 용량은 저장 공간에서 차지하는 크기이며 KB나 MB로 표시됩니다.
@@ -107,7 +111,7 @@ export default function ImageResizeGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">이미지 픽셀이란?</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-2">이미지 픽셀이란?</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           이미지는 작은 점인 픽셀의 모음입니다. 1920 x 1080 같은 숫자는 화면을 이루는 가로와 세로 픽셀 수를 뜻합니다.
           픽셀 수가 많으면 큰 화면이나 인쇄에서 유리할 수 있지만, 항상 더 선명하게 보이는 것은 아닙니다. 실제 표시
@@ -126,7 +130,7 @@ export default function ImageResizeGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">이미지 크기를 줄여야 하는 경우</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-3">이미지 크기를 줄여야 하는 경우</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           이미지 크기 조절은 특정 규격에 맞추거나 화면에 필요한 만큼만 이미지를 줄이고 싶을 때 유용합니다.
         </p>
@@ -141,7 +145,7 @@ export default function ImageResizeGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">가로세로 비율을 유지해야 하는 이유</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-4">가로세로 비율을 유지해야 하는 이유</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           가로세로 비율은 이미지의 폭과 높이 관계입니다. 비율을 유지하지 않고 가로 또는 세로만 바꾸면 사진이 납작하게
           눌리거나 길게 늘어나 보일 수 있습니다. 원본 비율 유지 옵션을 켜면 한쪽 값을 바꿀 때 다른 쪽 값이 자동으로
@@ -161,8 +165,9 @@ export default function ImageResizeGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">픽셀 기준과 퍼센트 기준의 차이</h2>
-        <div className="overflow-x-auto">
+        <h2 className="text-2xl font-semibold" id="guide-section-5">픽셀 기준과 퍼센트 기준의 차이</h2>
+        <p className="table-scroll-hint">표가 화면보다 넓으면 좌우로 움직여 모든 항목을 확인하세요.</p>
+        <div className="table-scroll" tabIndex={0} role="region" aria-label="이미지 형식 비교표, 가로 스크롤 가능">
           <table className="w-full min-w-[640px] border-collapse text-left text-sm">
             <thead>
               <tr className="border-b bg-gray-50">
@@ -203,7 +208,7 @@ export default function ImageResizeGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">JSTools 이미지 크기 조절기 사용 방법</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-6">JSTools 이미지 크기 조절기 사용 방법</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           JSTools 이미지 크기 조절기는 JPG, PNG, WebP 이미지를 서버 업로드 없이 브라우저에서 처리합니다. 픽셀 기준과
           퍼센트 기준 중 하나를 선택하고 결과 크기를 확인한 뒤 다운로드할 수 있습니다.
@@ -218,7 +223,7 @@ export default function ImageResizeGuidePage() {
       </section>
 
       <section id="resize-160-200" className="space-y-3">
-        <h2 className="text-2xl font-semibold">사진을 가로 160px·세로 200px로 바꾸는 예시</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-7">사진을 가로 160px·세로 200px로 바꾸는 예시</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           아래 순서는 원본 비율과 관계없이 결과 파일을 정확히 160×200px로 만드는 방법입니다. 사진의 원래 비율이
           4:5가 아니라면 모양이 변할 수 있습니다. 얼굴이나 사물의 형태를 보존해야 한다면 아래의 자르기 안내를 먼저 확인하세요.
@@ -246,7 +251,7 @@ export default function ImageResizeGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">사진 비율이 다르면 먼저 자른 뒤 크기 조절하기</h2>
+        <h2 className="text-2xl font-semibold" id="guide-section-8">사진 비율이 다르면 먼저 자른 뒤 크기 조절하기</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
           사진을 찌그러뜨리지 않으려면 필요한 부분만 남겨 목표 비율에 맞춘 다음 크기를 줄이는 방법을 사용하세요.
           160×200px의 가로:세로 비율은 4:5입니다. 자르기 도구의 3:4는 4:5와 다르므로 대체할 수 없습니다.
@@ -277,27 +282,27 @@ export default function ImageResizeGuidePage() {
 
       <section className="grid gap-3 md:grid-cols-2">
         <div className="rounded-xl border bg-gray-50 p-5 space-y-3">
-          <h2 className="text-xl font-semibold">이미지 크기 조절하기</h2>
+          <h2 className="text-xl font-semibold" id="guide-section-9">이미지 크기 조절하기</h2>
           <p className="text-sm text-gray-600">사진의 가로와 세로 픽셀을 목적에 맞게 바꿔 보세요.</p>
           <GuideCtaLink
             href="/tools/image/image-resizer"
             guideName="이미지 크기 조절 방법"
             targetTool="이미지 크기 조절기"
             targetUrl="/tools/image/image-resizer"
-            className="inline-block px-5 py-3 bg-black text-white rounded hover:bg-gray-800 transition"
+            className="guide-cta"
           >
             이미지 크기 조절하기
           </GuideCtaLink>
         </div>
         <div className="rounded-xl border bg-gray-50 p-5 space-y-3">
-          <h2 className="text-xl font-semibold">이미지 용량 줄이기</h2>
+          <h2 className="text-xl font-semibold" id="guide-section-10">이미지 용량 줄이기</h2>
           <p className="text-sm text-gray-600">픽셀 크기는 유지하고 파일 용량만 줄이고 싶다면 압축 도구를 사용하세요.</p>
           <GuideCtaLink
             href="/tools/image/image-compressor"
             guideName="이미지 크기 조절 방법"
             targetTool="이미지 용량 줄이기"
             targetUrl="/tools/image/image-compressor"
-            className="inline-block px-5 py-3 bg-black text-white rounded hover:bg-gray-800 transition"
+            className="guide-cta"
           >
             이미지 용량 줄이기
           </GuideCtaLink>
@@ -305,14 +310,14 @@ export default function ImageResizeGuidePage() {
       </section>
 
       <section className="space-y-3 text-sm text-gray-700 leading-relaxed">
-        <h2 className="text-xl font-semibold text-gray-900">크기 조절 후 다음 작업</h2>
+        <h2 className="text-xl font-semibold text-gray-900" id="guide-section-11">크기 조절 후 다음 작업</h2>
         <p>
           다운로드한 이미지의 KB·MB 용량이 여전히 크다면 <Link href="/tools/image/image-compressor" className="text-blue-600 underline">이미지 압축</Link>을 사용하세요.
           제출 사이트에서 다른 형식을 요구하면 <Link href="/tools/image/image-converter" className="text-blue-600 underline">JPG·PNG·WebP 변환</Link>으로 바꿀 수 있습니다.
           필요한 영역만 남길 때는 <Link href="/tools/image/image-cropper" className="text-blue-600 underline">이미지 자르기</Link>를 사용하세요.
           각 도구에서 이전 결과 파일을 직접 선택해야 하며, 영역을 잘라 정확한 규격을 맞추려면 자르기를 먼저 진행하는 편이 좋습니다.
         </p>
-        <h2 className="text-xl font-semibold text-gray-900">자주 묻는 질문</h2>
+        <h2 className="text-xl font-semibold text-gray-900" id="guide-section-12">자주 묻는 질문</h2>
         <h3 className="font-semibold">휴대폰에서도 사진 크기를 바꿀 수 있나요?</h3>
         <p>모바일 브라우저에서 이미지 선택 버튼을 누르고 사진을 선택한 뒤 크기를 적용할 수 있습니다. 다운로드한 파일의 위치는 브라우저와 기기에 따라 다릅니다.</p>
         <h3 className="font-semibold">크기를 바꾸면 원하는 KB 용량에 맞춰지나요?</h3>
@@ -320,7 +325,7 @@ export default function ImageResizeGuidePage() {
       </section>
 
       <section className="rounded-xl border p-5 space-y-3">
-        <h2 className="text-xl font-semibold">관련 가이드</h2>
+        <h2 className="text-xl font-semibold" id="guide-section-13">관련 가이드</h2>
         <div className="grid gap-2 text-sm">
           <Link href="/guide/image-compression" className="text-blue-600 hover:underline">
             이미지 용량 줄이는 방법 보기
@@ -330,6 +335,6 @@ export default function ImageResizeGuidePage() {
           </Link>
         </div>
       </section>
-    </article>
+    </article><GuideContents sections={contents} /></div>
   )
 }

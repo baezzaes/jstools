@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export function SiteFooter() {
   return (
-    <footer className="mx-auto mt-10 max-w-4xl border-t px-4 py-6 text-center text-sm text-gray-600">
+    <footer className="site-footer">
       <nav aria-label="사이트 안내" className="flex flex-wrap justify-center gap-x-5 gap-y-3">
         <Link href="/about" className="hover:underline">서비스 소개</Link>
         <Link href="/privacy" className="hover:underline">개인정보처리방침</Link>

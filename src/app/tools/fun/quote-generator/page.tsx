@@ -44,8 +44,8 @@ export default function QuoteGeneratorPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold text-center">💬 명언 생성기</h1>
+    <div className="tool-page space-y-6">
+      <h1 className="text-2xl font-bold">명언 생성기</h1>
       <p className="text-center text-gray-600">
         영어로 된 명언과 함께 한글 번역도 함께 제공합니다.
       </p>

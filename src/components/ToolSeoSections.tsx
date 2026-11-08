@@ -8,14 +8,14 @@ type ToolSeoSectionsProps = {
 export function ToolSeoSections({ tool }: ToolSeoSectionsProps) {
   return (
     <>
-      <section className="space-y-4 text-sm text-gray-700 leading-relaxed">
+      <section className="seo-section space-y-4 text-sm text-gray-700 leading-relaxed">
         <h2 className="text-lg font-semibold">{tool.content.introHeading}</h2>
         {tool.content.description.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
       </section>
 
-      <section className="space-y-4 text-sm text-gray-700 leading-relaxed">
+      <section className="seo-section space-y-4 text-sm text-gray-700 leading-relaxed">
         <h2 className="text-lg font-semibold">사용방법</h2>
         <ol className="list-decimal space-y-2 pl-5">
           {tool.content.howTo.map((step) => (
@@ -24,7 +24,7 @@ export function ToolSeoSections({ tool }: ToolSeoSectionsProps) {
         </ol>
       </section>
 
-      <section className="space-y-4">
+      <section className="seo-section space-y-4">
         <h2 className="text-lg font-semibold">자주 묻는 질문</h2>
         <div className="space-y-3 text-sm text-gray-700 leading-relaxed">
           {tool.content.faq.map((item) => (
@@ -36,7 +36,7 @@ export function ToolSeoSections({ tool }: ToolSeoSectionsProps) {
         </div>
       </section>
 
-      <section className="space-y-3">
+      <section className="seo-section space-y-3">
         <h2 className="text-lg font-semibold">관련 도구</h2>
         {tool.categoryPath === '/tools/image' && (
           <p className="text-sm text-gray-600">
