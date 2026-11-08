@@ -22,6 +22,11 @@ console.log(JSON.stringify({ robots: robots.html }))
 if (process.env.SEO_STRICT === '1') {
   const titles = new Set()
   const descriptions = new Set()
+  const englishPaths = locs.map(url => new URL(url).pathname).filter(path => path === '/en' || path.startsWith('/en/'))
+  const pairs = englishPaths.map(en => ({ en, ko: en.slice(3) || '/' }))
+  assert.equal(englishPaths.length, 8, 'English rollout must contain exactly the 8 implemented public pages')
+  const sitemapPaths = new Set(locs.map(url => new URL(url).pathname))
+  pairs.forEach(pair => assert(sitemapPaths.has(pair.ko), `Missing Korean counterpart: ${pair.ko}`))
   for (const url of locs) {
     const path = new URL(url).pathname
     const { response, html } = await get(path)
@@ -29,6 +34,16 @@ if (process.env.SEO_STRICT === '1') {
     const description = html.match(/<meta[^>]*name="description"[^>]*content="([^"]+)"/)?.[1]
     const canonical = html.match(/<link[^>]*rel="canonical"[^>]*href="([^"]+)"/)?.[1]
     assert.equal(response.status, 200, path)
+    const english = path === '/en' || path.startsWith('/en/')
+    assert.equal(html.match(/<html[^>]*lang="([^"]+)"/)?.[1], english ? 'en' : 'ko', `Initial HTML language: ${path}`)
+    assert.equal((html.match(/<html\b/g) || []).length, 1, `Duplicate html: ${path}`)
+    assert.equal((html.match(/<body\b/g) || []).length, 1, `Duplicate body: ${path}`)
+    const pair = pairs.find(pair => pair.en === path || pair.ko === path)
+    const alternates = Object.fromEntries([...html.matchAll(/<link\b[^>]*rel="alternate"[^>]*hrefLang="([^"]+)"[^>]*href="([^"]+)"/gi)].map(match => [match[1], match[2]]))
+    if (pair) {
+      assert.deepEqual(alternates, { ko: pair.ko === '/' ? origin : origin + pair.ko, en: origin + pair.en }, `Reciprocal/self hreflang: ${path}`)
+    } else assert.equal(Object.keys(alternates).length, 0, `Untranslated page has hreflang: ${path}`)
+    assert(html.includes(`property="og:locale" content="${english ? 'en_US' : 'ko_KR'}"`), `OG locale: ${path}`)
     assert(title && description && canonical, path)
     assert(!titles.has(title), `Duplicate title: ${path}`)
     assert(!descriptions.has(description), `Duplicate description: ${path}`)
@@ -43,6 +58,20 @@ if (process.env.SEO_STRICT === '1') {
     const text = body.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, '').replace(/<[^>]+>/g, '').trim()
     assert(text.length > 80, `Thin or missing initial HTML: ${path}`)
     const links = [...html.matchAll(/<a\b[^>]*href="(\/[^"?#]*)[^"\s]*"/g)].map(match => match[1])
+    if (english) {
+      assert(links.every(link => sitemapPaths.has(link)), `Unpublished internal link on ${path}`)
+      const meta = (attribute, name) => html.match(new RegExp(`<meta[^>]*${attribute}="${name}"[^>]*content="([^"]+)"`))?.[1]
+      assert.equal(meta('property', 'og:title'), title, `OG title inheritance: ${path}`)
+      assert.equal(meta('property', 'og:description'), description, `OG description inheritance: ${path}`)
+      assert.equal(meta('property', 'og:url'), canonical, `OG URL inheritance: ${path}`)
+      assert.equal(meta('name', 'twitter:title'), title, `Twitter title inheritance: ${path}`)
+      assert.equal(meta('name', 'twitter:description'), description, `Twitter description inheritance: ${path}`)
+      for (const match of html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>(.*?)<\/script>/gs)) {
+        const schema = JSON.parse(match[1])
+        assert.equal(schema.inLanguage, 'en', `Schema language: ${path}`)
+        if (schema.url) assert.equal(schema.url, origin + path, `Schema URL: ${path}`)
+      }
+    }
     for (const link of new Set(links)) {
       assert(locs.some(loc => new URL(loc).pathname === link), `Link outside canonical sitemap: ${path} -> ${link}`)
     }

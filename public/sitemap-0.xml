@@ -3,6 +3,14 @@
 <url><loc>https://jstools-app.vercel.app</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://jstools-app.vercel.app/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://jstools-app.vercel.app/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jstools-app.vercel.app/en</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jstools-app.vercel.app/en/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jstools-app.vercel.app/en/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jstools-app.vercel.app/en/guide/image-resize</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jstools-app.vercel.app/en/privacy</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jstools-app.vercel.app/en/tools/image/image-compressor</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jstools-app.vercel.app/en/tools/image/image-converter</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://jstools-app.vercel.app/en/tools/image/image-resizer</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://jstools-app.vercel.app/guide</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://jstools-app.vercel.app/guide/image-compression</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://jstools-app.vercel.app/guide/image-resize</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import type { ToolDefinition, ToolFaq } from '@/data/tools'
+import { languageAlternates } from './locales'
 
 export const SITE_URL = 'https://jstools-app.vercel.app'
 export const SITE_NAME = 'JSTools'
@@ -18,6 +19,7 @@ export function generateToolMetadata(tool: ToolDefinition): Metadata {
     keywords: tool.keywords,
     alternates: {
       canonical: url,
+      languages: languageAlternates(tool.path),
     },
     openGraph: {
       title: tool.title,
@@ -25,7 +27,7 @@ export function generateToolMetadata(tool: ToolDefinition): Metadata {
       url,
       siteName: SITE_NAME,
       type: 'website',
-      locale: 'ko_KR',
+      locale: tool.path.startsWith('/en/') ? 'en_US' : 'ko_KR',
     },
     twitter: {
       card: 'summary',
@@ -47,12 +49,12 @@ export function buildToolSchema(tool: ToolDefinition) {
     description: tool.description,
     applicationCategory: 'UtilitiesApplication',
     operatingSystem: 'Any',
-    inLanguage: 'ko-KR',
+    inLanguage: tool.path.startsWith('/en/') ? 'en' : 'ko-KR',
     isAccessibleForFree: true,
     publisher: {
       '@type': 'Organization',
       name: SITE_NAME,
-      url: SITE_URL,
+      url: tool.path.startsWith('/en/') ? absoluteUrl('/en') : SITE_URL,
     },
     offers: {
       '@type': 'Offer',
@@ -68,13 +70,14 @@ export function buildBreadcrumbSchema(tool: ToolDefinition) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
+    ...(tool.path.startsWith('/en/') && { inLanguage: 'en' }),
     '@id': `${url}#breadcrumb`,
     itemListElement: [
       {
         '@type': 'ListItem',
         position: 1,
         name: SITE_NAME,
-        item: absoluteUrl('/'),
+        item: absoluteUrl(tool.path.startsWith('/en/') ? '/en' : '/'),
       },
       {
         '@type': 'ListItem',
@@ -98,6 +101,7 @@ export function buildFaqSchema(tool: ToolDefinition) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
+    ...(tool.path.startsWith('/en/') && { inLanguage: 'en' }),
     '@id': `${url}#faq`,
     mainEntity: tool.content.faq.map((item: ToolFaq) => ({
       '@type': 'Question',

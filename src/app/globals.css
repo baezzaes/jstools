@@ -36,6 +36,17 @@ button:disabled { cursor: not-allowed; }
 .site-header nav { display: flex; flex-wrap: wrap; gap: 4px; }
 .site-header nav a { padding: 10px 14px; border-radius: 8px; font-size: 14px; color: var(--muted); font-weight: 600; }
 .site-header nav a:hover, .site-header nav a[aria-current] { background: #eff6ff; color: var(--primary); }
+.site-header-inner { flex-wrap: wrap; column-gap: 24px; row-gap: 8px; }
+.site-header .language-switch { margin-left: auto; flex: none; }
+.site-header .language-switch a { display: inline-flex; align-items: center; min-height: 44px; }
+.site-header .language-switch a:last-child { display: inline-flex; }
+html[lang="en"] :is(h1, h2, h3, p, li, label, button, a, th, td) { overflow-wrap: anywhere; }
+html[lang="en"] .tool-page button { min-height: 44px; }
+html[lang="en"] .tool-page button { overflow-wrap: normal; flex-shrink: 0; }
+html[lang="en"] .reading-article :is(th, td):first-child { min-width: 112px; }
+@media (max-width: 700px) {
+  .site-header .language-switch { width: 100%; justify-content: flex-end; margin-left: 0; }
+}
 .skip-link { position: absolute; top: -100px; left: 16px; z-index: 100; background: white; padding: 12px 20px; color: var(--primary); }
 .skip-link:focus { top: 12px; }
 .site-footer { margin-top: 48px; padding: 32px 16px; background: white; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 14px; }
