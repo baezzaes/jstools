@@ -4,11 +4,12 @@ import { GuideCtaLink } from '@/components/GuideCtaLink'
 import { JsonLd } from '@/components/JsonLd'
 import { absoluteUrl, SITE_NAME, SITE_URL } from '@/lib/seo'
 
-const pageTitle = 'JPG와 WebP 차이 - 이미지 형식 비교와 변환 방법 | JSTools'
+const pageTitle = 'JPG·PNG·WebP 차이 - 투명 배경과 이미지 변환 방법 | JSTools'
 const pageDescription =
-  'JPG와 WebP의 파일 용량, 화질, 투명 배경, 호환성 차이를 비교하고 용도에 맞는 이미지 형식을 선택하는 방법을 알아보세요.'
+  'JPG·PNG·WebP의 용도, 손실 압축과 투명 배경 차이를 비교합니다. JPG만 받는 제출 사이트와 투명 로고에 맞는 형식을 고르고, JPG 배경색을 선택해 변환하는 순서를 확인하세요.'
 const pageUrl = absoluteUrl('/guide/jpg-vs-webp')
 const publishedDate = '2026-08-02'
+const modifiedDate = '2026-11-08'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -51,7 +52,7 @@ function buildArticleSchema() {
       url: SITE_URL,
     },
     datePublished: publishedDate,
-    dateModified: publishedDate,
+    dateModified: modifiedDate,
   }
 }
 
@@ -72,11 +73,20 @@ export default function JpgVsWebpGuidePage() {
             이미지 용량 줄이기 가이드
           </Link>
         </div>
-        <h1 className="text-3xl font-bold">JPG와 WebP 차이 - 어떤 이미지 형식을 사용해야 할까?</h1>
+        <h1 className="text-3xl font-bold">JPG·PNG·WebP 차이 - 어떤 이미지 형식을 선택할까?</h1>
         <p className="text-sm text-gray-600 leading-relaxed">
-          JPG와 WebP는 모두 웹에서 자주 쓰이는 이미지 형식입니다. 어떤 형식이 더 좋다고 단정하기보다, 이미지 용도,
+          JPG, PNG, WebP는 웹에서 자주 쓰이는 이미지 형식입니다. 어떤 형식이 더 좋다고 단정하기보다, 이미지 용도,
           호환성, 투명 배경 필요 여부, 파일 크기 목표를 함께 보고 선택하는 것이 좋습니다.
         </p>
+        <GuideCtaLink
+          href="/tools/image/image-converter"
+          guideName="JPG와 WebP 차이"
+          targetTool="이미지 변환기"
+          targetUrl="/tools/image/image-converter"
+          className="inline-block px-5 py-3 bg-black text-white rounded hover:bg-gray-800 transition"
+        >
+          이미지 형식 변환기 열기
+        </GuideCtaLink>
       </header>
 
       <section className="space-y-3">
@@ -85,6 +95,19 @@ export default function JpgVsWebpGuidePage() {
           JPG는 사진 저장에 널리 사용되는 손실 압축 이미지 형식입니다. 대부분의 브라우저, 운영체제, 편집 프로그램,
           오래된 장비에서도 열 수 있어 호환성이 매우 높습니다. 다만 투명 배경은 지원하지 않으며, 같은 파일을 반복해서
           저장하면 압축 과정에서 화질이 조금씩 떨어질 수 있습니다.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-2xl font-semibold">PNG란? 투명 로고와 글자 이미지에 적합한 형식</h2>
+        <p className="text-sm text-gray-700 leading-relaxed">
+          PNG는 무손실 압축과 투명도를 지원합니다. 로고, 아이콘, 화면 캡처처럼 글자와 선을 선명하게 보관하려는
+          경우에 적합하지만, 복잡한 사진은 JPG보다 파일 용량이 클 수 있습니다. 브라우저에서 널리 지원되더라도
+          제출 사이트가 PNG 첨부를 허용하는지는 별도로 확인해야 합니다.
+        </p>
+        <p className="text-sm text-gray-700 leading-relaxed">
+          무손실은 저장할 때 이미지 정보를 잃지 않는다는 뜻입니다. 이미 손실된 JPG를 PNG로 바꾼다고 사라진
+          세부 정보가 복원되거나 사진이 더 선명해지지는 않습니다.
         </p>
       </section>
 
@@ -152,7 +175,7 @@ export default function JpgVsWebpGuidePage() {
       <section className="space-y-3">
         <h2 className="text-2xl font-semibold">JPG를 사용하면 좋은 경우</h2>
         <p className="text-sm text-gray-700 leading-relaxed">
-          JPG는 범용 호환성이 가장 중요한 상황에 적합합니다. 이메일 첨부, 오래된 프로그램이나 장비 사용, 사진 원본을
+          JPG는 범용 호환성이 가장 중요한 상황에 적합합니다. 이메일 첨부, 오래된 프로그램이나 장비 사용, 사진을
           여러 환경에서 열어야 하는 경우에는 JPG가 더 안전한 선택일 수 있습니다.
         </p>
         <ul className="list-disc space-y-2 pl-5 text-sm text-gray-700">
@@ -176,22 +199,50 @@ export default function JpgVsWebpGuidePage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-2xl font-semibold">JPG를 WebP로 변환하는 방법</h2>
+        <h2 className="text-2xl font-semibold">제출 조건과 투명 배경에 맞춰 고르기</h2>
+        <ul className="list-disc space-y-2 pl-5 text-sm text-gray-700">
+          <li>JPG만 받는 지원서·첨부 사이트: PNG 또는 WebP 원본을 JPG로 변환하세요. 투명 영역은 선택한 배경색으로 채워집니다. 변환 후 용량과 픽셀 규격도 확인하세요.</li>
+          <li>투명 로고를 문서나 디자인에 사용: PNG를 우선 검토하세요. 웹용이라면 투명도를 지원하는 WebP도 비교하되 사용 프로그램에서 열리는지 확인하세요.</li>
+          <li>블로그·쇼핑몰용 사진: 업로드 서비스가 WebP를 받는다면 변환 결과의 화질과 용량을 원본과 비교하세요. JPG만 허용하면 JPG를 사용합니다.</li>
+        </ul>
         <p className="text-sm text-gray-700 leading-relaxed">
-          JSTools 이미지 변환기를 사용하면 JPG 이미지를 브라우저에서 WebP로 변환할 수 있습니다. 이미지는 서버로
-          전송되지 않으며 결과 파일을 바로 다운로드할 수 있습니다.
+          투명도가 없는 JPG를 PNG나 WebP로 변환해도 배경이 자동으로 제거되지는 않습니다. WebP 형식 자체는
+          손실·무손실 저장을 지원하지만, JSTools 변환기에는 무손실 모드나 품질을 직접 고르는 옵션이 없습니다.
+          JPG·WebP 출력은 손실이 생길 수 있으며, 형식 변환만으로 용량이 반드시 줄어들지는 않습니다.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-2xl font-semibold">JPG·PNG·WebP를 변환하는 순서</h2>
+        <p className="text-sm text-gray-700 leading-relaxed">
+          JSTools 이미지 변환기는 JPG, PNG, WebP 입력과 출력을 지원합니다. 이미지는 서버로 전송되지 않으며
+          브라우저에서 처리됩니다. 픽셀 크기와 비율은 유지되므로 규격을 바꾸려면{' '}
+          <Link href="/guide/image-resize" className="text-blue-600 hover:underline">이미지 크기 변경 방법</Link>을 확인하세요.
         </p>
         <ol className="list-decimal space-y-2 pl-5 text-sm text-gray-700">
-          <li>JPG 이미지를 선택합니다.</li>
-          <li>출력 형식에서 WebP를 선택합니다.</li>
-          <li>변환을 실행합니다.</li>
-          <li>결과 파일을 다운로드합니다.</li>
+          <li>‘출력 형식 선택’에서 JPG, PNG, WebP 중 원본과 다른 형식을 고릅니다. JPG를 WebP로 바꾸려면 WebP를 선택합니다.</li>
+          <li>JPG 출력이라면 ‘JPG 배경색’에서 ‘흰색’, ‘검정’ 또는 ‘사용자 지정’ 색상을 정합니다. PNG·WebP 출력은 원본에 있던 투명 영역을 유지할 수 있습니다.</li>
+          <li>‘파일 선택’으로 이미지를 추가합니다. 현재 설정으로 자동 변환됩니다. 파일을 추가한 뒤 출력 형식이나 JPG 배경색을 바꿔도 다시 처리됩니다.</li>
+          <li>필요하면 ‘변환 적용’으로 현재 설정을 다시 적용합니다. ‘변환 결과’에서 형식과 용량을 확인하고 ‘JPG 다운로드’, ‘PNG 다운로드’ 또는 ‘WebP 다운로드’로 받습니다.</li>
+          <li>여러 파일은 ‘전체 ZIP 다운로드’로 묶어 받습니다. 같은 형식의 원본은 변환 오류가 표시되므로 원본과 다른 출력 형식을 선택하세요.</li>
         </ol>
+        <p className="text-sm text-gray-700 leading-relaxed">
+          휴대폰에서도 ‘파일 선택’을 사용할 수 있으며 여러 장 선택은 기기의 파일 선택 화면에 따라 다릅니다.
+          변환 목록은 최대 30개 파일, 각 이미지는 가로×세로 32,000,000픽셀까지 처리합니다. GIF, SVG, HEIC, AVIF는
+          지원하지 않습니다. 큰 사진이 많아 느려지면 적은 수로 나누어 작업하세요.
+        </p>
+        <p className="text-sm text-gray-700 leading-relaxed">
+          압축이나 크기 조절을 이어서 할 때 파일이 자동 전달되지는 않습니다. 결과를 다운로드하고 다음 도구에서
+          다시 선택하세요. 투명 PNG를 유지해야 한다면 PNG가 WebP로 저장되는 압축기 대신{' '}
+          <Link href="/tools/image/image-resizer" className="text-blue-600 hover:underline">이미지 크기 조절기</Link>에서
+          픽셀을 줄이는 방법을 검토하세요. 필요 없는 영역은{' '}
+          <Link href="/tools/image/image-cropper" className="text-blue-600 hover:underline">이미지 자르기</Link>로 정리할 수 있습니다.
+        </p>
       </section>
 
       <section className="grid gap-3 md:grid-cols-2">
         <div className="rounded-xl border bg-gray-50 p-5 space-y-3">
-          <h2 className="text-xl font-semibold">JPG를 WebP로 변환하기</h2>
+          <h2 className="text-xl font-semibold">용도에 맞는 이미지 형식으로 변환하기</h2>
           <p className="text-sm text-gray-600">이미지 형식을 바꿔 웹용 파일로 저장해 보세요.</p>
           <GuideCtaLink
             href="/tools/image/image-converter"
@@ -200,12 +251,12 @@ export default function JpgVsWebpGuidePage() {
             targetUrl="/tools/image/image-converter"
             className="inline-block px-5 py-3 bg-black text-white rounded hover:bg-gray-800 transition"
           >
-            JPG를 WebP로 변환하기
+            이미지 변환기 바로가기
           </GuideCtaLink>
         </div>
         <div className="rounded-xl border bg-gray-50 p-5 space-y-3">
           <h2 className="text-xl font-semibold">이미지 용량 더 줄이기</h2>
-          <p className="text-sm text-gray-600">이미 압축한 결과를 용도에 맞게 한 번 더 확인할 수 있습니다.</p>
+          <p className="text-sm text-gray-600">형식 변환 후에도 용량 제한을 넘는다면 품질을 조절해 결과를 비교하세요.</p>
           <GuideCtaLink
             href="/tools/image/image-compressor"
             guideName="JPG와 WebP 차이"

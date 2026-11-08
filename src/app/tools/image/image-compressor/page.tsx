@@ -217,8 +217,24 @@ export default function ImageCompressorPage() {
 
     try {
       const zip = new JSZip()
-      completedItems.forEach((item) => {
-        zip.file(item.outputName || getOutputName(item.name, item.type), item.compressedBlob as Blob)
+      const outputNames = completedItems.map((item) => item.outputName || getOutputName(item.name, item.type))
+      const reservedNames = new Set(outputNames)
+      const usedNames = new Set<string>()
+
+      completedItems.forEach((item, index) => {
+        const preferredName = outputNames[index]
+        let fileName = preferredName
+
+        if (usedNames.has(fileName)) {
+          let suffix = 2
+          // Keep existing names, including numbered ones, available for their own files.
+          do {
+            fileName = preferredName.replace(/(\.[^.]+)$/, `-${suffix++}$1`)
+          } while (usedNames.has(fileName) || reservedNames.has(fileName))
+        }
+
+        usedNames.add(fileName)
+        zip.file(fileName, item.compressedBlob as Blob)
       })
 
       const zipBlob = await zip.generateAsync({ type: 'blob' })

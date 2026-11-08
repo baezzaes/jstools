@@ -34,13 +34,13 @@ const guides = [
   {
     href: '/guide/image-compression',
     title: '이미지 용량 줄이는 방법',
-    description: 'JPG 사진 용량을 줄이는 방법과 이미지 품질, 해상도, WebP 변환 기준을 정리합니다.',
+    description: 'KB·MB 용량과 픽셀 크기의 차이, 품질 적용 순서와 압축 후에도 용량이 클 때의 해결 방법을 정리합니다.',
     category: '이미지 최적화',
   },
   {
     href: '/guide/jpg-vs-webp',
-    title: 'JPG와 WebP 차이',
-    description: '파일 용량, 화질, 투명 배경, 호환성을 비교하고 용도에 맞는 이미지 형식을 고르는 기준을 정리합니다.',
+    title: 'JPG·PNG·WebP 차이',
+    description: '투명 배경, 손실 압축, 호환성을 비교하고 제출 사이트와 로고에 맞는 형식을 골라 변환하는 방법을 정리합니다.',
     category: '이미지 형식',
   },
   {
