@@ -26,18 +26,6 @@ export default function Home() {
           <p>이미지 편집부터 글자 수와 날짜 계산까지. 설치나 로그인 없이 사용하는 한국어 무료 웹도구 모음입니다.</p>
         </header>
         <ToolDirectory />
-      {/* 광고 영역 */}
-      <div className="border border-dashed border-gray-300 p-4 text-center text-sm text-gray-500 rounded-xl">
-              <ins className="adsbygoogle"
-          style={{ display: 'block' }}
-          data-ad-client="ca-pub-7836056065911594"
-          data-ad-slot="1234567890"   // 없으면 자동광고
-          data-ad-format="auto"
-          data-full-width-responsive="true"></ins>
-        <script dangerouslySetInnerHTML={{
-          __html: `(adsbygoogle = window.adsbygoogle || []).push({});`
-        }} />
-      </div>
 
       </main>
     </div>

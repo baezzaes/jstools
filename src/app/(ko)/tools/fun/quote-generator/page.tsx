@@ -103,10 +103,6 @@ export default function QuoteGeneratorPage() {
         </Link>
       </div>
 
-      {/* 광고 자리 */}
-      <div className="border border-dashed border-gray-300 p-4 text-center text-sm text-gray-500 rounded-xl">
-        광고 영역 (Google AdSense 자리)
-      </div>
     </div>
   )
 }

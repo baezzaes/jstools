@@ -19,6 +19,9 @@ const robots = await get('/robots.txt')
 assert.equal(robots.response.status, 200)
 assert(robots.html.includes(`Sitemap: ${origin}/sitemap.xml`))
 console.log(JSON.stringify({ robots: robots.html }))
+const ads = await get('/ads.txt')
+assert.equal(ads.response.status, 200, 'ads.txt must be publicly available')
+assert.equal(ads.html.trim(), 'google.com, pub-7836056065911594, DIRECT, f08c47fec0942fa0', 'ads.txt publisher')
 if (process.env.SEO_STRICT === '1') {
   const titles = new Set()
   const descriptions = new Set()
@@ -36,6 +39,13 @@ if (process.env.SEO_STRICT === '1') {
     const description = html.match(/<meta[^>]*name="description"[^>]*content="([^"]+)"/)?.[1]
     const canonical = html.match(/<link[^>]*rel="canonical"[^>]*href="([^"]+)"/)?.[1]
     assert.equal(response.status, 200, path)
+    const adLoaders = [...html.matchAll(/<script\b[^>]*src="https:\/\/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js[^>]*>/g)].map(match => match[0])
+    assert.equal(adLoaders.length, 1, `Exactly one common AdSense loader: ${path}`)
+    assert(adLoaders[0].includes('client=ca-pub-7836056065911594'), `AdSense publisher: ${path}`)
+    assert(/\basync(?:\s|=)/.test(adLoaders[0]) && /crossorigin="anonymous"/i.test(adLoaders[0]), `Asynchronous cross-origin ad loader: ${path}`)
+    assert(!/data-ad-slot=|<ins\b[^>]*class="[^"]*adsbygoogle/.test(html), `Unexpected manual ad unit: ${path}`)
+    assert(!/adsbygoogle\s*=\s*window\.adsbygoogle/.test(html), `Unexpected manual ad initialization: ${path}`)
+    assert(!/광고 자리|광고 영역|광고.*Google AdSense.*자리/.test(html), `Ad placeholder: ${path}`)
     const english = path === '/en' || path.startsWith('/en/')
     assert.equal(html.match(/<html[^>]*lang="([^"]+)"/)?.[1], english ? 'en' : 'ko', `Initial HTML language: ${path}`)
     assert.equal((html.match(/<html\b/g) || []).length, 1, `Duplicate html: ${path}`)
