@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import QRCode from 'react-qr-code'  // react-qr-code 라이브러리 임포트
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
+import { QrWorkedExample } from '@/components/ToolWorkedExamples'
 import { qrCodeGeneratorTool } from '@/data/tools'
 import { trackToolExecute, trackToolView } from '@/lib/analytics'
 
@@ -51,6 +52,7 @@ export default function QRCodeGenerator() {
         <Link href="/" className="text-sm text-blue-600 hover:underline">← JSTools 홈으로</Link>
       </div>
 
+      <QrWorkedExample />
       <ToolSeoSections tool={qrCodeGeneratorTool} />
 
 

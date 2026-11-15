@@ -1,5 +1,6 @@
 import { languageAlternates } from '@/lib/locales'
 import { GuideContents } from '@/components/GuideContents'
+import { ResizeWorkedExample } from '@/components/GuideWorkedExamples'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { GuideCtaLink } from '@/components/GuideCtaLink'
@@ -58,7 +59,7 @@ function buildArticleSchema() {
   }
 }
 
-const contents = [{"id": "guide-section-1", "title": "이미지 크기와 파일 용량은 무엇이 다른가?"}, {"id": "guide-section-2", "title": "이미지 픽셀이란?"}, {"id": "guide-section-3", "title": "이미지 크기를 줄여야 하는 경우"}, {"id": "guide-section-4", "title": "가로세로 비율을 유지해야 하는 이유"}, {"id": "guide-section-5", "title": "픽셀 기준과 퍼센트 기준의 차이"}, {"id": "guide-section-6", "title": "JSTools 이미지 크기 조절기 사용 방법"}, {"id": "guide-section-7", "title": "사진을 가로 160px·세로 200px로 바꾸는 예시"}, {"id": "guide-section-8", "title": "사진 비율이 다르면 먼저 자른 뒤 크기 조절하기"}, {"id": "guide-section-9", "title": "이미지 크기 조절하기"}, {"id": "guide-section-10", "title": "이미지 용량 줄이기"}, {"id": "guide-section-11", "title": "크기 조절 후 다음 작업"}, {"id": "guide-section-12", "title": "자주 묻는 질문"}, {"id": "guide-section-13", "title": "관련 가이드"}]
+const contents = [{ id: "worked-example", title: "실제 파일로 확인한 작업 사례" }, {"id": "guide-section-1", "title": "이미지 크기와 파일 용량은 무엇이 다른가?"}, {"id": "guide-section-2", "title": "이미지 픽셀이란?"}, {"id": "guide-section-3", "title": "이미지 크기를 줄여야 하는 경우"}, {"id": "guide-section-4", "title": "가로세로 비율을 유지해야 하는 이유"}, {"id": "guide-section-5", "title": "픽셀 기준과 퍼센트 기준의 차이"}, {"id": "guide-section-6", "title": "JSTools 이미지 크기 조절기 사용 방법"}, {"id": "guide-section-7", "title": "사진을 가로 160px·세로 200px로 바꾸는 예시"}, {"id": "guide-section-8", "title": "사진 비율이 다르면 먼저 자른 뒤 크기 조절하기"}, {"id": "guide-section-9", "title": "이미지 크기 조절하기"}, {"id": "guide-section-10", "title": "이미지 용량 줄이기"}, {"id": "guide-section-11", "title": "크기 조절 후 다음 작업"}, {"id": "guide-section-12", "title": "자주 묻는 질문"}, {"id": "guide-section-13", "title": "관련 가이드"}]
 
 export default function ImageResizeGuidePage() {
   return (
@@ -96,6 +97,7 @@ export default function ImageResizeGuidePage() {
         </GuideCtaLink>
       </header>
       <GuideContents sections={contents} mobile />
+      <ResizeWorkedExample />
 
       <section className="space-y-3">
         <h2 className="text-2xl font-semibold" id="guide-section-1">이미지 크기와 파일 용량은 무엇이 다른가?</h2>

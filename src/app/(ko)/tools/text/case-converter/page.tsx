@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
+import { CaseWorkedExample } from '@/components/ToolWorkedExamples'
 import { caseConverterTool } from '@/data/tools'
 import { trackToolExecute, trackToolView } from '@/lib/analytics'
 
@@ -81,6 +82,7 @@ export default function CaseConverterPage() {
         </Link>
       </div>
 
+      <CaseWorkedExample />
       <ToolSeoSections tool={caseConverterTool} />
 
 

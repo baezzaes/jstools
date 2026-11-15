@@ -4,6 +4,34 @@ import JSZip from 'jszip'
 import { generatePassword, secureRandomIndex } from '../src/lib/password.ts'
 import { uniqueZipNames } from '../src/lib/zipNames.ts'
 import { readSavedLottoNumbers } from '../src/lib/lottoStorage.ts'
+import { differenceInDays, offsetDate } from '../src/lib/dateCalculation.ts'
+import { execFileSync } from 'node:child_process'
+
+test('date-only offsets include zero, leap day and month boundaries', () => {
+  assert.equal(offsetDate('2026-11-15', 0, 'after'), '2026-11-15')
+  assert.equal(offsetDate('2026-11-15', 0, 'before'), '2026-11-15')
+  assert.equal(offsetDate('2024-02-28', 1, 'after'), '2024-02-29')
+  assert.equal(offsetDate('2024-03-01', 1, 'before'), '2024-02-29')
+  assert.equal(offsetDate('2026-01-31', 1, 'after'), '2026-02-01')
+  assert.equal(differenceInDays('2024-02-28', '2024-03-01'), 2)
+  assert.equal(differenceInDays('2024-03-01', '2024-02-28'), -2)
+  assert.equal(differenceInDays('2024-03-01', '2024-03-01'), 0)
+})
+test('invalid dates and non-integer or out-of-range offsets produce no result', () => {
+  for (const value of ['', '2023-02-29', '2024-13-01', 'bad']) {
+    assert.equal(offsetDate(value, 1, 'after'), null)
+    assert.equal(differenceInDays(value, '2024-03-01'), null)
+  }
+  for (const days of [-1, 0.5, NaN, Infinity, Number.MAX_SAFE_INTEGER]) assert.equal(offsetDate('2024-03-01', days, 'after'), null)
+  assert.equal(offsetDate('2024-03-01', 1, 'invalid'), null)
+})
+test('calendar arithmetic is stable across Seoul, UTC and DST zones', () => {
+  const code = "import { offsetDate, differenceInDays } from './src/lib/dateCalculation.ts'; console.log(JSON.stringify([offsetDate('2026-03-08',1,'after'),offsetDate('2026-11-01',1,'after'),differenceInDays('2026-03-08','2026-03-09')]))"
+  for (const TZ of ['Asia/Seoul', 'UTC', 'America/Los_Angeles', 'Europe/Berlin']) {
+    const output = execFileSync(process.execPath, ['--experimental-strip-types', '--input-type=module', '-e', code], { env: { ...process.env, TZ }, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] })
+    assert.deepEqual(JSON.parse(output), ['2026-03-09', '2026-11-02', 1], TZ)
+  }
+})
 
 const defaults = { length: 12, numbers: true, uppercase: true, lowercase: true, symbols: true, exampleMode: false }
 for (const length of [4, 12, 32]) {

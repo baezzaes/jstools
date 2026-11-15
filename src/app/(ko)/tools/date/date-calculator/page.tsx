@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { dateCalculatorTool } from '@/data/tools'
 import { trackToolExecute, trackToolView } from '@/lib/analytics'
+import { differenceInDays, offsetDate } from '@/lib/dateCalculation'
+import { DateWorkedExample } from '@/components/ToolWorkedExamples'
 
 export default function DateCalculatorPage() {
   const [startDate, setStartDate] = useState('')
@@ -28,20 +30,11 @@ export default function DateCalculatorPage() {
   }, [startDate, endDate, baseDate, offset])
 
   const getDiffResult = () => {
-    if (!startDate || !endDate) return null
-    const start = new Date(startDate)
-    const end = new Date(endDate)
-    const diffTime = end.getTime() - start.getTime()
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
-    return diffDays
+    return differenceInDays(startDate, endDate)
   }
 
   const getOffsetDate = () => {
-    if (!baseDate || !offset) return null
-    const base = new Date(baseDate)
-    const result = new Date(base)
-    result.setDate(base.getDate() + (direction === 'after' ? offset : -offset))
-    return result.toISOString().split('T')[0]
+    return offsetDate(baseDate, offset, direction)
   }
 
   return (
@@ -94,6 +87,8 @@ export default function DateCalculatorPage() {
         <input
           type="number"
           aria-label="일 수"
+          min={0}
+          step={1}
           value={offset}
           onChange={(e) => setOffset(Number(e.target.value))}
           className="border p-2 rounded w-24 mx-2"
@@ -104,6 +99,8 @@ export default function DateCalculatorPage() {
         )}
       </div>
 
+      <p className="text-sm text-gray-600">일 수는 0 이상의 정수로 입력하세요. 0일 전·후는 기준일과 같습니다. 날짜만 계산하며 시각이나 영업일은 계산하지 않습니다.</p>
+      <DateWorkedExample />
       <ToolSeoSections tool={dateCalculatorTool} />
 
     {/* 홈으로 돌아가기 */}

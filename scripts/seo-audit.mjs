@@ -26,6 +26,8 @@ if (process.env.SEO_STRICT === '1') {
   const pairs = englishPaths.map(en => ({ en, ko: en.slice(3) || '/' }))
   assert.equal(englishPaths.length, 8, 'English rollout must contain exactly the 8 implemented public pages')
   const sitemapPaths = new Set(locs.map(url => new URL(url).pathname))
+  const checkedSamples = new Set()
+  const isSample = link => /^\/examples\/image-workflows\/[a-z0-9-]+\.(?:png|jpg|webp)$/.test(link)
   pairs.forEach(pair => assert(sitemapPaths.has(pair.ko), `Missing Korean counterpart: ${pair.ko}`))
   for (const url of locs) {
     const path = new URL(url).pathname
@@ -59,7 +61,7 @@ if (process.env.SEO_STRICT === '1') {
     assert(text.length > 80, `Thin or missing initial HTML: ${path}`)
     const links = [...html.matchAll(/<a\b[^>]*href="(\/[^"?#]*)[^"\s]*"/g)].map(match => match[1])
     if (english) {
-      assert(links.every(link => sitemapPaths.has(link)), `Unpublished internal link on ${path}`)
+      assert(links.every(link => sitemapPaths.has(link) || isSample(link)), `Unpublished internal link on ${path}`)
       const meta = (attribute, name) => html.match(new RegExp(`<meta[^>]*${attribute}="${name}"[^>]*content="([^"]+)"`))?.[1]
       assert.equal(meta('property', 'og:title'), title, `OG title inheritance: ${path}`)
       assert.equal(meta('property', 'og:description'), description, `OG description inheritance: ${path}`)
@@ -73,6 +75,16 @@ if (process.env.SEO_STRICT === '1') {
       }
     }
     for (const link of new Set(links)) {
+      if (isSample(link)) {
+        if (!checkedSamples.has(link)) {
+          const sample = await fetch(base + link, { signal: AbortSignal.timeout(30000) })
+          assert.equal(sample.status, 200, `Sample download: ${link}`)
+          assert(/^image\/(png|jpeg|webp)(?:;|$)/.test(sample.headers.get('content-type') || ''), `Sample image type: ${link}`)
+          assert((await sample.arrayBuffer()).byteLength > 0, `Empty sample: ${link}`)
+          checkedSamples.add(link)
+        }
+        continue
+      }
       assert(locs.some(loc => new URL(loc).pathname === link), `Link outside canonical sitemap: ${path} -> ${link}`)
     }
   }

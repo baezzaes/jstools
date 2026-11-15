@@ -40,3 +40,16 @@ ZIP과 이미지 다운로드는 output에 저장됩니다. ZIP 실제 엔트리
 개발용 경로는 `npm.cmd run dev -- --port 3105`에서 200/noindex/광고 없음,
 프로덕션 빌드에서는 404/noindex/광고 없음이 기대값입니다.
 `SEO_TEST_MODE=development`는 개발 서버의 SEO 검사에만 사용하는 옵션이며 운영 차단을 해제하는 설정이 아닙니다.
+
+## 2차 콘텐츠 사례 확인
+
+프로덕션 빌드의 로컬 서버를 연 뒤 기존 Playwright CLI로 해당 주소에 이동하고 실행합니다.
+
+```powershell
+npx.cmd --offline --package @playwright/cli playwright-cli -s=phase2 open http://127.0.0.1:3104 --headed
+npx.cmd --offline --package @playwright/cli playwright-cli -s=phase2 run-code --filename tests/browser-content.js
+```
+
+날짜 0일·윤년·월말·역순, 글자수 2종, JSON 정상/오류, 대소문자 5종, QR 표시, 세 가이드의 1280/768/390px 화면·샘플 링크·가로 넘침을 확인합니다. 캡처는 `output/playwright/phase2/`에 저장하며 실제 이미지를 별도로 열어 검토해야 합니다. QR의 물리 카메라 스캔은 이 검사에 포함되지 않습니다. 분석·광고 요청은 테스트 탭에서 차단합니다.
+
+공개 예시 파일은 `public/examples/image-workflows/`에 있습니다. 원본은 직접 그린 640×480 투명 PNG이며 브라우저에서 받은 리사이즈·압축·변환 결과입니다. 조건·측정값과 검토 범위는 `docs/adsense-phase2-result.md`에 기록합니다. 기존 `browser-quality.js`는 1차 ZIP·비밀번호·로또·명언 회귀 검증에 계속 사용합니다.

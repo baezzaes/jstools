@@ -1,4 +1,5 @@
 import { GuideContents } from '@/components/GuideContents'
+import { CompressionWorkedExample } from '@/components/GuideWorkedExamples'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { GuideCtaLink } from '@/components/GuideCtaLink'
@@ -10,7 +11,7 @@ const pageDescription =
   '사진의 KB·MB 용량과 픽셀 크기 차이, 품질 적용 순서와 PNG의 WebP 저장 방식을 안내합니다. 압축 후에도 용량이 클 때 크기 조절·형식 변환을 선택하는 기준을 확인하세요.'
 const pageUrl = absoluteUrl('/guide/image-compression')
 const publishedDate = '2026-08-02'
-const modifiedDate = '2026-11-08'
+const modifiedDate = '2026-11-15'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -57,7 +58,7 @@ function buildArticleSchema() {
   }
 }
 
-const contents = [{"id": "guide-section-1", "title": "KB·MB 용량과 픽셀 크기는 다릅니다"}, {"id": "guide-section-2", "title": "사진 용량이 커지는 이유"}, {"id": "guide-section-3", "title": "JPG 이미지 용량을 줄이는 방법"}, {"id": "guide-section-4", "title": "JPG, PNG, WebP 차이"}, {"id": "guide-section-5", "title": "JSTools 이미지 압축기 사용 방법"}, {"id": "guide-section-6", "title": "압축 후에도 용량이 크다면"}, {"id": "guide-section-7", "title": "휴대폰과 여러 사진에서 사용하는 방법"}, {"id": "guide-section-8", "title": "사진 용량을 바로 줄여보세요"}, {"id": "guide-section-9", "title": "관련 가이드"}]
+const contents = [{ id: "worked-example", title: "실제 파일로 확인한 작업 사례" }, {"id": "guide-section-1", "title": "KB·MB 용량과 픽셀 크기는 다릅니다"}, {"id": "guide-section-2", "title": "사진 용량이 커지는 이유"}, {"id": "guide-section-3", "title": "JPG 이미지 용량을 줄이는 방법"}, {"id": "guide-section-4", "title": "JPG, PNG, WebP 차이"}, {"id": "guide-section-5", "title": "JSTools 이미지 압축기 사용 방법"}, {"id": "guide-section-6", "title": "압축 후에도 용량이 크다면"}, {"id": "guide-section-7", "title": "휴대폰과 여러 사진에서 사용하는 방법"}, {"id": "guide-section-8", "title": "사진 용량을 바로 줄여보세요"}, {"id": "guide-section-9", "title": "관련 가이드"}]
 
 export default function ImageCompressionGuidePage() {
   return (
@@ -89,6 +90,7 @@ export default function ImageCompressionGuidePage() {
         </GuideCtaLink>
       </header>
       <GuideContents sections={contents} mobile />
+      <CompressionWorkedExample />
 
       <section className="space-y-3">
         <h2 className="text-2xl font-semibold" id="guide-section-1">KB·MB 용량과 픽셀 크기는 다릅니다</h2>

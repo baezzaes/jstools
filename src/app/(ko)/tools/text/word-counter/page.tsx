@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
+import { WordWorkedExample } from '@/components/ToolWorkedExamples'
 import { wordCounterTool } from '@/data/tools'
 import { trackToolExecute, trackToolView } from '@/lib/analytics'
 
@@ -79,6 +80,7 @@ export default function WordCounterPage() {
       </div>
       <p className="text-sm text-gray-600">입력과 동시에 계산됩니다. 줄 수는 완전히 빈 줄만 제외하며 공백만 있는 줄은 포함합니다. 일부 이모지는 여러 글자로 계산될 수 있으므로 제출처의 기준도 확인하세요.</p>
 
+      <WordWorkedExample />
       <ToolSeoSections tool={wordCounterTool} />
 
       <div className="text-center mt-8">

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { jsonFormatterTool } from '@/data/tools'
 import { trackToolExecute, trackToolView } from '@/lib/analytics'
+import { JsonWorkedExample } from '@/components/ToolWorkedExamples'
 
 export default function JsonFormatterPage() {
   const [input, setInput] = useState('')
@@ -64,6 +65,7 @@ export default function JsonFormatterPage() {
         />
       )}
 
+      <JsonWorkedExample />
       <ToolSeoSections tool={jsonFormatterTool} />
 
       <div className="text-center mt-8">

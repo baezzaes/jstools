@@ -1,4 +1,5 @@
 import { GuideContents } from '@/components/GuideContents'
+import { FormatWorkedExample } from '@/components/GuideWorkedExamples'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { GuideCtaLink } from '@/components/GuideCtaLink'
@@ -10,7 +11,7 @@ const pageDescription =
   'JPG·PNG·WebP의 용도, 손실 압축과 투명 배경 차이를 비교합니다. JPG만 받는 제출 사이트와 투명 로고에 맞는 형식을 고르고, JPG 배경색을 선택해 변환하는 순서를 확인하세요.'
 const pageUrl = absoluteUrl('/guide/jpg-vs-webp')
 const publishedDate = '2026-08-02'
-const modifiedDate = '2026-11-08'
+const modifiedDate = '2026-11-15'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -57,7 +58,7 @@ function buildArticleSchema() {
   }
 }
 
-const contents = [{"id": "guide-section-1", "title": "JPG란?"}, {"id": "guide-section-2", "title": "PNG란? 투명 로고와 글자 이미지에 적합한 형식"}, {"id": "guide-section-3", "title": "WebP란?"}, {"id": "guide-section-4", "title": "JPG와 WebP 차이"}, {"id": "guide-section-5", "title": "JPG를 사용하면 좋은 경우"}, {"id": "guide-section-6", "title": "WebP를 사용하면 좋은 경우"}, {"id": "guide-section-7", "title": "제출 조건과 투명 배경에 맞춰 고르기"}, {"id": "guide-section-8", "title": "JPG·PNG·WebP를 변환하는 순서"}, {"id": "guide-section-9", "title": "용도에 맞는 이미지 형식으로 변환하기"}, {"id": "guide-section-10", "title": "이미지 용량 더 줄이기"}, {"id": "guide-section-11", "title": "관련 가이드"}]
+const contents = [{ id: "worked-example", title: "실제 파일로 확인한 작업 사례" }, {"id": "guide-section-1", "title": "JPG란?"}, {"id": "guide-section-2", "title": "PNG란? 투명 로고와 글자 이미지에 적합한 형식"}, {"id": "guide-section-3", "title": "WebP란?"}, {"id": "guide-section-4", "title": "JPG와 WebP 차이"}, {"id": "guide-section-5", "title": "JPG를 사용하면 좋은 경우"}, {"id": "guide-section-6", "title": "WebP를 사용하면 좋은 경우"}, {"id": "guide-section-7", "title": "제출 조건과 투명 배경에 맞춰 고르기"}, {"id": "guide-section-8", "title": "JPG·PNG·WebP를 변환하는 순서"}, {"id": "guide-section-9", "title": "용도에 맞는 이미지 형식으로 변환하기"}, {"id": "guide-section-10", "title": "이미지 용량 더 줄이기"}, {"id": "guide-section-11", "title": "관련 가이드"}]
 
 export default function JpgVsWebpGuidePage() {
   return (
@@ -92,6 +93,7 @@ export default function JpgVsWebpGuidePage() {
         </GuideCtaLink>
       </header>
       <GuideContents sections={contents} mobile />
+      <FormatWorkedExample />
 
       <section className="space-y-3">
         <h2 className="text-2xl font-semibold" id="guide-section-1">JPG란?</h2>
