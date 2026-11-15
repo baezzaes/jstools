@@ -42,10 +42,11 @@ export const baseMetadata: Metadata = {
 };
 
 export function SiteDocument({
-  children, lang,
+  children, lang, adsEnabled = true,
 }: Readonly<{
   children: React.ReactNode;
   lang: 'ko' | 'en';
+  adsEnabled?: boolean;
 }>) {
   return (
     <html lang={lang}>
@@ -53,11 +54,11 @@ export function SiteDocument({
       {/* eslint-disable-next-line @next/next/no-head-element */}
       <head>
         <meta name="google-site-verification" content="F8GPFH41SR" />
-        <script
+        {adsEnabled && <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7836056065911594"
           crossOrigin="anonymous"
-        />
+        />}
       </head>
 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>

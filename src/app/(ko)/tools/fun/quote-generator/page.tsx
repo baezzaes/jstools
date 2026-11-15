@@ -92,7 +92,7 @@ export default function QuoteGeneratorPage() {
         </section>
       )}
 
-      <p className="text-sm text-gray-600">명언 제공: <a href="https://zenquotes.io/" className="text-blue-700 underline">ZenQuotes</a> · 번역: <a href="https://mymemory.translated.net/" className="text-blue-700 underline">MyMemory</a>. 외부 서비스의 연결 상태와 무료 이용 한도에 따라 제공이 제한될 수 있습니다.</p>
+      <p className="text-sm text-gray-600">명언 제공: <a href="https://zenquotes.io/" className="text-blue-700 underline">ZenQuotes</a> · 자동 번역: <a href="https://mymemory.translated.net/" className="text-blue-700 underline">MyMemory</a>. 저자는 제공자에 표시된 정보이며 원출처·저자와 번역을 운영자가 개별 검증한 것은 아닙니다. 외부 서비스의 연결 상태와 무료 이용 한도에 따라 제공이 제한될 수 있습니다.</p>
 
       <ToolSeoSections tool={quoteGeneratorTool} />
 

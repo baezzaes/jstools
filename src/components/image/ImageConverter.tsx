@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import JSZip from 'jszip'
+import { uniqueZipNames } from '@/lib/zipNames'
 import Link from 'next/link'
 import type { ImageToolProps } from '@/lib/image-locale'
 import { createImageTranslator } from '@/lib/image-locale'
@@ -311,15 +312,10 @@ export default function ImageConverterPage({ messages, contentTool, locale = 'ko
 
     try {
       const zip = new JSZip()
-      const usedNames = new Map<string, number>()
-
-      completedItems.forEach((item) => {
-        const preferredName =
-          item.outputName || getImageOutputName(item.name, 'converted', item.convertedBlob?.type || item.type)
-        const count = usedNames.get(preferredName) || 0
-        usedNames.set(preferredName, count + 1)
-        const fileName = count === 0 ? preferredName : preferredName.replace(/(\.[^.]+)$/, `-${count + 1}$1`)
-        zip.file(fileName, item.convertedBlob as Blob)
+      const names = uniqueZipNames(completedItems.map((item) =>
+        item.outputName || getImageOutputName(item.name, 'converted', item.convertedBlob?.type || item.type)))
+      completedItems.forEach((item, index) => {
+        zip.file(names[index], item.convertedBlob as Blob)
       })
 
       const zipBlob = await zip.generateAsync({ type: 'blob' })

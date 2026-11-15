@@ -19,7 +19,7 @@ export const toolSummaries: Record<string, string> = {
   'json-formatter': 'JSON을 정렬하고 문법 오류를 확인합니다.',
   'password-generator': '길이와 포함할 문자 옵션으로 비밀번호를 만듭니다.',
   'qrcode-generator': '입력한 텍스트나 URL을 QR 코드로 표시합니다.',
-  'lotto-generator': '기분·색상·선호 숫자를 바탕으로 재미로 번호를 추천합니다.',
+  'lotto-generator': '기분별 후보와 선호 숫자를 섞어 재미로 번호를 추천합니다.',
   'quote-generator': '영어 명언과 한국어 번역을 함께 확인합니다.',
 }
 

@@ -39,7 +39,7 @@ export default function PrivacyPage() {
       <section className="space-y-3 leading-relaxed">
         <h2 className="text-xl font-semibold">3. 사이트 이용 통계</h2>
         <p>서비스 개선과 유입 경로 확인을 위해 Google Analytics 4와 네이버 애널리틱스를 사용합니다. 방문한 페이지 주소, 유입 경로, 접속 시각, 브라우저·기기 환경, 도구 조회·실행·다운로드 버튼 클릭 등의 이용 정보가 처리될 수 있습니다.</p>
-        <p>JSTools의 도구 이벤트에는 도구명·분류·도구 경로·파일 형식·가이드 링크 정보만 포함하며, 입력한 텍스트·날짜·비밀번호·QR 내용·파일명·이미지 내용은 이벤트 파라미터에 포함하지 않습니다. 페이지 주소와 UTM 같은 유입 정보는 기본 방문 측정에 포함될 수 있으므로 주소나 캠페인 값에 개인정보를 넣지 마세요.</p>
+        <p>JSTools의 도구 이벤트에는 도구명·분류·도구 경로·파일 형식·가이드 링크 정보가 포함됩니다. 일부 이벤트에는 작업 시작 방식·처리 결과·다운로드 방식과 대상·성공·실패 파일 수도 포함됩니다. 입력한 텍스트·날짜·비밀번호·QR 내용·파일명·이미지 내용은 이벤트 파라미터에 포함하지 않습니다. 페이지 주소와 UTM 같은 유입 정보는 기본 방문 측정에 포함될 수 있으므로 주소나 캠페인 값에 개인정보를 넣지 마세요.</p>
         <p>통계 제공자에게 전송되는 정보와 보관 방식은 해당 서비스의 정책과 계정 설정에 따라 달라집니다. Google의 정보 이용 방법은 <a href="https://policies.google.com/technologies/partner-sites?hl=ko" className="text-blue-600 underline">Google 파트너 사이트 정보 이용 안내</a>, 네이버의 기준은 <a href="https://policy.naver.com/policy/privacy.html" className="text-blue-600 underline">네이버 개인정보처리방침</a>에서 확인할 수 있습니다.</p>
       </section>
       <section className="space-y-3 leading-relaxed">

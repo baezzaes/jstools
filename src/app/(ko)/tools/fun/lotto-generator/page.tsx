@@ -4,28 +4,39 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { lottoGeneratorTool } from '@/data/tools'
+import { readSavedLottoNumbers } from '@/lib/lottoStorage'
 
 const feelings = ["행복함", "평온함", "불안함", "짜증남", "신남"]
-const colors = ["빨강", "파랑", "노랑", "초록", "보라"]
 
 export default function LottoGenerator() {
   const [selectedFeeling, setSelectedFeeling] = useState('')
-  const [selectedColor, setSelectedColor] = useState('')
   const [favoriteNumber, setFavoriteNumber] = useState('')
   const [result, setResult] = useState<number[]>([])
 
   const [savedNumbers, setSavedNumbers] = useState<number[][]>([])
+  const [notice, setNotice] = useState('')
+  const [error, setError] = useState('')
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      const storedNumbers = JSON.parse(localStorage.getItem('savedLottoNumbers') || '[]')
-      setSavedNumbers(storedNumbers)
+      try {
+        const stored = readSavedLottoNumbers(localStorage.getItem('savedLottoNumbers'))
+        setSavedNumbers(stored.numbers)
+        if (stored.invalid) setNotice('저장된 번호 중 읽을 수 없는 항목은 제외했습니다. 새 번호 생성은 계속 사용할 수 있습니다.')
+      } catch {
+        setNotice('브라우저 저장소를 읽을 수 없습니다. 번호 생성은 사용할 수 있습니다.')
+      }
     }, 0)
 
     return () => window.clearTimeout(timer)
   }, [])
 
   const handleGenerate = () => {
+    setError('')
+    if (favoriteNumber && (!Number.isInteger(Number(favoriteNumber)) || Number(favoriteNumber) < 1 || Number(favoriteNumber) > 45)) {
+      setError('좋아하는 숫자는 1~45 사이의 정수로 입력하거나 비워 주세요.')
+      return
+    }
     const numbers: number[] = []
 
     // 사용자 입력 반영 (favoriteNumber가 비어있거나 0인 경우 추가하지 않음)
@@ -33,7 +44,6 @@ export default function LottoGenerator() {
       numbers.push(Number(favoriteNumber))
     }
 
-    console.log("초기 numbers 배열:", numbers) // 초기 배열 출력
 
     // 기분별 번호 편향
     const moodBias: Record<string, number[]> = {
@@ -47,49 +57,56 @@ export default function LottoGenerator() {
     const bias = moodBias[selectedFeeling] || []
     while (numbers.length < 4 && bias.length > 0) {
       const rand = bias[Math.floor(Math.random() * bias.length)]
-      console.log("추출된 기분 번호:", rand) // 로그 추가
       if (rand !== 0 && !numbers.includes(rand)) {
         numbers.push(rand)
       }
-      console.log("현재 numbers 배열 (기분 번호 추가 후):", numbers) // 기분 번호 추가 후 출력
     }
 
     // 랜덤 숫자 보완 (0을 제외하고 1부터 45 사이의 숫자만 생성)
     while (numbers.length < 6) {
       const rand = Math.floor(Math.random() * 45) + 1 // 1부터 45 사이로만 랜덤
-      console.log("추출된 랜덤 번호:", rand) // 로그 추가
       if (!numbers.includes(rand)) {
         numbers.push(rand)
       }
-      console.log("현재 numbers 배열 (랜덤 번호 추가 후):", numbers) // 랜덤 번호 추가 후 출력
     }
 
-    console.log("최종 추천 번호:", numbers) // 최종 번호 로그
     setResult(numbers.sort((a, b) => a - b))
   }
 
   // 번호 저장
   const saveNumber = () => {
+    if (result.length !== 6) return
     const newSavedNumbers = [...savedNumbers, result]
-    setSavedNumbers(newSavedNumbers)
-    localStorage.setItem('savedLottoNumbers', JSON.stringify(newSavedNumbers))
+    try {
+      localStorage.setItem('savedLottoNumbers', JSON.stringify(newSavedNumbers))
+      setSavedNumbers(newSavedNumbers)
+      setNotice('현재 브라우저에 번호를 저장했습니다.')
+    } catch {
+      setNotice('번호를 저장하지 못했습니다. 브라우저 저장 권한이나 남은 공간을 확인하세요.')
+    }
   }
 
   // 저장된 번호 삭제하기
   const deleteSavedNumber = (index: number) => {
     const updatedNumbers = [...savedNumbers]
     updatedNumbers.splice(index, 1)
-    setSavedNumbers(updatedNumbers)
-    localStorage.setItem('savedLottoNumbers', JSON.stringify(updatedNumbers))
+    try {
+      localStorage.setItem('savedLottoNumbers', JSON.stringify(updatedNumbers))
+      setSavedNumbers(updatedNumbers)
+      setNotice('저장된 번호를 삭제했습니다.')
+    } catch {
+      setNotice('저장된 번호를 삭제하지 못했습니다. 브라우저 저장 권한을 확인하세요.')
+    }
   }
 
   return (
     <div className="tool-page space-y-6">
-      <h1 className="text-2xl font-bold">운세 기반 로또 번호 추천기</h1>
+      <h1 className="text-2xl font-bold">로또 번호 추천기</h1>
+      <p className="text-sm text-gray-600">기분을 고르면 미리 정해진 후보 번호 일부를 섞습니다. 운세를 판단하거나 당첨 확률을 높이는 기능은 아니며, 재미로만 사용하세요.</p>
 
       <div className="space-y-4 border p-4 rounded bg-gray-50">
         <div>
-          <label htmlFor="lotto-feeling" className="font-semibold">1. 오늘 기분은?</label>
+          <label htmlFor="lotto-feeling" className="font-semibold">1. 오늘 기분은? (재미용 후보 선택)</label>
           <select
             id="lotto-feeling"
             value={selectedFeeling}
@@ -104,22 +121,7 @@ export default function LottoGenerator() {
         </div>
 
         <div>
-          <label htmlFor="lotto-color" className="font-semibold">2. 좋아하는 색은?</label>
-          <select
-            id="lotto-color"
-            value={selectedColor}
-            onChange={(e) => setSelectedColor(e.target.value)}
-            className="w-full p-2 border rounded mt-1"
-          >
-            <option value="">선택하세요</option>
-            {colors.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="lotto-number" className="font-semibold">3. 좋아하는 숫자 (선택)</label>
+          <label htmlFor="lotto-number" className="font-semibold">2. 좋아하는 숫자 (선택)</label>
           <input
             id="lotto-number"
             type="number"
@@ -139,6 +141,8 @@ export default function LottoGenerator() {
           번호 추천 받기
         </button>
       </div>
+      {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
+      {notice && <p role="status" className="text-sm text-gray-700">{notice}</p>}
 
       {result.length > 0 && (
         <div className="text-center text-xl mt-6">

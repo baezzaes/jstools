@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import JSZip from 'jszip'
+import { uniqueZipNames } from '@/lib/zipNames'
 import Link from 'next/link'
 import type { ImageToolProps } from '@/lib/image-locale'
 import { createImageTranslator } from '@/lib/image-locale'
@@ -384,8 +385,9 @@ export default function ImageResizerPage({ messages, contentTool, locale = 'ko' 
 
     try {
       const zip = new JSZip()
-      completedItems.forEach((item) => {
-        zip.file(item.outputName || getImageOutputName(item.name, 'resized', item.type), item.resizedBlob as Blob)
+      const names = uniqueZipNames(completedItems.map((item) => item.outputName || getImageOutputName(item.name, 'resized', item.type)))
+      completedItems.forEach((item, index) => {
+        zip.file(names[index], item.resizedBlob as Blob)
       })
 
       const fileCount = Object.values(zip.files).filter((file) => !file.dir).length

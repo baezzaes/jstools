@@ -78,12 +78,12 @@ const related = {
   passwordGenerator: {
     href: '/tools/security/password-generator',
     title: '랜덤 비밀번호 생성기',
-    description: '길이와 옵션을 선택해 보안성 높은 비밀번호를 생성합니다.',
+    description: '길이와 문자 옵션을 선택해 브라우저에서 비밀번호를 생성합니다.',
   },
   lottoGenerator: {
     href: '/tools/fun/lotto-generator',
     title: '로또 번호 추천기',
-    description: '기분, 색상, 선호 숫자를 바탕으로 재미있는 번호를 추천합니다.',
+    description: '기분별 후보와 선호 숫자를 섞어 재미로 번호를 추천합니다.',
   },
   quoteGenerator: {
     href: '/tools/fun/quote-generator',
@@ -261,22 +261,22 @@ export const jsonFormatterTool: ToolDefinition = {
 
 export const lottoGeneratorTool: ToolDefinition = {
   id: 'lotto-generator',
-  name: '운세 기반 로또 번호 추천기',
-  title: '운세 기반 로또 번호 추천기 - 재미있는 랜덤 번호 생성 | JSTools',
+  name: '로또 번호 추천기',
+  title: '로또 번호 추천기 - 재미용 랜덤 번호 생성 | JSTools',
   description:
-    '오늘의 기분, 좋아하는 색상, 선호 숫자를 바탕으로 재미있게 로또 번호를 추천받고 저장할 수 있는 랜덤 번호 도구입니다.',
+    '기분별 후보 번호와 선호 숫자를 섞어 재미로 로또 번호를 추천하고 현재 브라우저에 저장하는 도구입니다. 운세나 당첨 확률을 예측하지 않습니다.',
   path: '/tools/fun/lotto-generator',
   categoryName: '재미 도구',
   categoryPath: '/tools',
-  keywords: ['로또 번호 추천', '로또 번호 생성기', '운세 로또', '랜덤 번호', '행운 번호', 'JSTools'],
+  keywords: ['로또 번호 추천', '로또 번호 생성기', '랜덤 번호', 'JSTools'],
   content: {
-    introHeading: '운세 기반 로또 번호 추천기 소개',
+    introHeading: '로또 번호 추천기 소개',
     description: [
-      '운세 기반 로또 번호 추천기는 사용자의 감정, 좋아하는 색상, 선호 숫자 등 간단한 정보를 바탕으로 랜덤 요소를 결합해 번호를 추천하는 재미용 도구입니다.',
+      '로또 번호 추천기는 선택한 기분에 따라 미리 정한 후보 번호 일부를 고르고 무작위 숫자를 더해 1~45 사이의 중복 없는 번호 6개를 만드는 재미용 도구입니다. 선호 숫자를 입력하면 결과에 포함합니다.',
       '진지한 투자 목적보다는 일상 속 소소한 재미를 위한 도구로 활용할 수 있으며, 추천된 번호를 브라우저에 저장해 다시 확인할 수 있습니다.',
     ],
     howTo: [
-      '오늘의 기분과 좋아하는 색을 선택합니다.',
+      '원하는 경우 오늘의 기분을 선택합니다. 선택하지 않아도 번호를 생성할 수 있으며, 기분은 후보 번호 묶음만 바꿉니다.',
       '원하는 경우 좋아하는 숫자를 입력합니다.',
       '번호 추천 받기를 눌러 결과를 확인하고 필요하면 저장합니다.',
     ],
@@ -301,9 +301,9 @@ export const lottoGeneratorTool: ToolDefinition = {
 export const passwordGeneratorTool: ToolDefinition = {
   id: 'password-generator',
   name: '랜덤 비밀번호 생성기',
-  title: '랜덤 비밀번호 생성기 - 안전한 비밀번호 만들기 | JSTools',
+  title: '랜덤 비밀번호 생성기 - 길이와 문자 옵션 설정 | JSTools',
   description:
-    '길이, 숫자, 대소문자, 특수문자 옵션을 선택해 보안성 높은 랜덤 비밀번호를 생성하고 복사할 수 있는 무료 도구입니다.',
+    '4~32자 길이와 숫자·대소문자·특수문자 옵션으로 Web Crypto 난수를 사용해 비밀번호를 생성하고 복사합니다. 예시 모드는 실제 계정용이 아닙니다.',
   path: '/tools/security/password-generator',
   categoryName: '보안 도구',
   categoryPath: '/tools',
@@ -312,17 +312,17 @@ export const passwordGeneratorTool: ToolDefinition = {
     introHeading: '랜덤 비밀번호 생성기 소개',
     description: [
       '랜덤 비밀번호 생성기는 문자, 숫자, 특수문자 조합과 길이를 선택해 복잡한 비밀번호를 만드는 도구입니다.',
-      '회원가입, 계정 보안 강화, 암호 관리자 등록처럼 새 비밀번호가 필요할 때 빠르게 사용할 수 있습니다.',
+      '일반 모드는 Web Crypto 난수를 사용하고 선택한 문자 종류를 각각 하나 이상 포함합니다. 길이와 문자 선택은 사용자가 정하므로 모든 결과가 강한 비밀번호라고 보장하지 않습니다. 중요한 계정에서는 충분한 길이와 사이트별 다른 비밀번호, 비밀번호 관리자를 함께 검토하세요.',
     ],
     howTo: [
       '비밀번호 길이와 포함할 문자 옵션을 선택합니다.',
-      '필요하면 기억하기 쉬운 비밀번호 모드를 켭니다.',
+      '기억하기 쉬운 예시 모드는 단어 조합을 보여주는 용도이며 실제 계정에는 사용하지 마세요.',
       '비밀번호 생성 버튼을 누르고 결과를 복사합니다.',
     ],
     faq: [
       {
-        question: '기억하기 쉬운 비밀번호 모드는 무엇인가요?',
-        answer: '영단어, 숫자, 특수문자를 조합해 상대적으로 기억하기 쉬운 형태의 비밀번호를 만드는 옵션입니다.',
+        question: '기억하기 쉬운 예시 모드는 무엇인가요?',
+        answer: '작은 고정 단어 목록에 숫자와 기호를 섞는 예시 모드입니다. 추측 가능한 조합이 적어 실제 계정 비밀번호에 부적합하며, 길이·문자 옵션은 적용되지 않습니다.',
       },
       {
         question: '생성한 비밀번호가 저장되나요?',
@@ -330,7 +330,7 @@ export const passwordGeneratorTool: ToolDefinition = {
       },
       {
         question: '특수문자를 제외할 수 있나요?',
-        answer: '네. 특수문자 포함 옵션을 끄면 특수문자 없이 비밀번호를 생성할 수 있습니다.',
+        answer: '일반 모드에서는 특수문자 포함 옵션을 끄면 특수문자 없이 생성합니다. 예시 모드에는 문자 옵션이 적용되지 않습니다.',
       },
     ],
   },
@@ -496,6 +496,7 @@ export const imageResizerTool: ToolDefinition = {
       '픽셀 기준 또는 퍼센트 기준 중 원하는 크기 조절 방식을 선택합니다.',
       '가로세로 비율 유지 여부와 크기 값을 확인한 뒤 크기 적용 버튼을 누릅니다.',
       '결과 목록에서 원본 크기, 결과 크기, 결과 형식을 확인하고 개별 파일 또는 전체 ZIP으로 다운로드합니다.',
+      'ZIP 안에서 결과 이름이 겹치면 기존 숫자 접미사 이름을 보존하면서 새 숫자 접미사를 붙입니다. 개별 다운로드 이름은 바뀌지 않습니다.',
     ],
     faq: [
       {
@@ -549,6 +550,7 @@ export const imageConverterTool: ToolDefinition = {
       'JPG, PNG, WebP 중 원본과 다른 출력 형식을 선택합니다.',
       'JPG로 변환할 때는 투명 영역을 채울 배경색을 선택합니다.',
       '결과 목록에서 원본 형식, 결과 형식, 용량을 확인하고 개별 파일 또는 전체 ZIP으로 다운로드합니다.',
+      'ZIP 안에서 결과 이름이 겹치면 숫자 접미사를 붙여 모든 완료 파일을 보존합니다. 이미 숫자 접미사가 있는 이름과도 겹치지 않게 저장합니다.',
     ],
     faq: [
       {

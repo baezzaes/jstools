@@ -4,9 +4,10 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ToolSeoSections } from '@/components/ToolSeoSections'
 import { passwordGeneratorTool } from '@/data/tools'
+import { generatePassword as createPassword } from '@/lib/password'
 
 export default function PasswordGeneratorPage() {
-  const [length, setLength] = useState(12)
+  const [length, setLength] = useState('12')
   const [useNumbers, setUseNumbers] = useState(true)
   const [useUppercase, setUseUppercase] = useState(true)
   const [useLowercase, setUseLowercase] = useState(true)
@@ -14,40 +15,39 @@ export default function PasswordGeneratorPage() {
   const [easyMode, setEasyMode] = useState(false)
   const [password, setPassword] = useState('')
   const [copied, setCopied] = useState(false)
+  const [error, setError] = useState('')
+  const [copyError, setCopyError] = useState('')
 
-  const generatePassword = () => {
-    let charset = ''
-    if (easyMode) {
-      const words = ['Tree', 'Cat', 'Dog', 'Moon', 'Sun', 'Book', 'Fire', 'Rain']
-      const symbols = ['!', '@', '#', '$']
-      const word1 = words[Math.floor(Math.random() * words.length)]
-      const word2 = words[Math.floor(Math.random() * words.length)]
-      const number = Math.floor(Math.random() * 100)
-      const symbol = symbols[Math.floor(Math.random() * symbols.length)]
-      const easyPass = `${word1}${number}${symbol}${word2}`
-      setPassword(easyPass)
-      return
-    }
-
-    if (useNumbers) charset += '0123456789'
-    if (useUppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    if (useLowercase) charset += 'abcdefghijklmnopqrstuvwxyz'
-    if (useSymbols) charset += '!@#$%^&*()_+-=[]{}|;:,.<>?'
-
-    if (!charset) return setPassword('옵션을 선택하세요')
-
-    let result = ''
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * charset.length)
-      result += charset[randomIndex]
-    }
-    setPassword(result)
+  const resetResult = () => {
+    setPassword('')
+    setCopied(false)
+    setError('')
+    setCopyError('')
   }
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(password)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+  const generatePassword = () => {
+    setPassword('')
+    setCopied(false)
+    setError('')
+    setCopyError('')
+    try {
+      setPassword(createPassword({ length: Number(length), numbers: useNumbers, uppercase: useUppercase, lowercase: useLowercase, symbols: useSymbols, exampleMode: easyMode }))
+    } catch (failure) {
+      setError(failure instanceof Error ? failure.message : '비밀번호를 생성하지 못했습니다.')
+    }
+  }
+
+  const copyToClipboard = async () => {
+    if (!password) return
+    setCopyError('')
+    setCopied(false)
+    try {
+      await navigator.clipboard.writeText(password)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      setCopyError('복사하지 못했습니다. 브라우저 권한을 확인하거나 결과를 직접 선택해 복사하세요.')
+    }
   }
 
   return (
@@ -61,7 +61,7 @@ export default function PasswordGeneratorPage() {
             id="password-length"
             type="number"
             value={length}
-            onChange={(e) => setLength(Number(e.target.value))}
+            onChange={(e) => { setLength(e.target.value); resetResult() }}
             className="border p-2 rounded w-24"
             min={4}
             max={32}
@@ -74,7 +74,7 @@ export default function PasswordGeneratorPage() {
             <input
               type="checkbox"
               checked={useNumbers}
-              onChange={() => setUseNumbers(!useNumbers)}
+              onChange={() => { setUseNumbers(!useNumbers); resetResult() }}
               disabled={easyMode}
             />
             숫자 포함
@@ -83,7 +83,7 @@ export default function PasswordGeneratorPage() {
             <input
               type="checkbox"
               checked={useUppercase}
-              onChange={() => setUseUppercase(!useUppercase)}
+              onChange={() => { setUseUppercase(!useUppercase); resetResult() }}
               disabled={easyMode}
             />
             대문자 포함
@@ -92,7 +92,7 @@ export default function PasswordGeneratorPage() {
             <input
               type="checkbox"
               checked={useLowercase}
-              onChange={() => setUseLowercase(!useLowercase)}
+              onChange={() => { setUseLowercase(!useLowercase); resetResult() }}
               disabled={easyMode}
             />
             소문자 포함
@@ -101,7 +101,7 @@ export default function PasswordGeneratorPage() {
             <input
               type="checkbox"
               checked={useSymbols}
-              onChange={() => setUseSymbols(!useSymbols)}
+              onChange={() => { setUseSymbols(!useSymbols); resetResult() }}
               disabled={easyMode}
             />
             특수문자 포함
@@ -112,10 +112,12 @@ export default function PasswordGeneratorPage() {
           <input
             type="checkbox"
             checked={easyMode}
-            onChange={() => setEasyMode(!easyMode)}
+            onChange={() => { setEasyMode(!easyMode); resetResult() }}
           />
-          기억하기 쉬운 비밀번호 모드
+          기억하기 쉬운 예시 모드 (계정용 사용 금지)
         </label>
+        {easyMode && <p className="text-sm text-amber-800" role="note">적은 수의 단어·숫자 조합을 보여주는 예시입니다. 실제 계정의 비밀번호로 사용하지 마세요. 길이와 문자 옵션은 이 모드에 적용되지 않습니다.</p>}
+        {!easyMode && <p className="text-sm text-gray-600">4~32자, 선택한 문자 종류를 각각 하나 이상 포함합니다. Web Crypto 난수를 사용하지만 짧은 길이·단순한 옵션은 추측하기 쉬울 수 있습니다. 사이트별 요구 조건을 확인하세요.</p>}
 
         <button
           onClick={generatePassword}
@@ -123,6 +125,8 @@ export default function PasswordGeneratorPage() {
         >
           비밀번호 생성
         </button>
+        {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
+        {copyError && <p role="alert" className="text-sm text-red-700">{copyError}</p>}
 
         {password && (
           <div className="border p-3 rounded bg-white flex items-center justify-between">

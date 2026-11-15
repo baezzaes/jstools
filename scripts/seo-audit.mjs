@@ -78,8 +78,10 @@ if (process.env.SEO_STRICT === '1') {
   }
   console.log(JSON.stringify({ checkedCanonicalPages: locs.length, uniqueTitlesAndDescriptions: true, initialHtmlTextAndInternalLinks: 'pass' }))
   for (const path of ['/test', '/test/client', '/test/server']) {
-    const { html } = await get(path)
+    const { response, html } = await get(path)
+    assert.equal(response.status, process.env.SEO_TEST_MODE === 'development' ? 200 : 404, `Development-only route: ${path}`)
     assert(/<meta[^>]*name="robots"[^>]*content="[^"]*noindex/.test(html), path)
+    assert(!html.includes('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'), `Ads on development route: ${path}`)
   }
   const redirect = await fetch(base + '/guide/image-compress', { redirect: 'manual' })
   assert.equal(redirect.status, 308)
